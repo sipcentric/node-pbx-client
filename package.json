@@ -1,0 +1,54 @@
+{
+  "name": "nimvelo",
+  "version": "1.0.0",
+  "description": "Nimvelo API client library for node.js",
+  "main": "lib/nimvelo.js",
+  "scripts": {
+    "test": "babel lib/nimvelo.es6.js > lib/nimvelo.js && node example.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Nimvelo/node-client"
+  },
+  "keywords": [
+    "nimvelo",
+    "node",
+    "node.js",
+    "javascript",
+    "voip",
+    "api",
+    "streaming"
+  ],
+  "author": {
+    "name": "Josh Farrant",
+    "email": "josh.farrant@nimvelo.com"
+  },
+  "license": "MIT",
+  "main": "lib/nimvelo.js",
+  "bugs": {
+    "url": "https://github.com/nimvelo/node-client/issues"
+  },
+  "jshintConfig": {
+    "boss": true,
+    "curly": false,
+    "devel": true,
+    "eqeqeq": true,
+    "evil": true,
+    "noarg": true,
+    "node": true,
+    "undef": true,
+    "strict": true,
+    "white": false,
+    "eqnull": true,
+    "esnext": true,
+    "unused": true
+  },
+  "homepage": "https://github.com/Nimvelo/node-client",
+  "dependencies": {
+    "deep-extend": "^0.4.0",
+    "request": "^2.61.0"
+  },
+  "devDependencies": {
+    "babel": "^5.8.21"
+  }
+}
