@@ -124,7 +124,7 @@ nimvelo.customer(function(err, customer) {
     name: 'Nimvelo',
     phoneNumber: '03301200030',
     email: 'hello@nimvelo.com'
-  }
+  };
 
   customer.create('phonebookentry', phonebookentry).save(function(err, newEntry) {
     console.log(newEntry);
