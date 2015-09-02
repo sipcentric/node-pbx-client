@@ -68,16 +68,38 @@ var Nimvelo = (function () {
       var baseUrl = bases.hasOwnProperty(base) ? bases[base] : bases.rest;
       var path;
 
+      path = this._pathForType(type);
+
+      if (type === 'customer' && !id) {
+        if (!id) {
+          // If there's no ID provided for a customer, use the default
+          path = this.options.customer;
+        }
+      }
+
+      var url = baseUrl;
+
+      if (path) {
+        url += path + '/';
+      }
+
+      if (id) {
+        url += id + '/';
+      }
+
+      return url;
+    }
+  }, {
+    key: '_pathForType',
+    value: function _pathForType(type) {
+
+      var path;
       type = type.toLowerCase();
 
       switch (type) {
         case 'customers':
-          break;
         case 'customer':
-          if (!id) {
-            // Only add default customer if no id is provided
-            path = this.options.customer;
-          }
+          // Use the default base REST URL
           break;
         case 'callbundles':
         case 'calls':
@@ -97,17 +119,7 @@ var Nimvelo = (function () {
           break;
       }
 
-      var url = baseUrl;
-
-      if (path) {
-        url += path + '/';
-      }
-
-      if (id) {
-        url += id + '/';
-      }
-
-      return url;
+      return path;
     }
   }, {
     key: '_request',
@@ -280,29 +292,33 @@ var Nimvelo = (function () {
       });
     }
   }, {
+    key: '_objectFromItem',
+    value: function _objectFromItem(item) {
+
+      var object;
+
+      // Figure out which class to use for this type
+
+      switch (item.type) {
+        case 'customer':
+          object = new Customer(this.options, item);
+          break;
+        case 'phonebookentry':
+          object = new Phonebookentry(this.options, this, item);
+          break;
+        case 'recording':
+          object = new Recording(this.options, this, item);
+          break;
+      }
+
+      return object;
+    }
+  }, {
     key: '_buildObjects',
     value: function _buildObjects(items) {
 
       var classArray = [];
       var self = this;
-
-      function getObject(item) {
-
-        var object;
-
-        // Figure out which class to use for this type
-
-        switch (item.type) {
-          case 'customer':
-            object = new Customer(self.options, item);
-            break;
-          case 'phonebookentry':
-            object = new Phonebookentry(self.options, self, item);
-            break;
-        }
-
-        return object;
-      }
 
       if (Array.isArray(items)) {
 
@@ -310,7 +326,7 @@ var Nimvelo = (function () {
 
         items.forEach(function (item) {
 
-          classArray.push(getObject(item));
+          classArray.push(self._objectFromItem(item));
         });
 
         return classArray;
@@ -318,7 +334,7 @@ var Nimvelo = (function () {
 
         // We just have a single object
 
-        return getObject(items);
+        return self._objectFromItem(items);
       }
     }
   }, {
@@ -462,8 +478,8 @@ var Customer = (function (_Nimvelo2) {
   }
 
   _createClass(Customer, [{
-    key: '_getResource',
-    value: function _getResource(type) {
+    key: '_resourceForType',
+    value: function _resourceForType(type) {
 
       var resource;
 
@@ -474,13 +490,17 @@ var Customer = (function (_Nimvelo2) {
         case 'phonebookentry':
           resource = 'phonebook';
           break;
+        case 'recording':
+          // Basic pluralization
+          resource += 's';
+          break;
       }
 
       return resource;
     }
   }, {
-    key: 'phonebook',
-    value: function phonebook(id, callback) {
+    key: '_getResource',
+    value: function _getResource(type, id, callback) {
 
       var self = this;
 
@@ -492,7 +512,7 @@ var Customer = (function (_Nimvelo2) {
         id = null;
       }
 
-      return this._request('get', 'phonebook', id, function (err, data, response) {
+      return this._request('get', type, id, function (err, data, response) {
 
         if (!callback) {
           return;
@@ -503,10 +523,20 @@ var Customer = (function (_Nimvelo2) {
           return;
         }
 
-        var phonebook = data.items ? data.items : data;
-
-        callback(null, self._buildObjects(phonebook), response);
+        callback(null, self._buildObjects(data.items ? data.items : data), response);
       });
+    }
+  }, {
+    key: 'phonebook',
+    value: function phonebook(id, callback) {
+
+      this._getResource('phonebook', id, callback);
+    }
+  }, {
+    key: 'recordings',
+    value: function recordings(id, callback) {
+
+      this._getResource('recordings', id, callback);
     }
   }, {
     key: 'save',
@@ -515,7 +545,7 @@ var Customer = (function (_Nimvelo2) {
       var self = this;
 
       var type = this.type;
-      var resource = this._getResource(type);
+      var resource = this._resourceForType(type);
 
       var requestCallback = function requestCallback(err, data, response) {
 
@@ -547,10 +577,8 @@ var Customer = (function (_Nimvelo2) {
     key: 'delete',
     value: function _delete(callback) {
 
-      var self = this;
-
       var type = this.type;
-      var resource = this._getResource(type);
+      var resource = this._resourceForType(type);
 
       return this._request('delete', resource, this.data[type].id, function (err, data, response) {
 
@@ -562,8 +590,6 @@ var Customer = (function (_Nimvelo2) {
           callback(err, response);
           return;
         }
-
-        self = null;
 
         callback(null, response);
       });
@@ -622,6 +648,35 @@ var Phonebookentry = (function (_Customer) {
   }
 
   return Phonebookentry;
+})(Customer);
+
+var Recording = (function (_Customer2) {
+  _inherits(Recording, _Customer2);
+
+  function Recording(options, customer, item) {
+    _classCallCheck(this, Recording);
+
+    _get(Object.getPrototypeOf(Recording.prototype), 'constructor', this).call(this, options, customer.data.customer);
+
+    this.data = this.data || {};
+    this.data.recording = this.data.recording || {};
+
+    this.type = 'recording';
+    this.data.recording.type = 'recording';
+    this.data.recording.id = item.id;
+    this.data.recording.uri = item.uri;
+    this.data.recording.parent = item.parent;
+    this.data.recording.created = item.created;
+    this.data.recording.direction = item.direction;
+    this.data.recording.partyId = item.partyId;
+    this.data.recording.started = item.started;
+    this.data.recording.size = item.size;
+    this.data.recording.callId = item.callId;
+    this.data.recording.linkedId = item.linkedId;
+    this.data.recording.endpoint = item.endpoint;
+  }
+
+  return Recording;
 })(Customer);
 
 module.exports = Nimvelo;
