@@ -61,10 +61,11 @@ var Nimvelo = (function () {
       // Build the url based on the base and the type
 
       var bases = {
-        'rest': this.options.restBase,
-        'stream': this.options.streamBase
+        rest: this.options.restBase,
+        stream: this.options.streamBase
       };
 
+      // If we've been given a valid base, use it, else default to rest
       var baseUrl = bases.hasOwnProperty(base) ? bases[base] : bases.rest;
       var path;
 
@@ -77,6 +78,7 @@ var Nimvelo = (function () {
         }
       }
 
+      // Let's build our URL
       var url = baseUrl;
 
       if (path) {
@@ -204,7 +206,7 @@ var Nimvelo = (function () {
         // Build the options to pass to our custom request object
         options = {
           method: 'get',
-          url: this._buildUrl(base, resource, id), // Generate url,
+          url: this._buildUrl(base, resource, id), // Generate url
           qs: params
         };
       } else if (method === 'put') {
@@ -252,6 +254,8 @@ var Nimvelo = (function () {
         };
       }
 
+      // Make the request
+
       this.request(options, function (error, response, data) {
 
         if (error) {
@@ -261,12 +265,14 @@ var Nimvelo = (function () {
         } else {
 
           try {
-            // Try to parse the returned data
+
+            // If we've got data, and it's a string, try to parse it as JSON
 
             if (data && typeof data === 'string') {
               data = JSON.parse(data);
             }
           } catch (parseError) {
+
             // If we can't parse it, return our callback
 
             callback(new Error('Error parsing JSON. Status Code: ' + response.statusCode), data, response);
@@ -274,10 +280,10 @@ var Nimvelo = (function () {
 
           if (typeof data.errors !== 'undefined') {
 
-            // If there's some errors returned
+            // If there are some errors returned, return them with our callback
 
             callback(data.errors, data, response);
-          } else if (method === 'get' && response.statusCode !== 200 || method === 'put' && response.statusCode !== 200 || method === 'post' && response.statusCode !== 201 || method === 'delete' && response.statusCode !== 204) {
+          } else if (response.statusCode < 200 || response.statusCode >= 300) {
 
             // If we don't get the correct status back for the method
 
@@ -316,6 +322,9 @@ var Nimvelo = (function () {
   }, {
     key: '_buildObjects',
     value: function _buildObjects(items) {
+
+      // Builds an array of class objects from a given array of items,
+      // or returns a single class object if we only give it an object
 
       var classArray = [];
       var self = this;
@@ -362,9 +371,7 @@ var Nimvelo = (function () {
           return;
         }
 
-        var customers = data.items ? data.items : data;
-
-        callback(null, self._buildObjects(customers), response);
+        callback(null, self._buildObjects(data.items || data), response);
       });
     }
   }, {
@@ -523,7 +530,7 @@ var Customer = (function (_Nimvelo2) {
           return;
         }
 
-        callback(null, self._buildObjects(data.items ? data.items : data), response);
+        callback(null, self._buildObjects(data.items || data), response);
       });
     }
   }, {
