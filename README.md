@@ -16,7 +16,7 @@ npm install nimvelo
 Firstly, clone the repo:
 
 ```
-git clone git@github.com:Nimvelo/python-client.git
+git clone git@github.com:Nimvelo/node-client.git
 ```
 
 You'll then need to compile the code using babel:
