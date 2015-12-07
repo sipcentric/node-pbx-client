@@ -10,9 +10,11 @@ gulp.task('default', function() {
 });
 
 gulp.task('babel', function () {
-  return gulp.src('./lib/*.js')
-    .pipe(babel())
-    .pipe(gulp.dest('dist'));
+  return gulp.src('lib/*.js')
+	.pipe(babel({
+		presets: ['es2015']
+	}))
+	.pipe(gulp.dest('dist'));
 });
 
 gulp.task('lint', function() {
@@ -22,7 +24,9 @@ gulp.task('lint', function() {
 });
 
 gulp.task('nsp', function(cb) {
-  gulpNSP('./package.json', cb);
+  gulpNSP({
+    package: __dirname + '/package.json'
+  }, cb);
 });
 
 gulp.task('prepublish', ['nsp', 'babel']);

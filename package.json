@@ -26,15 +26,16 @@
   },
   "homepage": "https://github.com/Nimvelo/node-client",
   "dependencies": {
-    "atmosphere.js": "git://github.com/Atmosphere/atmosphere.js-node.git",
+    "atmosphere.js": "^2.2.13",
     "deep-extend": "^0.4.0",
     "request": "^2.61.0"
   },
   "devDependencies": {
-    "babel": "^5.8.21",
+    "babel": "^6.3.13",
+    "babel-preset-es2015": "^6.3.13",
     "gulp": "^3.9.0",
-    "gulp-babel": "^5.2.1",
-    "gulp-jshint": "^1.11.2",
-    "gulp-nsp": "^0.4.5"
+    "gulp-babel": "^6.1.1",
+    "gulp-jshint": "^2.0.0",
+    "gulp-nsp": "^2.1.0"
   }
 }
