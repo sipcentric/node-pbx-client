@@ -1,14 +1,18 @@
-'use strict';
+'use strict'
 
 // Module dependencies
 
-var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+;
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var request = require('request');
 var extend = require('deep-extend');
@@ -139,7 +143,7 @@ var Nimvelo = (function () {
 
           // * * "" ? ?
 
-          if (typeof params === 'object') {
+          if ((typeof params === 'undefined' ? 'undefined' : _typeof(params)) === 'object') {
 
             // * * "" {} -
             // * * "" {} f()
@@ -164,7 +168,7 @@ var Nimvelo = (function () {
               params = {};
               id = null;
             }
-        } else if (typeof id === 'object') {
+        } else if ((typeof id === 'undefined' ? 'undefined' : _typeof(id)) === 'object') {
 
           if (typeof params === 'function') {
 
@@ -398,14 +402,14 @@ var Stream = (function (_Nimvelo) {
   function Stream(options) {
     _classCallCheck(this, Stream);
 
-    _get(Object.getPrototypeOf(Stream.prototype), 'constructor', this).call(this, options);
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Stream).call(this, options));
 
-    this.stream = {
-      url: this.options.streamBase,
+    _this.stream = {
+      url: _this.options.streamBase,
       contentType: 'application/json',
       logLevel: 'debug',
       headers: {
-        'Authorization': this.authorization
+        'Authorization': _this.authorization
       },
       dropHeaders: false,
       attachHeadersAsQueryString: false,
@@ -414,15 +418,17 @@ var Stream = (function (_Nimvelo) {
       transport: 'streaming'
     };
 
-    this.stream.onOpen = function () {
+    _this.stream.onOpen = function () {
 
       console.log('Connected to stream');
     };
 
-    this.stream.onError = function (error) {
+    _this.stream.onError = function (error) {
 
       console.log('Stream error: ' + error.reasonPhrase);
     };
+
+    return _this;
   }
 
   _createClass(Stream, [{
@@ -463,25 +469,27 @@ var Customer = (function (_Nimvelo2) {
   function Customer(options, item) {
     _classCallCheck(this, Customer);
 
-    _get(Object.getPrototypeOf(Customer.prototype), 'constructor', this).call(this, options);
+    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(Customer).call(this, options));
 
-    this.data = this.data || {};
-    this.data.customer = this.data.customer || {};
+    _this2.data = _this2.data || {};
+    _this2.data.customer = _this2.data.customer || {};
 
-    this.type = 'customer';
-    this.data.customer.type = 'customer';
-    this.data.customer.id = item.id;
-    this.data.customer.uri = item.uri;
-    this.data.customer.created = item.created;
-    this.data.customer.company = item.company;
-    this.data.customer.firstName = item.firstName;
-    this.data.customer.lastName = item.lastName;
-    this.data.customer.telephone = item.telephone;
-    this.data.customer.email = item.email;
-    this.data.customer.address1 = item.address1;
-    this.data.customer.address2 = item.address2;
-    this.data.customer.city = item.city;
-    this.data.customer.postcode = item.postcode;
+    _this2.type = 'customer';
+    _this2.data.customer.type = 'customer';
+    _this2.data.customer.id = item.id;
+    _this2.data.customer.uri = item.uri;
+    _this2.data.customer.created = item.created;
+    _this2.data.customer.company = item.company;
+    _this2.data.customer.firstName = item.firstName;
+    _this2.data.customer.lastName = item.lastName;
+    _this2.data.customer.telephone = item.telephone;
+    _this2.data.customer.email = item.email;
+    _this2.data.customer.address1 = item.address1;
+    _this2.data.customer.address2 = item.address2;
+    _this2.data.customer.city = item.city;
+    _this2.data.customer.postcode = item.postcode;
+
+    return _this2;
   }
 
   _createClass(Customer, [{
@@ -638,20 +646,22 @@ var Phonebookentry = (function (_Customer) {
   function Phonebookentry(options, customer, item) {
     _classCallCheck(this, Phonebookentry);
 
-    _get(Object.getPrototypeOf(Phonebookentry.prototype), 'constructor', this).call(this, options, customer.data.customer);
+    var _this3 = _possibleConstructorReturn(this, Object.getPrototypeOf(Phonebookentry).call(this, options, customer.data.customer));
 
-    this.data = this.data || {};
-    this.data.phonebookentry = this.data.phonebookentry || {};
+    _this3.data = _this3.data || {};
+    _this3.data.phonebookentry = _this3.data.phonebookentry || {};
 
-    this.type = 'phonebookentry';
-    this.data.phonebookentry.type = 'phonebookentry';
-    this.data.phonebookentry.id = item.id;
-    this.data.phonebookentry.uri = item.uri;
-    this.data.phonebookentry.parent = item.parent;
-    this.data.phonebookentry.created = item.created;
-    this.data.phonebookentry.name = item.name;
-    this.data.phonebookentry.email = item.email;
-    this.data.phonebookentry.phoneNumber = item.phoneNumber;
+    _this3.type = 'phonebookentry';
+    _this3.data.phonebookentry.type = 'phonebookentry';
+    _this3.data.phonebookentry.id = item.id;
+    _this3.data.phonebookentry.uri = item.uri;
+    _this3.data.phonebookentry.parent = item.parent;
+    _this3.data.phonebookentry.created = item.created;
+    _this3.data.phonebookentry.name = item.name;
+    _this3.data.phonebookentry.email = item.email;
+    _this3.data.phonebookentry.phoneNumber = item.phoneNumber;
+
+    return _this3;
   }
 
   return Phonebookentry;
@@ -663,24 +673,26 @@ var Recording = (function (_Customer2) {
   function Recording(options, customer, item) {
     _classCallCheck(this, Recording);
 
-    _get(Object.getPrototypeOf(Recording.prototype), 'constructor', this).call(this, options, customer.data.customer);
+    var _this4 = _possibleConstructorReturn(this, Object.getPrototypeOf(Recording).call(this, options, customer.data.customer));
 
-    this.data = this.data || {};
-    this.data.recording = this.data.recording || {};
+    _this4.data = _this4.data || {};
+    _this4.data.recording = _this4.data.recording || {};
 
-    this.type = 'recording';
-    this.data.recording.type = 'recording';
-    this.data.recording.id = item.id;
-    this.data.recording.uri = item.uri;
-    this.data.recording.parent = item.parent;
-    this.data.recording.created = item.created;
-    this.data.recording.direction = item.direction;
-    this.data.recording.partyId = item.partyId;
-    this.data.recording.started = item.started;
-    this.data.recording.size = item.size;
-    this.data.recording.callId = item.callId;
-    this.data.recording.linkedId = item.linkedId;
-    this.data.recording.endpoint = item.endpoint;
+    _this4.type = 'recording';
+    _this4.data.recording.type = 'recording';
+    _this4.data.recording.id = item.id;
+    _this4.data.recording.uri = item.uri;
+    _this4.data.recording.parent = item.parent;
+    _this4.data.recording.created = item.created;
+    _this4.data.recording.direction = item.direction;
+    _this4.data.recording.partyId = item.partyId;
+    _this4.data.recording.started = item.started;
+    _this4.data.recording.size = item.size;
+    _this4.data.recording.callId = item.callId;
+    _this4.data.recording.linkedId = item.linkedId;
+    _this4.data.recording.endpoint = item.endpoint;
+
+    return _this4;
   }
 
   return Recording;
