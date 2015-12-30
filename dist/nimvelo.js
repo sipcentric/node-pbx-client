@@ -85,13 +85,8 @@ var Nimvelo = (function () {
       // Let's build our URL
       var url = baseUrl;
 
-      if (path) {
-        url += path + '/';
-      }
-
-      if (id) {
-        url += id + '/';
-      }
+      url += path ? path + '/' : '';
+      url += id ? id + '/' : '';
 
       return url;
     }
@@ -129,7 +124,11 @@ var Nimvelo = (function () {
     }
   }, {
     key: '_request',
-    value: function _request(method, resource, id, params, callback) {
+    value: function _request(method, resource) {
+
+      var id;
+      var params;
+      var callback;
 
       var base = 'rest';
       var options;
@@ -137,77 +136,35 @@ var Nimvelo = (function () {
 
       method = method.toLowerCase();
 
+      // Iterate through the given arguments assigning them accordingly
+      // The ID is a string or a number
+      // The object is the params
+      // The function is the callback
+
+      for (var _len = arguments.length, args = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+        args[_key - 2] = arguments[_key];
+      }
+
+      args.forEach(function (arg) {
+
+        switch (typeof arg === 'undefined' ? 'undefined' : _typeof(arg)) {
+          case 'string':
+          case 'number':
+            id = arg;
+            break;
+          case 'object':
+            params = arg;
+            break;
+          case 'function':
+            callback = arg;
+            break;
+        }
+      });
+
+      // Build the options to pass to our custom request object
+
       if (method === 'get') {
 
-        if (typeof id === 'string' || typeof id === 'number') {
-
-          // * * "" ? ?
-
-          if ((typeof params === 'undefined' ? 'undefined' : _typeof(params)) === 'object') {
-
-            // * * "" {} -
-            // * * "" {} f()
-
-            // Expected input format, don't need to do anything
-
-          } else if (typeof params === 'function') {
-
-              // * * "" f() -
-
-              // No params provided
-
-              callback = params;
-              params = {};
-            } else {
-
-              // * * "" - -
-
-              // No id, params, or callback provided
-
-              callback = null;
-              params = {};
-              id = null;
-            }
-        } else if ((typeof id === 'undefined' ? 'undefined' : _typeof(id)) === 'object') {
-
-          if (typeof params === 'function') {
-
-            // * * {} f() -
-
-            // No id provided, params and function provided
-
-            callback = params;
-            params = id;
-            id = null;
-          } else {
-
-            // * * {} - -
-
-            // No id or callback provided, params provided
-
-            callback = null;
-            params = id;
-            id = null;
-          }
-        } else if (typeof id === 'function') {
-
-          // * * f() - -
-
-          // No params or id provided, callback provided
-
-          callback = id;
-          params = {};
-          id = null;
-        } else {
-
-          // * * - - -
-
-          id = null;
-          params = {};
-          callback = null;
-        }
-
-        // Build the options to pass to our custom request object
         options = {
           method: 'get',
           url: this._buildUrl(base, resource, id), // Generate url
@@ -216,8 +173,6 @@ var Nimvelo = (function () {
       } else if (method === 'put') {
 
         // If we're PUTting, the params become the body
-
-        // * * "" {} f()
 
         body = params;
 
@@ -230,12 +185,6 @@ var Nimvelo = (function () {
 
         // If we're POSTting, the params become the body
 
-        // * * {} f() -
-
-        callback = params;
-        params = id;
-        id = null;
-
         body = params;
 
         options = {
@@ -244,13 +193,6 @@ var Nimvelo = (function () {
           json: body
         };
       } else if (method === 'delete') {
-
-        // If we're DELETEting we only need the id and callback
-
-        // * * "" f() -
-
-        callback = params;
-        params = {};
 
         options = {
           method: 'delete',
@@ -294,7 +236,7 @@ var Nimvelo = (function () {
             callback(new Error('Status Code: ' + response.statusCode), data, response);
           } else {
 
-            // If we've got this far, then theres no errors
+            // If we've got this far, then there are no errors
 
             callback(null, data, response);
           }
@@ -326,35 +268,19 @@ var Nimvelo = (function () {
   }, {
     key: '_buildObjects',
     value: function _buildObjects(items) {
+      var _this = this;
 
       // Builds an array of class objects from a given array of items,
-      // or returns a single class object if we only give it an object
+      // or returns a single class object if we only give it one object
 
-      var classArray = [];
-      var self = this;
-
-      if (Array.isArray(items)) {
-
-        // We've got an array of objects
-
-        items.forEach(function (item) {
-
-          classArray.push(self._objectFromItem(item));
-        });
-
-        return classArray;
-      } else {
-
-        // We just have a single object
-
-        return self._objectFromItem(items);
-      }
+      return Array.isArray(items) ? items.map(function (item) {
+        return _this._objectFromItem(item);
+      }) : this._objectFromItem(items);
     }
   }, {
     key: 'customers',
     value: function customers(id, callback) {
-
-      var self = this;
+      var _this2 = this;
 
       if (typeof id === 'function') {
 
@@ -375,7 +301,7 @@ var Nimvelo = (function () {
           return;
         }
 
-        callback(null, self._buildObjects(data.items || data), response);
+        callback(null, _this2._buildObjects(data.items || data), response);
       });
     }
   }, {
@@ -402,14 +328,14 @@ var Stream = (function (_Nimvelo) {
   function Stream(options) {
     _classCallCheck(this, Stream);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Stream).call(this, options));
+    var _this3 = _possibleConstructorReturn(this, Object.getPrototypeOf(Stream).call(this, options));
 
-    _this.stream = {
-      url: _this.options.streamBase,
+    _this3.stream = {
+      url: _this3.options.streamBase,
       contentType: 'application/json',
       logLevel: 'debug',
       headers: {
-        'Authorization': _this.authorization
+        'Authorization': _this3.authorization
       },
       dropHeaders: false,
       attachHeadersAsQueryString: false,
@@ -418,17 +344,17 @@ var Stream = (function (_Nimvelo) {
       transport: 'streaming'
     };
 
-    _this.stream.onOpen = function () {
+    _this3.stream.onOpen = function () {
 
       console.log('Connected to stream');
     };
 
-    _this.stream.onError = function (error) {
+    _this3.stream.onError = function (error) {
 
       console.log('Stream error: ' + error.reasonPhrase);
     };
 
-    return _this;
+    return _this3;
   }
 
   _createClass(Stream, [{
@@ -469,27 +395,17 @@ var Customer = (function (_Nimvelo2) {
   function Customer(options, item) {
     _classCallCheck(this, Customer);
 
-    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(Customer).call(this, options));
+    var _this4 = _possibleConstructorReturn(this, Object.getPrototypeOf(Customer).call(this, options));
 
-    _this2.data = _this2.data || {};
-    _this2.data.customer = _this2.data.customer || {};
+    _this4.data = _this4.data || {};
+    _this4.data.customer = _this4.data.customer || {};
 
-    _this2.type = 'customer';
-    _this2.data.customer.type = 'customer';
-    _this2.data.customer.id = item.id;
-    _this2.data.customer.uri = item.uri;
-    _this2.data.customer.created = item.created;
-    _this2.data.customer.company = item.company;
-    _this2.data.customer.firstName = item.firstName;
-    _this2.data.customer.lastName = item.lastName;
-    _this2.data.customer.telephone = item.telephone;
-    _this2.data.customer.email = item.email;
-    _this2.data.customer.address1 = item.address1;
-    _this2.data.customer.address2 = item.address2;
-    _this2.data.customer.city = item.city;
-    _this2.data.customer.postcode = item.postcode;
+    _this4.type = 'customer';
+    _this4.data.customer.type = 'customer';
 
-    return _this2;
+    extend(_this4.data.customer, item);
+
+    return _this4;
   }
 
   _createClass(Customer, [{
@@ -516,8 +432,7 @@ var Customer = (function (_Nimvelo2) {
   }, {
     key: '_getResource',
     value: function _getResource(type, id, callback) {
-
-      var self = this;
+      var _this5 = this;
 
       if (typeof id === 'function') {
 
@@ -538,7 +453,7 @@ var Customer = (function (_Nimvelo2) {
           return;
         }
 
-        callback(null, self._buildObjects(data.items || data), response);
+        callback(null, _this5._buildObjects(data.items || data), response);
       });
     }
   }, {
@@ -556,8 +471,7 @@ var Customer = (function (_Nimvelo2) {
   }, {
     key: 'save',
     value: function save(callback) {
-
-      var self = this;
+      var _this6 = this;
 
       var type = this.type;
       var resource = this._resourceForType(type);
@@ -574,10 +488,10 @@ var Customer = (function (_Nimvelo2) {
         }
 
         // Update our object with the newly returned propreties
-        self.data[type] = extend(self.data[type], data.items ? data.items : data);
+        extend(_this6.data[type], data.items ? data.items : data);
 
         // Pass our newly updated object to the callback
-        callback(null, self, response);
+        callback(null, _this6, response);
       };
 
       if (this.data[type].id) {
@@ -631,7 +545,7 @@ var Customer = (function (_Nimvelo2) {
 
       var type = this.type;
 
-      this.data[type] = extend(this.data[type], properties);
+      extend(this.data[type], properties);
 
       return this;
     }
@@ -646,22 +560,17 @@ var Phonebookentry = (function (_Customer) {
   function Phonebookentry(options, customer, item) {
     _classCallCheck(this, Phonebookentry);
 
-    var _this3 = _possibleConstructorReturn(this, Object.getPrototypeOf(Phonebookentry).call(this, options, customer.data.customer));
+    var _this7 = _possibleConstructorReturn(this, Object.getPrototypeOf(Phonebookentry).call(this, options, customer.data.customer));
 
-    _this3.data = _this3.data || {};
-    _this3.data.phonebookentry = _this3.data.phonebookentry || {};
+    _this7.data = _this7.data || {};
+    _this7.data.phonebookentry = _this7.data.phonebookentry || {};
 
-    _this3.type = 'phonebookentry';
-    _this3.data.phonebookentry.type = 'phonebookentry';
-    _this3.data.phonebookentry.id = item.id;
-    _this3.data.phonebookentry.uri = item.uri;
-    _this3.data.phonebookentry.parent = item.parent;
-    _this3.data.phonebookentry.created = item.created;
-    _this3.data.phonebookentry.name = item.name;
-    _this3.data.phonebookentry.email = item.email;
-    _this3.data.phonebookentry.phoneNumber = item.phoneNumber;
+    _this7.type = 'phonebookentry';
+    _this7.data.phonebookentry.type = 'phonebookentry';
 
-    return _this3;
+    extend(_this7.data.phonebookentry, item);
+
+    return _this7;
   }
 
   return Phonebookentry;
@@ -673,26 +582,17 @@ var Recording = (function (_Customer2) {
   function Recording(options, customer, item) {
     _classCallCheck(this, Recording);
 
-    var _this4 = _possibleConstructorReturn(this, Object.getPrototypeOf(Recording).call(this, options, customer.data.customer));
+    var _this8 = _possibleConstructorReturn(this, Object.getPrototypeOf(Recording).call(this, options, customer.data.customer));
 
-    _this4.data = _this4.data || {};
-    _this4.data.recording = _this4.data.recording || {};
+    _this8.data = _this8.data || {};
+    _this8.data.recording = _this8.data.recording || {};
 
-    _this4.type = 'recording';
-    _this4.data.recording.type = 'recording';
-    _this4.data.recording.id = item.id;
-    _this4.data.recording.uri = item.uri;
-    _this4.data.recording.parent = item.parent;
-    _this4.data.recording.created = item.created;
-    _this4.data.recording.direction = item.direction;
-    _this4.data.recording.partyId = item.partyId;
-    _this4.data.recording.started = item.started;
-    _this4.data.recording.size = item.size;
-    _this4.data.recording.callId = item.callId;
-    _this4.data.recording.linkedId = item.linkedId;
-    _this4.data.recording.endpoint = item.endpoint;
+    _this8.type = 'recording';
+    _this8.data.recording.type = 'recording';
 
-    return _this4;
+    extend(_this8.data.recording, item);
+
+    return _this8;
   }
 
   return Recording;
