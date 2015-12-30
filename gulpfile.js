@@ -3,7 +3,7 @@
 var gulp = require('gulp');
 var watch = require('gulp-watch');
 var babel = require('gulp-babel');
-var jshint = require('gulp-jshint');
+var eslint = require('gulp-eslint');
 var gulpNSP = require('gulp-nsp');
 
 gulp.task('default', function() {
@@ -20,8 +20,8 @@ gulp.task('babel', function () {
 
 gulp.task('lint', function() {
   return gulp.src('./lib/*.js')
-    .pipe(jshint())
-    .pipe(jshint.reporter('default'));
+    .pipe(eslint())
+    .pipe(eslint.failAfterError());
 });
 
 gulp.task('nsp', function(cb) {
