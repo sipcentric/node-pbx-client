@@ -1,6 +1,7 @@
 'use strict';
 
 var gulp = require('gulp');
+var watch = require('gulp-watch');
 var babel = require('gulp-babel');
 var jshint = require('gulp-jshint');
 var gulpNSP = require('gulp-nsp');
@@ -28,5 +29,10 @@ gulp.task('nsp', function(cb) {
     package: __dirname + '/package.json'
   }, cb);
 });
+
+gulp.task('watch', function() {
+  //their could be more watchers here ofc
+  gulp.watch('lib/*.js', ['babel'])
+})
 
 gulp.task('prepublish', ['nsp', 'babel']);
