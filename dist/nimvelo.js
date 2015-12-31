@@ -71,9 +71,7 @@ var Nimvelo = (function () {
 
       // If we've been given a valid base, use it, else default to rest
       var baseUrl = bases.hasOwnProperty(base) ? bases[base] : bases.rest;
-      var path;
-
-      path = this._pathForType(type);
+      var path = this._pathForType(type);
 
       if (type === 'customer' && !id) {
         if (!id) {
@@ -94,10 +92,10 @@ var Nimvelo = (function () {
     key: '_pathForType',
     value: function _pathForType(type) {
 
-      var path;
-      type = type.toLowerCase();
+      var path = undefined;
+      var normalizedType = type.toLowerCase();
 
-      switch (type) {
+      switch (normalizedType) {
         case 'customers':
         case 'customer':
           // Use the default base REST URL
@@ -113,10 +111,10 @@ var Nimvelo = (function () {
         case 'sms':
         case 'sounds':
         case 'timeintervals':
-          path = this.options.customer + '/' + type;
+          path = this.options.customer + '/' + normalizedType;
           break;
         default:
-          path = this.options.customer + '/' + type;
+          path = this.options.customer + '/' + normalizedType;
           break;
       }
 
@@ -126,15 +124,14 @@ var Nimvelo = (function () {
     key: '_request',
     value: function _request(method, resource) {
 
-      var id;
-      var params;
-      var callback;
+      var id = undefined;
+      var params = undefined;
+      var callback = undefined;
 
       var base = 'rest';
-      var options;
-      var body;
+      var options = undefined;
 
-      method = method.toLowerCase();
+      var normalizedMethod = method.toLowerCase();
 
       // Iterate through the given arguments assigning them accordingly
       // The ID is a string or a number
@@ -158,41 +155,39 @@ var Nimvelo = (function () {
           case 'function':
             callback = arg;
             break;
+          default:
+            break;
         }
       });
 
       // Build the options to pass to our custom request object
 
-      if (method === 'get') {
+      if (normalizedMethod === 'get') {
 
         options = {
           method: 'get',
           url: this._buildUrl(base, resource, id), // Generate url
           qs: params
         };
-      } else if (method === 'put') {
+      } else if (normalizedMethod === 'put') {
 
         // If we're PUTting, the params become the body
-
-        body = params;
 
         options = {
           method: 'put',
           url: this._buildUrl(base, resource, id), // Generate url
-          json: body
+          json: params
         };
-      } else if (method === 'post') {
+      } else if (normalizedMethod === 'post') {
 
         // If we're POSTting, the params become the body
-
-        body = params;
 
         options = {
           method: 'post',
           url: this._buildUrl(base, resource), // Generate url
-          json: body
+          json: params
         };
-      } else if (method === 'delete') {
+      } else if (normalizedMethod === 'delete') {
 
         options = {
           method: 'delete',
@@ -202,7 +197,7 @@ var Nimvelo = (function () {
 
       // Make the request
 
-      this.request(options, function (error, response, data) {
+      this.request(options, function makeRequest(error, response, data) {
 
         if (error) {
 
@@ -210,35 +205,40 @@ var Nimvelo = (function () {
           callback(error, data, response);
         } else {
 
-          try {
+          var parsedData = undefined;
 
-            // If we've got data, and it's a string, try to parse it as JSON
+          if (data && typeof data === 'string') {
 
-            if (data && typeof data === 'string') {
-              data = JSON.parse(data);
+            try {
+
+              // If we've got data, and it's a string, try to parse it as JSON
+              parsedData = JSON.parse(data);
+            } catch (parseError) {
+
+              // If we can't parse it, return our callback
+
+              callback(new Error('Error parsing JSON. Status Code: ' + response.statusCode), data, response);
             }
-          } catch (parseError) {
+          } else {
 
-            // If we can't parse it, return our callback
-
-            callback(new Error('Error parsing JSON. Status Code: ' + response.statusCode), data, response);
+            parsedData = data;
           }
 
-          if (typeof data.errors !== 'undefined') {
+          if (typeof parsedData.errors !== 'undefined') {
 
             // If there are some errors returned, return them with our callback
 
-            callback(data.errors, data, response);
+            callback(parsedData.errors, parsedData, response);
           } else if (response.statusCode < 200 || response.statusCode >= 300) {
 
             // If we don't get the correct status back for the method
 
-            callback(new Error('Status Code: ' + response.statusCode), data, response);
+            callback(new Error('Status Code: ' + response.statusCode), parsedData, response);
           } else {
 
             // If we've got this far, then there are no errors
 
-            callback(null, data, response);
+            callback(null, parsedData, response);
           }
         }
       });
@@ -247,11 +247,12 @@ var Nimvelo = (function () {
     key: '_objectFromItem',
     value: function _objectFromItem(item) {
 
-      var object;
+      var object = undefined;
 
       // Figure out which class to use for this type
 
       switch (item.type) {
+        /* eslint no-use-before-define: 0 */
         case 'customer':
           object = new Customer(this.options, item);
           break;
@@ -260,6 +261,8 @@ var Nimvelo = (function () {
           break;
         case 'recording':
           object = new Recording(this.options, this, item);
+          break;
+        default:
           break;
       }
 
@@ -284,7 +287,9 @@ var Nimvelo = (function () {
 
       if (typeof id === 'function') {
 
-        // If we've not got an id then set it to 'me'
+        // If we've not got an id then set it to null
+
+        /* eslint no-param-reassign: 0 */
 
         callback = id;
         id = null;
@@ -344,12 +349,12 @@ var Stream = (function (_Nimvelo) {
       transport: 'streaming'
     };
 
-    _this3.stream.onOpen = function () {
+    _this3.stream.onOpen = function streamOpen() {
 
       console.log('Connected to stream');
     };
 
-    _this3.stream.onError = function (error) {
+    _this3.stream.onError = function streamError(error) {
 
       console.log('Stream error: ' + error.reasonPhrase);
     };
@@ -361,9 +366,9 @@ var Stream = (function (_Nimvelo) {
     key: 'subscribe',
     value: function subscribe(type, callback) {
 
-      this.stream.onMessage = function (data) {
+      this.stream.onMessage = function streamMessage(data) {
 
-        var message;
+        var message = undefined;
 
         try {
           message = JSON.parse(data.responseBody);
@@ -412,7 +417,7 @@ var Customer = (function (_Nimvelo2) {
     key: '_resourceForType',
     value: function _resourceForType(type) {
 
-      var resource;
+      var resource = undefined;
 
       switch (type) {
         case 'customer':
@@ -424,6 +429,8 @@ var Customer = (function (_Nimvelo2) {
         case 'recording':
           // Basic pluralization
           resource += 's';
+          break;
+        default:
           break;
       }
 
@@ -494,13 +501,17 @@ var Customer = (function (_Nimvelo2) {
         callback(null, _this6, response);
       };
 
+      var builtRequest = undefined;
+
       if (this.data[type].id) {
 
-        return this._request('put', resource, this.data[type].id, this.data[type], requestCallback);
+        builtRequest = this._request('put', resource, this.data[type].id, this.data[type], requestCallback);
       } else {
 
-        return this._request('post', resource, this.data[type], requestCallback);
+        builtRequest = this._request('post', resource, this.data[type], requestCallback);
       }
+
+      return builtRequest;
     }
   }, {
     key: 'delete',
@@ -509,7 +520,7 @@ var Customer = (function (_Nimvelo2) {
       var type = this.type;
       var resource = this._resourceForType(type);
 
-      return this._request('delete', resource, this.data[type].id, function (err, data, response) {
+      return this._request('delete', resource, this.data[type].id, function handleDeleteResponse(err, data, response) {
 
         if (!callback) {
           return;
@@ -527,13 +538,15 @@ var Customer = (function (_Nimvelo2) {
     key: 'create',
     value: function create(type, properties) {
 
-      var instance;
+      var instance = undefined;
 
       // Figure out which class to use for this type
 
       switch (type) {
         case 'phonebookentry':
           instance = new Phonebookentry(this.options, this, properties);
+          break;
+        default:
           break;
       }
 
