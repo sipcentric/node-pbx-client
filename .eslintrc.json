@@ -8,10 +8,12 @@
     "node": true
   },
   "rules": {
-    "no-console": 0,
     "comma-dangle": 0,
-    "strict": 0,
+    "no-console": 0,
+    "no-use-before-define": [2, "nofunc"],
+    "padded-blocks": 0,
     "prefer-const": 1,
-    "space-before-function-paren": 0
+    "space-before-function-paren": 0,
+    "strict": 0,
   }
 }
