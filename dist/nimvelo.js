@@ -27,12 +27,15 @@ var Nimvelo = (function () {
 
     this.VERSION = VERSION;
 
-    if (options.username && options.password) {
+    if (typeof options !== 'undefined') {
 
-      // If we've got the credentials then encode and format them
-      var encodedAuth = new Buffer(options.username + ':' + options.password).toString('base64');
+      if (options.hasOwnProperty('username') && options.hasOwnProperty('password')) {
 
-      this.authorization = 'Basic ' + encodedAuth;
+        // If we've got the credentials then encode and format them
+        var encodedAuth = new Buffer(options.username + ':' + options.password).toString('base64');
+
+        this.authorization = 'Basic ' + encodedAuth;
+      }
     }
 
     // Merge the default options with the client submitted options
@@ -47,7 +50,8 @@ var Nimvelo = (function () {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': this.authorization
+          'Authorization': this.authorization,
+          'User-Agent': 'node-nimvelo/' + VERSION
         }
       }
     }, options);
