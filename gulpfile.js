@@ -31,7 +31,6 @@ gulp.task('nsp', function(cb) {
 });
 
 gulp.task('watch', function() {
-  //their could be more watchers here ofc
   gulp.watch('lib/*.js', ['babel'])
 })
 
