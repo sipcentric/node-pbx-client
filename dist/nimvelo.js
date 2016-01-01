@@ -96,7 +96,7 @@ var Nimvelo = (function () {
     key: '_pathForType',
     value: function _pathForType(type) {
 
-      var path = undefined;
+      var path = '';
       var normalizedType = type.toLowerCase();
 
       switch (normalizedType) {
