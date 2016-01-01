@@ -5,7 +5,6 @@ var watch = require('gulp-watch');
 var babel = require('gulp-babel');
 var eslint = require('gulp-eslint');
 var gulpNSP = require('gulp-nsp');
-var notify = require('gulp-notify');
 var mocha = require('gulp-mocha');
 
 gulp.task('default', function() {
@@ -18,10 +17,6 @@ gulp.task('babel', function () {
 		presets: ['es2015']
 	}))
 	.pipe(gulp.dest('dist'))
-  .pipe(notify({
-    title: 'Gulp (Nimvelo)',
-    message: 'Babel task finished.'
-  }));
 });
 
 gulp.task('lint', function() {

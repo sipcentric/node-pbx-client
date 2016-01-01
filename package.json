@@ -41,11 +41,9 @@
     "gulp-babel": "^6.1.1",
     "gulp-eslint": "^1.1.1",
     "gulp-mocha": "^2.2.0",
-    "gulp-notify": "^2.2.0",
     "gulp-nsp": "^2.1.0",
     "gulp-watch": "^4.3.5",
     "mocha": "^2.3.4",
-    "nock": "^3.6.0",
-    "node-notifier": "^4.4.0"
+    "nock": "^3.6.0"
   }
 }
