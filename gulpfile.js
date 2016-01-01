@@ -6,6 +6,7 @@ var babel = require('gulp-babel');
 var eslint = require('gulp-eslint');
 var gulpNSP = require('gulp-nsp');
 var notify = require('gulp-notify');
+var mocha = require('gulp-mocha');
 
 gulp.task('default', function() {
   // place code for your default task here
@@ -35,8 +36,15 @@ gulp.task('nsp', function(cb) {
   }, cb);
 });
 
-gulp.task('watch', function() {
-  gulp.watch('lib/*.js', ['babel'])
-})
+gulp.task('test', ['babel', 'nsp'], function() {
+	return gulp.src('test/test.js', {read: false})
+		.pipe(mocha({reporter: 'nyan'}));
+});
 
-gulp.task('prepublish', ['nsp', 'babel']);
+
+gulp.task('watch', function() {
+  gulp.watch('lib/*.js', ['test'])
+});
+
+
+gulp.task('prepublish', ['test', 'nsp']);

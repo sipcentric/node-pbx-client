@@ -40,6 +40,7 @@
     "gulp": "^3.9.0",
     "gulp-babel": "^6.1.1",
     "gulp-eslint": "^1.1.1",
+    "gulp-mocha": "^2.2.0",
     "gulp-notify": "^2.2.0",
     "gulp-nsp": "^2.1.0",
     "gulp-watch": "^4.3.5",
