@@ -31,7 +31,7 @@ gulp.task('nsp', function(cb) {
   }, cb);
 });
 
-gulp.task('test', ['babel', 'nsp'], function() {
+gulp.task('test', ['babel'], function() {
 	return gulp.src('test/test.js', {read: false})
 		.pipe(mocha({reporter: 'nyan'}));
 });
