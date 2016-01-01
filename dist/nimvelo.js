@@ -251,6 +251,10 @@ var Nimvelo = (function () {
     key: '_objectFromItem',
     value: function _objectFromItem(item) {
 
+      if (typeof item === 'undefined' || !item.hasOwnProperty('type')) {
+        return false;
+      }
+
       var object = undefined;
 
       // Figure out which class to use for this type
