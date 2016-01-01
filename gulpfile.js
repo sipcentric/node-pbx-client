@@ -12,7 +12,7 @@ gulp.task('default', function() {
 });
 
 gulp.task('babel', function () {
-  return gulp.src('lib/*.js')
+  return gulp.src('lib/**/*.js')
 	.pipe(babel({
 		presets: ['es2015']
 	}))
@@ -20,7 +20,7 @@ gulp.task('babel', function () {
 });
 
 gulp.task('lint', function() {
-  return gulp.src('./lib/*.js')
+  return gulp.src('./lib/**/*.js')
     .pipe(eslint())
     .pipe(eslint.failAfterError());
 });
@@ -38,7 +38,7 @@ gulp.task('test', ['babel'], function() {
 
 
 gulp.task('watch', function() {
-  gulp.watch('lib/*.js', ['test'])
+  gulp.watch('lib/**/*.js', ['test'])
 });
 
 
