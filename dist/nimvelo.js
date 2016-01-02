@@ -197,23 +197,26 @@ var Nimvelo = (function () {
         args[_key - 2] = arguments[_key];
       }
 
-      args.forEach(function (arg) {
+      if (Array.isArray(args)) {
 
-        switch (typeof arg === 'undefined' ? 'undefined' : _typeof(arg)) {
-          case 'string':
-          case 'number':
-            id = arg;
-            break;
-          case 'object':
-            params = arg;
-            break;
-          case 'function':
-            callback = arg;
-            break;
-          default:
-            break;
-        }
-      });
+        args.forEach(function (arg) {
+
+          switch (typeof arg === 'undefined' ? 'undefined' : _typeof(arg)) {
+            case 'string':
+            case 'number':
+              id = arg;
+              break;
+            case 'object':
+              params = arg;
+              break;
+            case 'function':
+              callback = arg;
+              break;
+            default:
+              break;
+          }
+        });
+      }
 
       // Build the options to pass to our custom request object
 
