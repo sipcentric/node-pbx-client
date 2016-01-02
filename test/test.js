@@ -129,12 +129,12 @@ describe('Nimvelo', () => {
         );
 
         assert.equal(
-          client._buildUrl('rest', 'phonebook'),
+          client._buildUrl('rest', 'phonebookentry'),
           client.options.restBase + 'me/phonebook/'
         );
 
         assert.equal(
-          client._buildUrl('rest', 'phonebook', 5),
+          client._buildUrl('rest', 'phonebookentry', 5),
           client.options.restBase + 'me/phonebook/5/'
         );
 
@@ -167,13 +167,13 @@ describe('Nimvelo', () => {
         );
 
         assert.equal(
-          client._pathForType('phonebook'),
+          client._pathForType('phonebookentry'),
           client.options.customer + '/phonebook'
         );
 
         assert.equal(
           client._pathForType('TEST_TYPE'),
-          client.options.customer + '/test_type'
+          client.options.customer + '/test_types'
         );
 
       });

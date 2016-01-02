@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/Nimvelo/node-client",
   "dependencies": {
-    "atmosphere.js": "^2.2.13",
+    "atmosphere.js": "https://github.com/joshfarrant/atmosphere.js-node",
     "deep-extend": "^0.4.0",
     "request": "^2.61.0"
   },
