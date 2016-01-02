@@ -11,6 +11,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var extend = require('deep-extend');
 
 var Representation = require('./representation');
+var CallList = require('./callList');
+var Call = require('./call');
 var PhonebookentryList = require('./phonebookentryList');
 var Phonebookentry = require('./phonebookentry');
 var RecordingList = require('./recordingList');
@@ -28,6 +30,7 @@ var Customer = (function (_Representation) {
 
     _this.type = 'customer';
 
+    _this.calls = new CallList(_this.client);
     _this.phonebook = new PhonebookentryList(_this.client);
     _this.recordings = new RecordingList(_this.client);
 
@@ -43,6 +46,8 @@ var Customer = (function (_Representation) {
       // Figure out which class to use for this type
 
       switch (type) {
+        case 'call':
+          return new Call(this.client, properties);
         case 'phonebookentry':
           return new Phonebookentry(this.client, properties);
         case 'recording':

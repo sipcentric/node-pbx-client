@@ -9,10 +9,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var request = require('request');
 var extend = require('deep-extend');
 
-var Stream = require('./stream');
+var Call = require('./call');
 var Customer = require('./customer');
 var CustomerList = require('./customerList');
 var Phonebookentry = require('./phonebookentry');
+var Stream = require('./stream');
 var Recording = require('./recording');
 
 // Promise + callback polyfill
@@ -111,7 +112,7 @@ var Nimvelo = (function () {
           path = this.options.customer + '/phonebook';
           break;
         case 'callbundle':
-        case 'calls':
+        case 'call':
         case 'creditstatus':
         case 'endpoint':
         case 'outgoingcallerid':
@@ -143,6 +144,9 @@ var Nimvelo = (function () {
 
       switch (item.type) {
         /* eslint no-use-before-define: 0 */
+        case 'call':
+          object = new Call(this, item);
+          break;
         case 'customer':
           object = new Customer(this, item);
           break;
