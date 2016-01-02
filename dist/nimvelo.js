@@ -305,21 +305,12 @@ var Nimvelo = (function () {
     }
   }, {
     key: '_getResource',
-    value: function _getResource(type, id, callback) {
+    value: function _getResource(type, id, params, callback) {
       var _this3 = this;
-
-      if (typeof id === 'function') {
-        /* eslint no-param-reassign:0 */
-
-        // If we've not got an id then set it to null
-
-        callback = id;
-        id = null;
-      }
 
       return new Promise(function (resolve, reject) {
 
-        _this3._request('get', type, id).then(function (data) {
+        _this3._request('get', type, id, params).then(function (data) {
 
           resolve(_this3._buildObjects(data.items || data));
         }, function (error) {
