@@ -16,12 +16,12 @@ var RepresentationList = (function () {
   _createClass(RepresentationList, [{
     key: 'list',
     value: function list(callback) {
-      this.client._getResource(this.itemType, callback);
+      return this.client._getResource(this.itemType, callback);
     }
   }, {
     key: 'find',
     value: function find(id, callback) {
-      this.client._getResource(this.itemType, id, callback);
+      return this.client._getResource(this.itemType, id, callback);
     }
   }, {
     key: 'create',

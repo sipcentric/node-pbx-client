@@ -18,53 +18,55 @@ var Representation = (function () {
     value: function save(callback) {
       var _this = this;
 
-      var type = this.type;
-
-      var requestCallback = function requestCallback(err, data, response) {
-
-        if (!callback) {
-          return;
-        }
-
-        if (err) {
-          callback(err, data, response);
-          return;
-        }
-
-        // Update our object with the newly returned propreties
-        extend(_this, data);
-
-        // Pass our newly updated object to the callback
-        callback(null, _this, response);
-      };
-
       if (this.id) {
 
-        this.client._request('put', type, this.id, this, requestCallback);
+        return new Promise(function (resolve, reject) {
+
+          _this.client._request('put', _this.type, _this.id, _this).then(function (data) {
+
+            // Update our object with the newly returned propreties
+            extend(_this, data);
+
+            resolve(data);
+          }, function (error) {
+
+            reject(error);
+          });
+        }).nodeify(callback);
       } else {
 
-        this.client._request('post', type, this, requestCallback);
+        return new Promise(function (resolve, reject) {
+
+          _this.client._request('post', _this.type, _this).then(function (data) {
+
+            // Update our object with the newly returned propreties
+            extend(_this, data);
+
+            resolve(data);
+          }, function (error) {
+
+            reject(error);
+          });
+        }).nodeify(callback);
       }
     }
   }, {
     key: 'delete',
     value: function _delete(callback) {
+      var _this2 = this;
 
       var type = this.type;
 
-      this.client._request('delete', type, this.id, function handleDeleteResponse(err, data, response) {
+      return new Promise(function (resolve, reject) {
 
-        if (!callback) {
-          return;
-        }
+        _this2.client._request('delete', type, _this2.id).then(function () {
 
-        if (err) {
-          callback(err, response);
-          return;
-        }
+          resolve();
+        }, function (error) {
 
-        callback(null, response);
-      });
+          reject(error);
+        });
+      }).nodeify(callback);
     }
   }]);
 

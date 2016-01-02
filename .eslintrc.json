@@ -10,6 +10,7 @@
   "rules": {
     "comma-dangle": 0,
     "no-console": 0,
+    "no-else-return": 0,
     "no-use-before-define": [2, "nofunc"],
     "padded-blocks": 0,
     "prefer-const": 1,

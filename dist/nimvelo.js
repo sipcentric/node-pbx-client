@@ -1,7 +1,4 @@
-'use strict'
-
-// Module dependencies
-;
+'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
@@ -17,6 +14,9 @@ var Customer = require('./customer');
 var CustomerList = require('./customerList');
 var Phonebookentry = require('./phonebookentry');
 var Recording = require('./recording');
+
+// Promise + callback polyfill
+Promise.prototype.nodeify = require('./polyfills/nodeify'); // eslint-disable-line no-extend-native
 
 // Package version
 var VERSION = require('../package.json').version;
@@ -173,6 +173,7 @@ var Nimvelo = (function () {
   }, {
     key: '_request',
     value: function _request(method, resource) {
+      var _this2 = this;
 
       var id = undefined;
       var params = undefined;
@@ -245,60 +246,63 @@ var Nimvelo = (function () {
         };
       }
 
-      // Make the request
+      return new Promise(function (resolve, reject) {
 
-      this.request(options, function makeRequest(error, response, data) {
+        // Make the request
 
-        if (error) {
+        _this2.request(options, function makeRequest(error, response, data) {
 
-          // If there's an error, return our callback
-          callback(error, data, response);
-        } else {
+          if (error) {
 
-          var parsedData = undefined;
+            // If there's an error, reject
+            reject(error);
+          } else {
 
-          if (data && typeof data === 'string') {
+            var parsedData = undefined;
 
-            try {
+            if (data && typeof data === 'string') {
 
-              // If we've got data, and it's a string, try to parse it as JSON
-              parsedData = JSON.parse(data);
-            } catch (parseError) {
+              try {
 
-              // If we can't parse it, return our callback
+                // If we've got data, and it's a string, try to parse it as JSON
+                parsedData = JSON.parse(data);
+              } catch (parseError) {
 
-              callback(new Error('Error parsing JSON. Status Code: ' + response.statusCode), data, response);
+                // If we can't parse it, reject
 
-              return;
+                reject(new Error('Error parsing JSON. Status Code: ' + response.statusCode));
+
+                return;
+              }
+            } else {
+
+              parsedData = data;
             }
-          } else {
 
-            parsedData = data;
+            if (typeof parsedData.errors !== 'undefined') {
+
+              // If there are some errors returned, reject
+
+              reject(parsedData.errors);
+            } else if (response.statusCode < 200 || response.statusCode >= 300) {
+
+              // If we don't get the correct status back for the method, reject
+
+              reject(new Error('Status Code: ' + response.statusCode));
+            } else {
+
+              // If we've got this far, then there are no errors and we can resolve
+
+              resolve(parsedData);
+            }
           }
-
-          if (typeof parsedData.errors !== 'undefined') {
-
-            // If there are some errors returned, return them with our callback
-
-            callback(parsedData.errors, parsedData, response);
-          } else if (response.statusCode < 200 || response.statusCode >= 300) {
-
-            // If we don't get the correct status back for the method
-
-            callback(new Error('Status Code: ' + response.statusCode), parsedData, response);
-          } else {
-
-            // If we've got this far, then there are no errors
-
-            callback(null, parsedData, response);
-          }
-        }
-      });
+        });
+      }).nodeify(callback);
     }
   }, {
     key: '_getResource',
     value: function _getResource(type, id, callback) {
-      var _this2 = this;
+      var _this3 = this;
 
       if (typeof id === 'function') {
         /* eslint no-param-reassign:0 */
@@ -309,19 +313,16 @@ var Nimvelo = (function () {
         id = null;
       }
 
-      return this._request('get', type, id, function (err, data, response) {
+      return new Promise(function (resolve, reject) {
 
-        if (!callback) {
-          return;
-        }
+        _this3._request('get', type, id).then(function (data) {
 
-        if (err) {
-          callback(err, data, response);
-          return;
-        }
+          resolve(_this3._buildObjects(data.items || data));
+        }, function (error) {
 
-        callback(null, _this2._buildObjects(data.items || data), response);
-      });
+          reject(error);
+        });
+      }).nodeify(callback);
     }
   }]);
 
