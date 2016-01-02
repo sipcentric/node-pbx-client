@@ -1,8 +1,15 @@
+/* global describe, it, before */
+
 'use strict';
 
 const assert = require('assert');
 const nock = require('nock');
-const Nimvelo = require('../dist/nimvelo')
+
+const Nimvelo = require('../dist/nimvelo');
+const Call = require('../dist/call');
+const Customer = require('../dist/customer');
+const Recording = require('../dist/recording');
+
 const VERSION = require('../package.json').version;
 
 describe('Nimvelo', () => {
@@ -25,7 +32,7 @@ describe('Nimvelo', () => {
             'Authorization': null
           }
         }
-      }
+      };
 
       it('creates new instance', () => {
         const client = new Nimvelo();
@@ -41,7 +48,7 @@ describe('Nimvelo', () => {
         assert.deepEqual(
           Object.keys(defaults),
           Object.keys(client.options)
-        )
+        );
       });
 
       it('accepts and overrides options', () => {
@@ -55,7 +62,7 @@ describe('Nimvelo', () => {
               Authorization: 'Basic TEST_AUTH'
             }
           }
-        }
+        };
 
         const client = new Nimvelo(options);
 
@@ -83,7 +90,7 @@ describe('Nimvelo', () => {
 
         nock('http://node.nimvelo').get('/').reply(200);
         client.request.get('http://node.nimvelo', (error, response) => {
-          var headers = response.request.headers;
+          const headers = response.request.headers;
 
           assert(headers.hasOwnProperty('foo'));
           assert(headers.foo, 'bar');
@@ -104,7 +111,7 @@ describe('Nimvelo', () => {
       let client;
 
       before(() => {
-        client = new Nimvelo()
+        client = new Nimvelo();
       });
 
       it('method exists', () => {
@@ -147,7 +154,7 @@ describe('Nimvelo', () => {
       let client;
 
       before(() => {
-        client = new Nimvelo()
+        client = new Nimvelo();
       });
 
       it('method exists', () => {
@@ -183,11 +190,9 @@ describe('Nimvelo', () => {
     describe('prototype._objectFromItem();', () => {
 
       let client;
-      let item;
 
       before(() => {
         client = new Nimvelo();
-        item = {};
       });
 
       it('method exists', () => {
@@ -197,15 +202,67 @@ describe('Nimvelo', () => {
       it('returns correct object', () => {
 
         assert.equal(
-          client._objectFromItem(item),
+          client._objectFromItem({}),
           false
         );
 
-        item.type = 'customer';
+        assert(client._objectFromItem({ type: 'customer' }) instanceof Customer);
+
+        assert(client._objectFromItem({ type: 'recording' }) instanceof Recording);
+
+      });
+
+    });
+
+    describe('prototype._buildObjects();', () => {
+
+      let client;
+      let customerItem;
+      let callItem;
+      let customerItemsArray;
+      let mixedItemsArray;
+
+      before(() => {
+        client = new Nimvelo();
+        customerItem = { type: 'customer' };
+        callItem = { type: 'call' };
+        customerItemsArray = [customerItem, customerItem, customerItem, customerItem];
+        mixedItemsArray = [customerItem, callItem, customerItem, callItem, customerItem];
+      });
+
+      it('method exists', () => {
+        assert.equal(typeof client._buildObjects, 'function');
+      });
+
+      it('returns correct object', () => {
+
+        assert(!Array.isArray(client._buildObjects(customerItem)));
+
+        assert(client._buildObjects(customerItem) instanceof Customer);
+
+        assert(client._buildObjects(callItem) instanceof Call);
+
+      });
+
+      it('returns correct array', () => {
+
+        assert(Array.isArray(client._buildObjects(customerItemsArray)));
+
         assert.equal(
-          client._objectFromItem(item).type,
-          'customer'
+          client._buildObjects(customerItemsArray).length,
+          4
         );
+
+        assert(client._buildObjects(customerItemsArray)[2] instanceof Customer);
+
+        assert.equal(
+          client._buildObjects(mixedItemsArray).length,
+          5
+        );
+
+        assert(client._buildObjects(mixedItemsArray)[2] instanceof Customer);
+
+        assert(client._buildObjects(mixedItemsArray)[3] instanceof Call);
 
       });
 
