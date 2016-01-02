@@ -10,13 +10,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var extend = require('deep-extend');
 
-var PhonebookentryList = require('./phonebookentryList');
-var RecordingList = require('./recordingList');
-
-var Phonebookentry = require('./phonebookentry');
-var Recording = require('./recording');
-
 var Representation = require('./representation');
+var PhonebookentryList = require('./phonebookentryList');
+var Phonebookentry = require('./phonebookentry');
+var RecordingList = require('./recordingList');
+var Recording = require('./recording');
 
 var Customer = (function (_Representation) {
   _inherits(Customer, _Representation);

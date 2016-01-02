@@ -13,10 +13,8 @@ var request = require('request');
 var extend = require('deep-extend');
 
 var Stream = require('./stream');
-
-var CustomerList = require('./customerList');
-
 var Customer = require('./customer');
+var CustomerList = require('./customerList');
 var Phonebookentry = require('./phonebookentry');
 var Recording = require('./recording');
 
