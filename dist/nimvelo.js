@@ -158,7 +158,7 @@ var Nimvelo = (function () {
         case 'phonebookentry':
           object = new Phonebookentry(this, item);
           break;
-        case 'phonenumber':
+        case 'did':
           object = new Phonenumber(this, item);
           break;
         case 'recording':
@@ -326,7 +326,19 @@ var Nimvelo = (function () {
 
         _this3._request('get', type, id, params).then(function (data) {
 
-          resolve(_this3._buildObjects(data.items || data));
+          if (data.hasOwnProperty('items')) {
+
+            var items = _this3._buildObjects(data.items);
+
+            delete data.items;
+
+            var meta = data;
+
+            resolve({ meta: meta, items: items });
+          } else {
+
+            resolve(_this3._buildObjects(data));
+          }
         }, function (error) {
 
           reject(error);
