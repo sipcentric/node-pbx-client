@@ -17,6 +17,8 @@ var PhonebookentryList = require('./phonebookentryList');
 var Phonebookentry = require('./phonebookentry');
 var RecordingList = require('./recordingList');
 var Recording = require('./recording');
+var SmsmessageList = require('./smsmessageList');
+var Smsmessage = require('./smsmessage');
 
 var Customer = (function (_Representation) {
   _inherits(Customer, _Representation);
@@ -33,6 +35,7 @@ var Customer = (function (_Representation) {
     _this.calls = new CallList(_this.client);
     _this.phonebook = new PhonebookentryList(_this.client);
     _this.recordings = new RecordingList(_this.client);
+    _this.smsmessages = new SmsmessageList(_this.client);
 
     return _this;
   }
@@ -52,6 +55,8 @@ var Customer = (function (_Representation) {
           return new Phonebookentry(this.client, properties);
         case 'recording':
           return new Recording(this.client, properties);
+        case 'smsmessage':
+          return new Smsmessage(this.client, properties);
         default:
           return false;
       }

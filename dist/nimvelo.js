@@ -15,6 +15,7 @@ var CustomerList = require('./customerList');
 var Phonebookentry = require('./phonebookentry');
 var Stream = require('./stream');
 var Recording = require('./recording');
+var Smsmessage = require('./smsmessage');
 
 // Promise + callback polyfill
 Promise.prototype.nodeify = require('./polyfills/nodeify'); // eslint-disable-line no-extend-native
@@ -111,6 +112,9 @@ var Nimvelo = (function () {
         case 'phonebookentry':
           path = this.options.customer + '/phonebook';
           break;
+        case 'smsmessage':
+          path = this.options.customer + '/sms';
+          break;
         case 'callbundle':
         case 'call':
         case 'creditstatus':
@@ -118,7 +122,6 @@ var Nimvelo = (function () {
         case 'outgoingcallerid':
         case 'phonenumber':
         case 'recording':
-        case 'sms':
         case 'sound':
         case 'timeinterval':
           path = this.options.customer + '/' + normalizedType + 's';
@@ -155,6 +158,9 @@ var Nimvelo = (function () {
           break;
         case 'recording':
           object = new Recording(this, item);
+          break;
+        case 'smsmessage':
+          object = new Smsmessage(this, item);
           break;
         default:
           break;
