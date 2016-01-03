@@ -51,9 +51,10 @@ var Nimvelo = (function () {
       requestOptions: {
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
           'Authorization': this.authorization,
-          'User-Agent': 'node-nimvelo/' + VERSION
+          'Content-Type': 'application/json',
+          'User-Agent': 'node-nimvelo/' + VERSION,
+          'X-Relationship-Key': 'id'
         }
       }
     }, options);
