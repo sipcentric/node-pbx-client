@@ -15,6 +15,8 @@ var CallList = require('./callList');
 var Call = require('./call');
 var PhonebookentryList = require('./phonebookentryList');
 var Phonebookentry = require('./phonebookentry');
+var PhonenumberList = require('./phonenumberList');
+var Phonenumber = require('./phonenumber');
 var RecordingList = require('./recordingList');
 var Recording = require('./recording');
 var SmsmessageList = require('./smsmessageList');
@@ -34,6 +36,7 @@ var Customer = (function (_Representation) {
 
     _this.calls = new CallList(_this.client);
     _this.phonebook = new PhonebookentryList(_this.client);
+    _this.phonenumbers = new PhonenumberList(_this.client);
     _this.recordings = new RecordingList(_this.client);
     _this.smsmessages = new SmsmessageList(_this.client);
 
@@ -53,6 +56,8 @@ var Customer = (function (_Representation) {
           return new Call(this.client, properties);
         case 'phonebookentry':
           return new Phonebookentry(this.client, properties);
+        case 'phonenumber':
+          return new Phonenumber(this.client, properties);
         case 'recording':
           return new Recording(this.client, properties);
         case 'smsmessage':

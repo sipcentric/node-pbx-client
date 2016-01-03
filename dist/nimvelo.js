@@ -13,6 +13,7 @@ var Call = require('./call');
 var Customer = require('./customer');
 var CustomerList = require('./customerList');
 var Phonebookentry = require('./phonebookentry');
+var Phonenumber = require('./phonenumber');
 var Stream = require('./stream');
 var Recording = require('./recording');
 var Smsmessage = require('./smsmessage');
@@ -156,6 +157,9 @@ var Nimvelo = (function () {
           break;
         case 'phonebookentry':
           object = new Phonebookentry(this, item);
+          break;
+        case 'phonenumber':
+          object = new Phonenumber(this, item);
           break;
         case 'recording':
           object = new Recording(this, item);
