@@ -12,6 +12,10 @@ const toTest = [{
   objectType: 'recording',
   listObjectType: 'recordingList',
   listEndpoint: 'recordings'
+}, {
+  objectType: 'smsmessage',
+  listObjectType: 'smsmessageList',
+  listEndpoint: 'sms'
 }];
 
 toTest.forEach(representationListTests);
