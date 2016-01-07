@@ -927,7 +927,7 @@ var Stream = (function () {
           return;
         }
 
-        if (Array.isArray(type) && type.indexOf(message.event) > -1 || Array.isArray(type) && message.event === type) {
+        if (Array.isArray(type) && type.indexOf(message.event) > -1 || typeof type === 'string' && message.event === type) {
 
           callback(message);
         }
