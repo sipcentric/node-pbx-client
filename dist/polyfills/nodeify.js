@@ -1,10 +1,11 @@
-'use strict';
+'use strict'
 
 /*
   Thanks go to Brian Mancini for this polyfill of Q's 'nodeify' method
   http://derpturkey.com/promise-callback-pattern-for-javascript/
 */
 
+;
 module.exports = function (callback) {
 
   if (callback) {

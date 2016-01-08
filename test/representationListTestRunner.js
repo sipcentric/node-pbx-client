@@ -1,13 +1,17 @@
 const representationListTests = require('./representationListTests');
 
 const toTest = [{
-  objectType: 'phonebookentry',
-  listObjectType: 'phonebookentryList',
-  listEndpoint: 'phonebook'
-}, {
   objectType: 'call',
   listObjectType: 'callList',
   listEndpoint: 'calls'
+}, {
+  objectType: 'outgoingcallerid',
+  listObjectType: 'outgoingcalleridList',
+  listEndpoint: 'outgoingcallerids'
+}, {
+  objectType: 'phonebookentry',
+  listObjectType: 'phonebookentryList',
+  listEndpoint: 'phonebook'
 }, {
   objectType: 'recording',
   listObjectType: 'recordingList',

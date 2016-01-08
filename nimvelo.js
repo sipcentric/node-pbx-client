@@ -71,6 +71,8 @@ var extend = require('deep-extend');
 var Representation = require('./representation');
 var CallList = require('./callList');
 var Call = require('./call');
+var OutgoingcalleridList = require('./outgoingcalleridList');
+var Outgoingcallerid = require('./outgoingcallerid');
 var PhonebookentryList = require('./phonebookentryList');
 var Phonebookentry = require('./phonebookentry');
 var PhonenumberList = require('./phonenumberList');
@@ -93,6 +95,7 @@ var Customer = (function (_Representation) {
     _this.type = 'customer';
 
     _this.calls = new CallList(_this.client);
+    _this.outgoingcallerids = new OutgoingcalleridList(_this.client);
     _this.phonebook = new PhonebookentryList(_this.client);
     _this.phonenumbers = new PhonenumberList(_this.client);
     _this.recordings = new RecordingList(_this.client);
@@ -112,6 +115,8 @@ var Customer = (function (_Representation) {
       switch (type) {
         case 'call':
           return new Call(this.client, properties);
+        case 'outgoingcallerid':
+          return new Outgoingcallerid(this.client, properties);
         case 'phonebookentry':
           return new Phonebookentry(this.client, properties);
         case 'phonenumber':
@@ -173,6 +178,7 @@ var extend = require('deep-extend');
 var Call = require('./call');
 var Customer = require('./customer');
 var CustomerList = require('./customerList');
+var Outgoingcallerid = require('./outgoingcallerid');
 var Phonebookentry = require('./phonebookentry');
 var Phonenumber = require('./phonenumber');
 var Stream = require('./stream');
@@ -316,11 +322,14 @@ var Nimvelo = (function () {
         case 'customer':
           object = new Customer(this, item);
           break;
-        case 'phonebookentry':
-          object = new Phonebookentry(this, item);
-          break;
         case 'did':
           object = new Phonenumber(this, item);
+          break;
+        case 'outgoingcallerid':
+          object = new Outgoingcallerid(this, item);
+          break;
+        case 'phonebookentry':
+          object = new Phonebookentry(this, item);
           break;
         case 'recording':
           object = new Recording(this, item);
@@ -512,6 +521,64 @@ var Nimvelo = (function () {
 })();
 
 module.exports = Nimvelo;
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var extend = require('deep-extend');
+
+var Representation = require('./representation');
+
+var Outgoingcallerid = (function (_Representation) {
+  _inherits(Outgoingcallerid, _Representation);
+
+  function Outgoingcallerid(client, item) {
+    _classCallCheck(this, Outgoingcallerid);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Outgoingcallerid).call(this, client));
+
+    extend(_this, item);
+
+    _this.type = 'outgoingcallerid';
+
+    return _this;
+  }
+
+  return Outgoingcallerid;
+})(Representation);
+
+module.exports = Outgoingcallerid;
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var RepresentationList = require('./representationList');
+
+var OutgoingcalleridList = (function (_RepresentationList) {
+  _inherits(OutgoingcalleridList, _RepresentationList);
+
+  function OutgoingcalleridList(client) {
+    _classCallCheck(this, OutgoingcalleridList);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(OutgoingcalleridList).call(this, client));
+
+    _this.type = 'outgoingcalleridList';
+    _this.itemType = 'outgoingcallerid';
+    return _this;
+  }
+
+  return OutgoingcalleridList;
+})(RepresentationList);
+
+module.exports = OutgoingcalleridList;
 'use strict';
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -866,9 +933,10 @@ var SmsmessageList = (function (_RepresentationList) {
 })(RepresentationList);
 
 module.exports = SmsmessageList;
-'use strict';
+'use strict'
 
 // Module dependencies
+;
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
@@ -941,13 +1009,14 @@ var Stream = (function () {
 })();
 
 module.exports = Stream;
-'use strict';
+'use strict'
 
 /*
   Thanks go to Brian Mancini for this polyfill of Q's 'nodeify' method
   http://derpturkey.com/promise-callback-pattern-for-javascript/
 */
 
+;
 module.exports = function (callback) {
 
   if (callback) {

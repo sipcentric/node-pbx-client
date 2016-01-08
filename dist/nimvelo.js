@@ -12,6 +12,7 @@ var extend = require('deep-extend');
 var Call = require('./call');
 var Customer = require('./customer');
 var CustomerList = require('./customerList');
+var Outgoingcallerid = require('./outgoingcallerid');
 var Phonebookentry = require('./phonebookentry');
 var Phonenumber = require('./phonenumber');
 var Stream = require('./stream');
@@ -155,11 +156,14 @@ var Nimvelo = (function () {
         case 'customer':
           object = new Customer(this, item);
           break;
-        case 'phonebookentry':
-          object = new Phonebookentry(this, item);
-          break;
         case 'did':
           object = new Phonenumber(this, item);
+          break;
+        case 'outgoingcallerid':
+          object = new Outgoingcallerid(this, item);
+          break;
+        case 'phonebookentry':
+          object = new Phonebookentry(this, item);
           break;
         case 'recording':
           object = new Recording(this, item);
