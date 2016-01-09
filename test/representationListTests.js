@@ -345,6 +345,91 @@ module.exports = function(testParams) {
 
       });
 
+      describe('prototype.create();', function() {
+
+        let client;
+        let listObject;
+
+        beforeEach(function() {
+
+          client = new Nimvelo();
+          listObject = newListObject(client);
+
+        });
+
+        it('method exists', function() {
+          assert.equal(typeof listObject.create, 'function');
+        });
+
+        it('returns a ${NvObject} object', function() {
+
+          const newObject = listObject.create();
+
+          assert(newObject instanceof NvObject);
+
+        });
+
+        it('accepts an object of properties and sets them on the initialized object ', function() {
+
+          const properties = {
+            testProperty1: 'test',
+            testProperty2: 123,
+            testProperty3: true,
+            testProperty4: undefined,
+          };
+
+          const newObject = listObject.create(properties);
+
+          assert.equal(
+            newObject.testProperty1,
+            properties.testProperty1
+          );
+
+          assert.equal(
+            newObject.testProperty2,
+            properties.testProperty2
+          );
+
+          assert.equal(
+            newObject.testProperty3,
+            properties.testProperty3
+          );
+
+          assert.equal(
+            newObject.testProperty4,
+            properties.testProperty4
+          );
+
+        });
+
+        it('cannot have it\'s type overridden on initialization', function() {
+
+          const objectWrongType = listObject.create({
+            type: 'INCORRECT_TYPE'
+          });
+
+          assert.equal(
+            objectWrongType.type,
+            objectType
+          );
+
+        });
+
+        it('cannot have it\'s id overridden on initialization', function() {
+
+          const objectWrongId = listObject.create({
+            id: 'INCORRECT_ID'
+          });
+
+          assert.equal(
+            objectWrongId.id,
+            undefined
+          );
+
+        });
+
+      });
+
     });
 
   });
