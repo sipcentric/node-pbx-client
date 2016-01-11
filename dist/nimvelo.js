@@ -301,7 +301,7 @@ var Nimvelo = (function () {
               parsedData = data;
             }
 
-            if (typeof parsedData.errors !== 'undefined') {
+            if (parsedData && typeof parsedData.errors !== 'undefined') {
 
               // If there are some errors returned, reject
 

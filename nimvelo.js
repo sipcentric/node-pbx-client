@@ -467,7 +467,7 @@ var Nimvelo = (function () {
               parsedData = data;
             }
 
-            if (typeof parsedData.errors !== 'undefined') {
+            if (parsedData && typeof parsedData.errors !== 'undefined') {
 
               // If there are some errors returned, reject
 
@@ -933,10 +933,9 @@ var SmsmessageList = (function (_RepresentationList) {
 })(RepresentationList);
 
 module.exports = SmsmessageList;
-'use strict'
+'use strict';
 
 // Module dependencies
-;
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
@@ -1009,14 +1008,13 @@ var Stream = (function () {
 })();
 
 module.exports = Stream;
-'use strict'
+'use strict';
 
 /*
   Thanks go to Brian Mancini for this polyfill of Q's 'nodeify' method
   http://derpturkey.com/promise-callback-pattern-for-javascript/
 */
 
-;
 module.exports = function (callback) {
 
   if (callback) {
