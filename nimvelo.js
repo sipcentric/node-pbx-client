@@ -101,6 +101,11 @@ var Customer = (function (_Representation) {
     _this.recordings = new RecordingList(_this.client);
     _this.smsmessages = new SmsmessageList(_this.client);
 
+    _this.unavailableMethods = ['delete'];
+    _this.unavailableMethods.forEach(function (method) {
+      return _this[method] = undefined;
+    });
+
     return _this;
   }
 
@@ -545,6 +550,11 @@ var Outgoingcallerid = (function (_Representation) {
 
     _this.type = 'outgoingcallerid';
 
+    _this.unavailableMethods = ['save', 'delete'];
+    _this.unavailableMethods.forEach(function (method) {
+      return _this[method] = undefined;
+    });
+
     return _this;
   }
 
@@ -718,6 +728,11 @@ var Recording = (function (_Representation) {
     extend(_this, item);
 
     _this.type = 'recording';
+
+    _this.unavailableMethods = ['save'];
+    _this.unavailableMethods.forEach(function (method) {
+      return _this[method] = undefined;
+    });
 
     return _this;
   }
@@ -898,6 +913,11 @@ var Smsmessage = (function (_Representation) {
     extend(_this, item);
 
     _this.type = 'smsmessage';
+
+    _this.unavailableMethods = ['save', 'delete'];
+    _this.unavailableMethods.forEach(function (method) {
+      return _this[method] = undefined;
+    });
 
     return _this;
   }

@@ -43,6 +43,11 @@ var Customer = (function (_Representation) {
     _this.recordings = new RecordingList(_this.client);
     _this.smsmessages = new SmsmessageList(_this.client);
 
+    _this.unavailableMethods = ['delete'];
+    _this.unavailableMethods.forEach(function (method) {
+      return _this[method] = undefined;
+    });
+
     return _this;
   }
 
