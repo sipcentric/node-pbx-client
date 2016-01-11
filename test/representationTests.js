@@ -18,12 +18,14 @@ module.exports = function(testParams) {
     let NvObject;
     let mockData;
     let newObject;
+    let unavailableMethods;
 
     before(function() {
 
       NvObject = require(`../dist/${objectType}`);
       mockData = require(`./mock/${objectType}`);
       newObject = (client, properties) => new NvObject(client, properties);
+      unavailableMethods = newObject().unavailableMethods || [];
 
     });
 
@@ -105,25 +107,32 @@ module.exports = function(testParams) {
 
           let client;
           let representationObject;
+          let skipTests;
 
           beforeEach(function() {
             client = new Nimvelo();
             representationObject = newObject(client, mockData.singleObject);
+            skipTests = unavailableMethods.indexOf('save') >= 0;
           });
 
           it('method exists', function() {
+            if (skipTests) this.skip();
             assert.equal(typeof representationObject.save, 'function');
           });
 
           it('returns a promise by default', function() {
+            if (skipTests) this.skip();
             assert(representationObject.save() instanceof Promise);
           });
 
           it('doesn\'t return a promise if a callback is provided', function() {
+            if (skipTests) this.skip();
             assert.notEqual(representationObject.save(function() {}) instanceof Promise);
           });
 
           it('calls a callback, if provided', function(done) {
+
+            if (skipTests) this.skip();
 
             nock('https://pbx.sipcentric.com/api/v1/customers/me')
               .put(`/${listEndpoint}/${representationObject.id}/`)
@@ -136,6 +145,8 @@ module.exports = function(testParams) {
 
           it('sends a PUT request to the instance resource if the item has an id', function(done) {
 
+            if (skipTests) this.skip();
+
             nock('https://pbx.sipcentric.com/api/v1/customers/me')
               .put(`/${listEndpoint}/${representationObject.id}/`)
               .query(true)
@@ -146,6 +157,8 @@ module.exports = function(testParams) {
           });
 
           it('sends a POST request to the list resource if the item doesn\'t have an id', function(done) {
+
+            if (skipTests) this.skip();
 
             nock('https://pbx.sipcentric.com/api/v1/customers/me')
               .post(`/${listEndpoint}/`)
@@ -159,6 +172,8 @@ module.exports = function(testParams) {
           });
 
           it('sets the returned PUT data on the object', function(done) {
+
+            if (skipTests) this.skip();
 
             const testProperty = 'test';
 
@@ -185,6 +200,8 @@ module.exports = function(testParams) {
 
           it('sets the returned POST data on the object', function(done) {
 
+            if (skipTests) this.skip();
+
             const testProperty = 'test';
 
             nock('https://pbx.sipcentric.com/api/v1/customers/me')
@@ -210,31 +227,59 @@ module.exports = function(testParams) {
 
           });
 
+          it('passes through request errors correctly', function(done) {
+
+            if (skipTests) this.skip();
+
+            nock('https://pbx.sipcentric.com/api/v1/customers/me')
+              .put(`/${listEndpoint}/${representationObject.id}/`)
+              .query(true)
+              .reply(404);
+
+            representationObject.save().then(function() {
+              done(new Error('Request error not passed through correctly'));
+            }, function(err) {
+              if (err.message === 'Status Code: 404') {
+                done();
+              } else {
+                done(new Error('Request error not passed through correctly'));
+              }
+            });
+
+          });
+
         });
 
         describe('prototype.delete();', function() {
 
           let client;
           let representationObject;
+          let skipTests;
 
           beforeEach(function() {
             client = new Nimvelo();
             representationObject = newObject(client, mockData.singleObject);
+            skipTests = unavailableMethods.indexOf('delete') >= 0;
           });
 
           it('method exists', function() {
+            if (skipTests) this.skip();
             assert.equal(typeof representationObject.delete, 'function');
           });
 
           it('returns a promise by default', function() {
+            if (skipTests) this.skip();
             assert(representationObject.delete() instanceof Promise);
           });
 
           it('doesn\'t return a promise if a callback is provided', function() {
+            if (skipTests) this.skip();
             assert.notEqual(representationObject.delete(function() {}) instanceof Promise);
           });
 
           it('calls a callback, if provided', function(done) {
+
+            if (skipTests) this.skip();
 
             nock('https://pbx.sipcentric.com/api/v1/customers/me')
               .delete(`/${listEndpoint}/${representationObject.id}/`)
@@ -247,6 +292,8 @@ module.exports = function(testParams) {
 
           it('sends a DELETE request to the instance resource', function(done) {
 
+            if (skipTests) this.skip();
+
             nock('https://pbx.sipcentric.com/api/v1/customers/me')
               .delete(`/${listEndpoint}/${representationObject.id}/`)
               .query(true)
@@ -257,6 +304,8 @@ module.exports = function(testParams) {
           });
 
           it('passes through request errors correctly', function(done) {
+
+            if (skipTests) this.skip();
 
             nock('https://pbx.sipcentric.com/api/v1/customers/me')
               .delete(`/${listEndpoint}/${representationObject.id}/`)
