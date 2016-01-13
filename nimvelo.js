@@ -71,6 +71,8 @@ var extend = require('deep-extend');
 var Representation = require('./representation');
 var CallList = require('./callList');
 var Call = require('./call');
+var MusicList = require('./musicList');
+var Music = require('./music');
 var OutgoingcalleridList = require('./outgoingcalleridList');
 var Outgoingcallerid = require('./outgoingcallerid');
 var PhonebookentryList = require('./phonebookentryList');
@@ -97,6 +99,7 @@ var Customer = (function (_Representation) {
     _this.type = 'customer';
 
     _this.calls = new CallList(_this.client);
+    _this.music = new MusicList(_this.client);
     _this.outgoingcallerids = new OutgoingcalleridList(_this.client);
     _this.phonebook = new PhonebookentryList(_this.client);
     _this.phonenumbers = new PhonenumberList(_this.client);
@@ -123,6 +126,8 @@ var Customer = (function (_Representation) {
       switch (type) {
         case 'call':
           return new Call(this.client, properties);
+        case 'music':
+          return new Music(this.client, properties);
         case 'outgoingcallerid':
           return new Outgoingcallerid(this.client, properties);
         case 'phonebookentry':
@@ -176,6 +181,64 @@ var CustomerList = (function (_RepresentationList) {
 module.exports = CustomerList;
 'use strict';
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var extend = require('deep-extend');
+
+var Representation = require('./representation');
+
+var Music = (function (_Representation) {
+  _inherits(Music, _Representation);
+
+  function Music(client, item) {
+    _classCallCheck(this, Music);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Music).call(this, client));
+
+    extend(_this, item);
+
+    _this.type = 'music';
+
+    return _this;
+  }
+
+  return Music;
+})(Representation);
+
+module.exports = Music;
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var RepresentationList = require('./representationList');
+
+var MusicList = (function (_RepresentationList) {
+  _inherits(MusicList, _RepresentationList);
+
+  function MusicList(client) {
+    _classCallCheck(this, MusicList);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(MusicList).call(this, client));
+
+    _this.type = 'musicList';
+    _this.itemType = 'music';
+    return _this;
+  }
+
+  return MusicList;
+})(RepresentationList);
+
+module.exports = MusicList;
+'use strict';
+
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
@@ -188,6 +251,7 @@ var extend = require('deep-extend');
 var Call = require('./call');
 var Customer = require('./customer');
 var CustomerList = require('./customerList');
+var Music = require('./music');
 var Outgoingcallerid = require('./outgoingcallerid');
 var Phonebookentry = require('./phonebookentry');
 var Phonenumber = require('./phonenumber');
@@ -339,6 +403,9 @@ var Nimvelo = (function () {
           break;
         case 'did':
           object = new Phonenumber(this, item);
+          break;
+        case 'music':
+          object = new Music(this, item);
           break;
         case 'outgoingcallerid':
           object = new Outgoingcallerid(this, item);

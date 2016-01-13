@@ -5,6 +5,10 @@ const toTest = [{
   listObjectType: 'callList',
   listEndpoint: 'calls'
 }, {
+  objectType: 'music',
+  listObjectType: 'musicList',
+  listEndpoint: 'sounds'
+}, {
   objectType: 'outgoingcallerid',
   listObjectType: 'outgoingcalleridList',
   listEndpoint: 'outgoingcallerids'

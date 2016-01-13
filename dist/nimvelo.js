@@ -12,6 +12,7 @@ var extend = require('deep-extend');
 var Call = require('./call');
 var Customer = require('./customer');
 var CustomerList = require('./customerList');
+var Music = require('./music');
 var Outgoingcallerid = require('./outgoingcallerid');
 var Phonebookentry = require('./phonebookentry');
 var Phonenumber = require('./phonenumber');
@@ -163,6 +164,9 @@ var Nimvelo = (function () {
           break;
         case 'did':
           object = new Phonenumber(this, item);
+          break;
+        case 'music':
+          object = new Music(this, item);
           break;
         case 'outgoingcallerid':
           object = new Outgoingcallerid(this, item);

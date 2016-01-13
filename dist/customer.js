@@ -13,6 +13,8 @@ var extend = require('deep-extend');
 var Representation = require('./representation');
 var CallList = require('./callList');
 var Call = require('./call');
+var MusicList = require('./musicList');
+var Music = require('./music');
 var OutgoingcalleridList = require('./outgoingcalleridList');
 var Outgoingcallerid = require('./outgoingcallerid');
 var PhonebookentryList = require('./phonebookentryList');
@@ -39,6 +41,7 @@ var Customer = (function (_Representation) {
     _this.type = 'customer';
 
     _this.calls = new CallList(_this.client);
+    _this.music = new MusicList(_this.client);
     _this.outgoingcallerids = new OutgoingcalleridList(_this.client);
     _this.phonebook = new PhonebookentryList(_this.client);
     _this.phonenumbers = new PhonenumberList(_this.client);
@@ -65,6 +68,8 @@ var Customer = (function (_Representation) {
       switch (type) {
         case 'call':
           return new Call(this.client, properties);
+        case 'music':
+          return new Music(this.client, properties);
         case 'outgoingcallerid':
           return new Outgoingcallerid(this.client, properties);
         case 'phonebookentry':
