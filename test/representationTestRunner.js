@@ -13,6 +13,10 @@ const toTest = [{
   listObjectType: 'phonebookentryList',
   listEndpoint: 'phonebook'
 }, {
+  objectType: 'prompt',
+  listObjectType: 'promptList',
+  listEndpoint: 'sounds'
+}, {
   objectType: 'recording',
   listObjectType: 'recordingList',
   listEndpoint: 'recordings'

@@ -77,6 +77,8 @@ var PhonebookentryList = require('./phonebookentryList');
 var Phonebookentry = require('./phonebookentry');
 var PhonenumberList = require('./phonenumberList');
 var Phonenumber = require('./phonenumber');
+var PromptList = require('./promptList');
+var Prompt = require('./prompt');
 var RecordingList = require('./recordingList');
 var Recording = require('./recording');
 var SmsmessageList = require('./smsmessageList');
@@ -98,6 +100,7 @@ var Customer = (function (_Representation) {
     _this.outgoingcallerids = new OutgoingcalleridList(_this.client);
     _this.phonebook = new PhonebookentryList(_this.client);
     _this.phonenumbers = new PhonenumberList(_this.client);
+    _this.prompts = new PromptList(_this.client);
     _this.recordings = new RecordingList(_this.client);
     _this.smsmessages = new SmsmessageList(_this.client);
 
@@ -126,6 +129,8 @@ var Customer = (function (_Representation) {
           return new Phonebookentry(this.client, properties);
         case 'phonenumber':
           return new Phonenumber(this.client, properties);
+        case 'prompt':
+          return new Prompt(this.client, properties);
         case 'recording':
           return new Recording(this.client, properties);
         case 'smsmessage':
@@ -186,6 +191,7 @@ var CustomerList = require('./customerList');
 var Outgoingcallerid = require('./outgoingcallerid');
 var Phonebookentry = require('./phonebookentry');
 var Phonenumber = require('./phonenumber');
+var Prompt = require('./prompt');
 var Stream = require('./stream');
 var Recording = require('./recording');
 var Smsmessage = require('./smsmessage');
@@ -289,6 +295,10 @@ var Nimvelo = (function () {
         case 'smsmessage':
           path = this.options.customer + '/sms';
           break;
+        case 'prompt':
+        case 'music':
+          path = this.options.customer + '/sounds';
+          break;
         case 'callbundle':
         case 'call':
         case 'creditstatus':
@@ -335,6 +345,9 @@ var Nimvelo = (function () {
           break;
         case 'phonebookentry':
           object = new Phonebookentry(this, item);
+          break;
+        case 'prompt':
+          object = new Prompt(this, item);
           break;
         case 'recording':
           object = new Recording(this, item);
@@ -717,6 +730,65 @@ var extend = require('deep-extend');
 
 var Representation = require('./representation');
 
+var Prompt = (function (_Representation) {
+  _inherits(Prompt, _Representation);
+
+  function Prompt(client, item) {
+    _classCallCheck(this, Prompt);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Prompt).call(this, client));
+
+    extend(_this, item);
+
+    _this.type = 'prompt';
+    _this.badger = 'badgsfdsfdsf';
+
+    return _this;
+  }
+
+  return Prompt;
+})(Representation);
+
+module.exports = Prompt;
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var RepresentationList = require('./representationList');
+
+var PromptList = (function (_RepresentationList) {
+  _inherits(PromptList, _RepresentationList);
+
+  function PromptList(client) {
+    _classCallCheck(this, PromptList);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PromptList).call(this, client));
+
+    _this.type = 'promptList';
+    _this.itemType = 'prompt';
+    return _this;
+  }
+
+  return PromptList;
+})(RepresentationList);
+
+module.exports = PromptList;
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var extend = require('deep-extend');
+
+var Representation = require('./representation');
+
 var Recording = (function (_Representation) {
   _inherits(Recording, _Representation);
 
@@ -1035,7 +1107,7 @@ module.exports = Stream;
   http://derpturkey.com/promise-callback-pattern-for-javascript/
 */
 
-module.exports = function (callback) {
+module.exports = function replacePromiseWithCallback(callback) {
 
   if (callback) {
 

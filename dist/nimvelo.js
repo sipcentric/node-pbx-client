@@ -15,6 +15,7 @@ var CustomerList = require('./customerList');
 var Outgoingcallerid = require('./outgoingcallerid');
 var Phonebookentry = require('./phonebookentry');
 var Phonenumber = require('./phonenumber');
+var Prompt = require('./prompt');
 var Stream = require('./stream');
 var Recording = require('./recording');
 var Smsmessage = require('./smsmessage');
@@ -118,6 +119,10 @@ var Nimvelo = (function () {
         case 'smsmessage':
           path = this.options.customer + '/sms';
           break;
+        case 'prompt':
+        case 'music':
+          path = this.options.customer + '/sounds';
+          break;
         case 'callbundle':
         case 'call':
         case 'creditstatus':
@@ -164,6 +169,9 @@ var Nimvelo = (function () {
           break;
         case 'phonebookentry':
           object = new Phonebookentry(this, item);
+          break;
+        case 'prompt':
+          object = new Prompt(this, item);
           break;
         case 'recording':
           object = new Recording(this, item);
