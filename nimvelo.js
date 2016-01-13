@@ -507,8 +507,37 @@ var Nimvelo = (function () {
     }
   }, {
     key: '_getResource',
-    value: function _getResource(type, id, params, callback) {
+    value: function _getResource(type) {
       var _this3 = this;
+
+      var id = undefined;
+      var params = undefined;
+      var callback = undefined;
+
+      for (var _len2 = arguments.length, args = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+        args[_key2 - 1] = arguments[_key2];
+      }
+
+      if (Array.isArray(args)) {
+
+        args.forEach(function (arg) {
+
+          switch (typeof arg === 'undefined' ? 'undefined' : _typeof(arg)) {
+            case 'string':
+            case 'number':
+              id = arg;
+              break;
+            case 'object':
+              params = arg;
+              break;
+            case 'function':
+              callback = arg;
+              break;
+            default:
+              break;
+          }
+        });
+      }
 
       return new Promise(function (resolve, reject) {
 
