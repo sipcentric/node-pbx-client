@@ -770,7 +770,6 @@ var Prompt = (function (_Representation) {
     extend(_this, item);
 
     _this.type = 'prompt';
-    _this.badger = 'badgsfdsfdsf';
 
     return _this;
   }
