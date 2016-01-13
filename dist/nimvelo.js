@@ -143,6 +143,24 @@ var Nimvelo = (function () {
       return path;
     }
   }, {
+    key: '_paramsForType',
+    value: function _paramsForType(type) {
+
+      var params = {};
+      var normalizedType = type.toLowerCase();
+
+      switch (normalizedType) {
+        case 'prompt':
+        case 'music':
+          params.type = type;
+          break;
+        default:
+          break;
+      }
+
+      return params;
+    }
+  }, {
     key: '_objectFromItem',
     value: function _objectFromItem(item) {
 
@@ -207,7 +225,7 @@ var Nimvelo = (function () {
       var _this2 = this;
 
       var id = undefined;
-      var params = undefined;
+      var params = {};
       var callback = undefined;
 
       var base = 'rest';
@@ -252,7 +270,7 @@ var Nimvelo = (function () {
         options = {
           method: 'get',
           url: this._buildUrl(base, resource, id), // Generate url
-          qs: params
+          qs: extend(params, this._paramsForType(resource))
         };
       } else if (normalizedMethod === 'put') {
 

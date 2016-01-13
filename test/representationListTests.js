@@ -6,6 +6,7 @@
 const assert = require('assert');
 const nock = require('nock');
 const qs = require('querystring');
+const extend = require('deep-extend');
 
 const Nimvelo = require('../dist/nimvelo');
 
@@ -186,8 +187,10 @@ module.exports = function(testParams) {
 
         it('appends given query parameters to request URL', function(done) {
 
+          const extendedParams = extend(params, client._paramsForType(objectType));
+
           nock('https://pbx.sipcentric.com/api/v1/customers/me')
-            .get(`/${listEndpoint}/?${qs.stringify(params)}`)
+            .get(`/${listEndpoint}/?${qs.stringify(extendedParams)}`)
             .reply(200, mockData.listSingle);
 
           listObject.list(params).then(function(data) {
@@ -213,6 +216,10 @@ module.exports = function(testParams) {
 
           client = new Nimvelo();
           listObject = newListObject(client);
+
+          params = {
+            createdAfter: '2016-01-01T00:00:00Z'
+          };
 
         });
 
@@ -328,9 +335,10 @@ module.exports = function(testParams) {
 
         it('appends given query parameters to request URL', function(done) {
 
+          const extendedParams = extend(params, client._paramsForType(objectType));
+
           nock('https://pbx.sipcentric.com/api/v1/customers/me')
-            .get(`/${listEndpoint}/${qs.stringify(params)}`)
-            .query(params)
+            .get(`/${listEndpoint}/?${qs.stringify(extendedParams)}`)
             .reply(200, mockData.listSingle);
 
           listObject.find(params).then(function(data) {
