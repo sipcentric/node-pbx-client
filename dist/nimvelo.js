@@ -120,6 +120,7 @@ var Nimvelo = (function () {
         case 'smsmessage':
           path = this.options.customer + '/sms';
           break;
+        case 'sound':
         case 'prompt':
         case 'music':
           path = this.options.customer + '/sounds';
@@ -131,7 +132,6 @@ var Nimvelo = (function () {
         case 'outgoingcallerid':
         case 'phonenumber':
         case 'recording':
-        case 'sound':
         case 'timeinterval':
           path = this.options.customer + '/' + normalizedType + 's';
           break;

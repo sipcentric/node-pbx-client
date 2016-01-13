@@ -27,6 +27,7 @@ var RecordingList = require('./recordingList');
 var Recording = require('./recording');
 var SmsmessageList = require('./smsmessageList');
 var Smsmessage = require('./smsmessage');
+var SoundList = require('./soundList');
 
 var Customer = (function (_Representation) {
   _inherits(Customer, _Representation);
@@ -48,6 +49,7 @@ var Customer = (function (_Representation) {
     _this.prompts = new PromptList(_this.client);
     _this.recordings = new RecordingList(_this.client);
     _this.smsmessages = new SmsmessageList(_this.client);
+    _this.sounds = new SoundList(_this.client);
 
     _this.unavailableMethods = ['delete'];
     _this.unavailableMethods.forEach(function (method) {
