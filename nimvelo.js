@@ -328,13 +328,6 @@ var Nimvelo = (function () {
       var baseUrl = bases.hasOwnProperty(base) ? bases[base] : bases.rest;
       var path = this._pathForType(type);
 
-      if (type === 'customer' && !id) {
-        if (!id) {
-          // If there's no ID provided for a customer, use the default
-          path = this.options.customer;
-        }
-      }
-
       // Let's build our URL
       var url = baseUrl;
 

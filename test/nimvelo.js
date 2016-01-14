@@ -128,7 +128,7 @@ describe('Nimvelo', function() {
 
         assert.equal(
           client._buildUrl('rest', 'customer'),
-          client.options.restBase + 'me/'
+          client.options.restBase
         );
 
         assert.equal(
@@ -297,7 +297,7 @@ describe('Nimvelo', function() {
 
       it('calls a callback, if provided', function(done) {
 
-        nock('https://pbx.sipcentric.com/api/v1/customers/me')
+        nock('https://pbx.sipcentric.com/api/v1/customers/')
         .get('/')
         .reply(200, {
           type: 'customer',
@@ -346,7 +346,7 @@ describe('Nimvelo', function() {
 
       it('calls a callback, if provided', function(done) {
 
-        nock('https://pbx.sipcentric.com/api/v1/customers/me')
+        nock('https://pbx.sipcentric.com/api/v1/customers/')
         .get('/')
         .reply(200, {
           type: 'customer',
