@@ -56,7 +56,6 @@ describe('Nimvelo', function() {
         const options = {
           username: 'TEST_USERNAME',
           password: 'TEST_PASSWORD',
-          customer: 5,
           newOption: 'TEST_OPTION',
           requestOptions: {
             headers: {
@@ -137,13 +136,13 @@ describe('Nimvelo', function() {
         );
 
         assert.equal(
-          client._buildUrl('rest', 'phonebookentry'),
-          client.options.restBase + 'me/phonebook/'
+          client._buildUrl('rest', 'phonebookentry', 5),
+          client.options.restBase + '5/phonebook/'
         );
 
         assert.equal(
-          client._buildUrl('rest', 'phonebookentry', 5),
-          client.options.restBase + 'me/phonebook/5/'
+          client._buildUrl('rest', 'phonebookentry', 5, 20),
+          client.options.restBase + '5/phonebook/20/'
         );
 
       });
@@ -175,13 +174,13 @@ describe('Nimvelo', function() {
         );
 
         assert.equal(
-          client._pathForType('phonebookentry'),
-          client.options.customer + '/phonebook'
+          client._pathForType('phonebookentry', 5),
+          '5/phonebook'
         );
 
         assert.equal(
-          client._pathForType('TEST_TYPE'),
-          client.options.customer + '/test_types'
+          client._pathForType('TEST_TYPE', 5),
+          '5/test_types'
         );
 
       });
@@ -202,9 +201,11 @@ describe('Nimvelo', function() {
 
       it('returns correct object', function() {
 
+        const item = {};
+
         assert.equal(
-          client._objectFromItem({}),
-          false
+          client._objectFromItem(item),
+          item
         );
 
         assert(client._objectFromItem({ type: 'customer' }) instanceof Customer);

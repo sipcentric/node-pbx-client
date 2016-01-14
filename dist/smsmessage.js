@@ -13,10 +13,10 @@ var Representation = require('./representation');
 var Smsmessage = (function (_Representation) {
   _inherits(Smsmessage, _Representation);
 
-  function Smsmessage(client, item) {
+  function Smsmessage(client, item, customerId) {
     _classCallCheck(this, Smsmessage);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Smsmessage).call(this, client));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Smsmessage).call(this, client, customerId));
 
     extend(_this, item);
 

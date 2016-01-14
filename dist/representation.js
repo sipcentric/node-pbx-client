@@ -7,10 +7,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var extend = require('deep-extend');
 
 var Representation = (function () {
-  function Representation(client) {
+  function Representation(client, customerId) {
     _classCallCheck(this, Representation);
 
     this.client = client;
+    this.customerId = customerId;
   }
 
   _createClass(Representation, [{
@@ -22,7 +23,7 @@ var Representation = (function () {
 
         return new Promise(function (resolve, reject) {
 
-          _this.client._request('put', _this.type, _this.id, _this).then(function (data) {
+          _this.client._request('put', _this.type, _this.customerId, _this.id, _this).then(function (data) {
 
             // Update our object with the newly returned propreties
             extend(_this, data);
@@ -37,7 +38,7 @@ var Representation = (function () {
 
         return new Promise(function (resolve, reject) {
 
-          _this.client._request('post', _this.type, _this).then(function (data) {
+          _this.client._request('post', _this.type, _this.customerId, _this).then(function (data) {
 
             // Update our object with the newly returned propreties
             extend(_this, data);
@@ -59,7 +60,7 @@ var Representation = (function () {
 
       return new Promise(function (resolve, reject) {
 
-        _this2.client._request('delete', type, _this2.id).then(function () {
+        _this2.client._request('delete', type, _this2.customerId, _this2.id).then(function () {
 
           resolve();
         }, function (error) {

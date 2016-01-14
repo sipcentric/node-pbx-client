@@ -13,10 +13,10 @@ var Representation = require('./representation');
 var Phonenumber = (function (_Representation) {
   _inherits(Phonenumber, _Representation);
 
-  function Phonenumber(client, item) {
+  function Phonenumber(client, item, customerId) {
     _classCallCheck(this, Phonenumber);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Phonenumber).call(this, client));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Phonenumber).call(this, client, customerId));
 
     extend(_this, item);
 

@@ -13,10 +13,10 @@ var Representation = require('./representation');
 var Music = (function (_Representation) {
   _inherits(Music, _Representation);
 
-  function Music(client, item) {
+  function Music(client, item, customerId) {
     _classCallCheck(this, Music);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Music).call(this, client));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Music).call(this, client, customerId));
 
     extend(_this, item);
 

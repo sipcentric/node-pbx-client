@@ -41,15 +41,17 @@ var Customer = (function (_Representation) {
 
     _this.type = 'customer';
 
-    _this.calls = new CallList(_this.client);
-    _this.music = new MusicList(_this.client);
-    _this.outgoingcallerids = new OutgoingcalleridList(_this.client);
-    _this.phonebook = new PhonebookentryList(_this.client);
-    _this.phonenumbers = new PhonenumberList(_this.client);
-    _this.prompts = new PromptList(_this.client);
-    _this.recordings = new RecordingList(_this.client);
-    _this.smsmessages = new SmsmessageList(_this.client);
-    _this.sounds = new SoundList(_this.client);
+    _this.customerId = item.id;
+
+    _this.calls = new CallList(_this.client, _this.customerId);
+    _this.music = new MusicList(_this.client, _this.customerId);
+    _this.outgoingcallerids = new OutgoingcalleridList(_this.client, _this.customerId);
+    _this.phonebook = new PhonebookentryList(_this.client, _this.customerId);
+    _this.phonenumbers = new PhonenumberList(_this.client, _this.customerId);
+    _this.prompts = new PromptList(_this.client, _this.customerId);
+    _this.recordings = new RecordingList(_this.client, _this.customerId);
+    _this.smsmessages = new SmsmessageList(_this.client, _this.customerId);
+    _this.sounds = new SoundList(_this.client, _this.customerId);
 
     _this.unavailableMethods = ['delete'];
     _this.unavailableMethods.forEach(function (method) {
@@ -69,21 +71,21 @@ var Customer = (function (_Representation) {
 
       switch (type) {
         case 'call':
-          return new Call(this.client, properties);
+          return new Call(this.client, properties, this.customerId);
         case 'music':
-          return new Music(this.client, properties);
+          return new Music(this.client, properties, this.customerId);
         case 'outgoingcallerid':
-          return new Outgoingcallerid(this.client, properties);
+          return new Outgoingcallerid(this.client, properties, this.customerId);
         case 'phonebookentry':
-          return new Phonebookentry(this.client, properties);
+          return new Phonebookentry(this.client, properties, this.customerId);
         case 'phonenumber':
-          return new Phonenumber(this.client, properties);
+          return new Phonenumber(this.client, properties, this.customerId);
         case 'prompt':
-          return new Prompt(this.client, properties);
+          return new Prompt(this.client, properties, this.customerId);
         case 'recording':
-          return new Recording(this.client, properties);
+          return new Recording(this.client, properties, this.customerId);
         case 'smsmessage':
-          return new Smsmessage(this.client, properties);
+          return new Smsmessage(this.client, properties, this.customerId);
         default:
           return false;
       }

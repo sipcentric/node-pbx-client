@@ -24,7 +24,7 @@ module.exports = function(testParams) {
 
       NvObject = require(`../dist/${objectType}`);
       mockData = require(`./mock/${objectType}`);
-      newObject = (client, properties) => new NvObject(client, properties);
+      newObject = (client, properties, customerId) => new NvObject(client, properties, customerId);
       unavailableMethods = newObject().unavailableMethods || [];
 
     });
@@ -111,7 +111,7 @@ module.exports = function(testParams) {
 
           beforeEach(function() {
             client = new Nimvelo();
-            representationObject = newObject(client, mockData.singleObject);
+            representationObject = newObject(client, mockData.singleObject, 5);
             skipTests = unavailableMethods.indexOf('save') >= 0;
           });
 
@@ -134,7 +134,7 @@ module.exports = function(testParams) {
 
             if (skipTests) this.skip();
 
-            nock('https://pbx.sipcentric.com/api/v1/customers/me')
+            nock('https://pbx.sipcentric.com/api/v1/customers/5')
               .put(`/${listEndpoint}/${representationObject.id}/`)
               .query(true)
               .reply(200, representationObject);
@@ -147,7 +147,7 @@ module.exports = function(testParams) {
 
             if (skipTests) this.skip();
 
-            nock('https://pbx.sipcentric.com/api/v1/customers/me')
+            nock('https://pbx.sipcentric.com/api/v1/customers/5')
               .put(`/${listEndpoint}/${representationObject.id}/`)
               .query(true)
               .reply(200, representationObject);
@@ -160,7 +160,7 @@ module.exports = function(testParams) {
 
             if (skipTests) this.skip();
 
-            nock('https://pbx.sipcentric.com/api/v1/customers/me')
+            nock('https://pbx.sipcentric.com/api/v1/customers/5')
               .post(`/${listEndpoint}/`)
               .query(true)
               .reply(201, representationObject);
@@ -177,7 +177,7 @@ module.exports = function(testParams) {
 
             const testProperty = 'test';
 
-            nock('https://pbx.sipcentric.com/api/v1/customers/me')
+            nock('https://pbx.sipcentric.com/api/v1/customers/5')
               .put(`/${listEndpoint}/${representationObject.id}/`)
               .query(true)
               .reply(200, function(uri, requestBody) {
@@ -204,7 +204,7 @@ module.exports = function(testParams) {
 
             const testProperty = 'test';
 
-            nock('https://pbx.sipcentric.com/api/v1/customers/me')
+            nock('https://pbx.sipcentric.com/api/v1/customers/5')
               .post(`/${listEndpoint}/`)
               .query(true)
               .reply(201, function(uri, requestBody) {
@@ -231,7 +231,7 @@ module.exports = function(testParams) {
 
             if (skipTests) this.skip();
 
-            nock('https://pbx.sipcentric.com/api/v1/customers/me')
+            nock('https://pbx.sipcentric.com/api/v1/customers/5')
               .put(`/${listEndpoint}/${representationObject.id}/`)
               .query(true)
               .reply(404);
@@ -258,7 +258,7 @@ module.exports = function(testParams) {
 
           beforeEach(function() {
             client = new Nimvelo();
-            representationObject = newObject(client, mockData.singleObject);
+            representationObject = newObject(client, mockData.singleObject, 5);
             skipTests = unavailableMethods.indexOf('delete') >= 0;
           });
 
@@ -281,7 +281,7 @@ module.exports = function(testParams) {
 
             if (skipTests) this.skip();
 
-            nock('https://pbx.sipcentric.com/api/v1/customers/me')
+            nock('https://pbx.sipcentric.com/api/v1/customers/5')
               .delete(`/${listEndpoint}/${representationObject.id}/`)
               .query(true)
               .reply(204);
@@ -294,7 +294,7 @@ module.exports = function(testParams) {
 
             if (skipTests) this.skip();
 
-            nock('https://pbx.sipcentric.com/api/v1/customers/me')
+            nock('https://pbx.sipcentric.com/api/v1/customers/5')
               .delete(`/${listEndpoint}/${representationObject.id}/`)
               .query(true)
               .reply(204);
@@ -307,7 +307,7 @@ module.exports = function(testParams) {
 
             if (skipTests) this.skip();
 
-            nock('https://pbx.sipcentric.com/api/v1/customers/me')
+            nock('https://pbx.sipcentric.com/api/v1/customers/5')
               .delete(`/${listEndpoint}/${representationObject.id}/`)
               .query(true)
               .reply(404);

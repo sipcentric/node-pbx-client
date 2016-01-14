@@ -11,10 +11,10 @@ var RepresentationList = require('./representationList');
 var RecordingList = (function (_RepresentationList) {
   _inherits(RecordingList, _RepresentationList);
 
-  function RecordingList(client) {
+  function RecordingList(client, customerId) {
     _classCallCheck(this, RecordingList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(RecordingList).call(this, client));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(RecordingList).call(this, client, customerId));
 
     _this.type = 'recordingList';
     _this.itemType = 'recording';

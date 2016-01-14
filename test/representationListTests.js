@@ -28,7 +28,7 @@ module.exports = function(testParams) {
       NvObject = require(`../dist/${objectType}`);
       NvListObject = require(`../dist/${listObjectType}`);
       mockData = require(`./mock/${objectType}`);
-      newListObject = client => new NvListObject(client);
+      newListObject = client => new NvListObject(client, 5);
 
     });
 
@@ -111,7 +111,7 @@ module.exports = function(testParams) {
 
         it('calls a callback, if provided', function(done) {
 
-          nock('https://pbx.sipcentric.com/api/v1/customers/me')
+          nock('https://pbx.sipcentric.com/api/v1/customers/5')
             .get(`/${listEndpoint}/`)
             .query(true)
             .reply(200, mockData.listMultiple);
@@ -129,7 +129,7 @@ module.exports = function(testParams) {
 
         it('returns an object containing items and metadata', function(done) {
 
-          nock('https://pbx.sipcentric.com/api/v1/customers/me')
+          nock('https://pbx.sipcentric.com/api/v1/customers/5')
             .get(`/${listEndpoint}/`)
             .query(true)
             .reply(200, mockData.listMultiple);
@@ -146,7 +146,7 @@ module.exports = function(testParams) {
 
         it(`returns an object with an items property containing an array of ${NvObject} objects`, function(done) {
 
-          nock('https://pbx.sipcentric.com/api/v1/customers/me')
+          nock('https://pbx.sipcentric.com/api/v1/customers/5')
             .get(`/${listEndpoint}/`)
             .query(true)
             .reply(200, mockData.listMultiple);
@@ -163,7 +163,7 @@ module.exports = function(testParams) {
 
         it('returns an object with a meta property containing metadata', function(done) {
 
-          nock('https://pbx.sipcentric.com/api/v1/customers/me')
+          nock('https://pbx.sipcentric.com/api/v1/customers/5')
             .get(`/${listEndpoint}/`)
             .query(true)
             .reply(200, mockData.listMultiple);
@@ -189,7 +189,7 @@ module.exports = function(testParams) {
 
           const extendedParams = extend(params, client._paramsForType(objectType));
 
-          nock('https://pbx.sipcentric.com/api/v1/customers/me')
+          nock('https://pbx.sipcentric.com/api/v1/customers/5')
             .get(`/${listEndpoint}/?${qs.stringify(extendedParams)}`)
             .reply(200, mockData.listSingle);
 
@@ -237,7 +237,7 @@ module.exports = function(testParams) {
 
         it('calls a callback, if provided', function(done) {
 
-          nock('https://pbx.sipcentric.com/api/v1/customers/me')
+          nock('https://pbx.sipcentric.com/api/v1/customers/5')
             .get(`/${listEndpoint}/`)
             .query(true)
             .reply(200, mockData.listMultiple);
@@ -256,7 +256,7 @@ module.exports = function(testParams) {
 
         it('returns an object containing items and metadata if no id is provided', function(done) {
 
-          nock('https://pbx.sipcentric.com/api/v1/customers/me')
+          nock('https://pbx.sipcentric.com/api/v1/customers/5')
             .get(`/${listEndpoint}/`)
             .query(true)
             .reply(200, mockData.listMultiple);
@@ -273,7 +273,7 @@ module.exports = function(testParams) {
 
         it(`returns an object with an items property containing an array of ${NvObject} objects if no id is provided`, function(done) {
 
-          nock('https://pbx.sipcentric.com/api/v1/customers/me')
+          nock('https://pbx.sipcentric.com/api/v1/customers/5')
             .get(`/${listEndpoint}/`)
             .query(true)
             .reply(200, mockData.listMultiple);
@@ -290,7 +290,7 @@ module.exports = function(testParams) {
 
         it('returns an object with a meta property containing metadata if no id is provided', function(done) {
 
-          nock('https://pbx.sipcentric.com/api/v1/customers/me')
+          nock('https://pbx.sipcentric.com/api/v1/customers/5')
             .get(`/${listEndpoint}/`)
             .query(true)
             .reply(200, mockData.listMultiple);
@@ -314,7 +314,7 @@ module.exports = function(testParams) {
 
         it('returns a single object if id is provided', function(done) {
 
-          nock('https://pbx.sipcentric.com/api/v1/customers/me')
+          nock('https://pbx.sipcentric.com/api/v1/customers/5')
             .get(`/${listEndpoint}/2/`)
             .query(true)
             .reply(200, mockData.singleObject);
@@ -337,7 +337,7 @@ module.exports = function(testParams) {
 
           const extendedParams = extend(params, client._paramsForType(objectType));
 
-          nock('https://pbx.sipcentric.com/api/v1/customers/me')
+          nock('https://pbx.sipcentric.com/api/v1/customers/5')
             .get(`/${listEndpoint}/?${qs.stringify(extendedParams)}`)
             .reply(200, mockData.listSingle);
 

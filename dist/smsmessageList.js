@@ -11,10 +11,10 @@ var RepresentationList = require('./representationList');
 var SmsmessageList = (function (_RepresentationList) {
   _inherits(SmsmessageList, _RepresentationList);
 
-  function SmsmessageList(client) {
+  function SmsmessageList(client, customerId) {
     _classCallCheck(this, SmsmessageList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SmsmessageList).call(this, client));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SmsmessageList).call(this, client, customerId));
 
     _this.type = 'smsmessageList';
     _this.itemType = 'smsmessage';
