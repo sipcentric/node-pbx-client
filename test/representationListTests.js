@@ -22,6 +22,7 @@ module.exports = function(testParams) {
     let NvListObject;
     let mockData;
     let newListObject;
+    let unavailableMethods;
 
     before(function() {
 
@@ -29,6 +30,7 @@ module.exports = function(testParams) {
       NvListObject = require(`../dist/${listObjectType}`);
       mockData = require(`./mock/${objectType}`);
       newListObject = client => new NvListObject(client, 5);
+      unavailableMethods = newListObject().unavailableMethods || [];
 
     });
 
@@ -357,19 +359,24 @@ module.exports = function(testParams) {
 
         let client;
         let listObject;
+        let skipTests;
 
         beforeEach(function() {
 
           client = new Nimvelo();
           listObject = newListObject(client);
+          skipTests = unavailableMethods.indexOf('create') >= 0;
 
         });
 
         it('method exists', function() {
+          if (skipTests) this.skip();
           assert.equal(typeof listObject.create, 'function');
         });
 
         it('returns a ${NvObject} object', function() {
+
+          if (skipTests) this.skip();
 
           const newObject = listObject.create();
 
@@ -378,6 +385,8 @@ module.exports = function(testParams) {
         });
 
         it('accepts an object of properties and sets them on the initialized object ', function() {
+
+          if (skipTests) this.skip();
 
           const properties = {
             testProperty1: 'test',
@@ -412,6 +421,8 @@ module.exports = function(testParams) {
 
         it('cannot have it\'s type overridden on initialization', function() {
 
+          if (skipTests) this.skip();
+
           const objectWrongType = listObject.create({
             type: 'INCORRECT_TYPE'
           });
@@ -424,6 +435,8 @@ module.exports = function(testParams) {
         });
 
         it('cannot have it\'s id overridden on initialization', function() {
+
+          if (skipTests) this.skip();
 
           const objectWrongId = listObject.create({
             id: 'INCORRECT_ID'

@@ -18,6 +18,12 @@ var PhonenumberList = (function (_RepresentationList) {
 
     _this.type = 'phonenumberList';
     _this.itemType = 'phonenumber';
+
+    _this.unavailableMethods = ['create'];
+    _this.unavailableMethods.forEach(function (method) {
+      return _this[method] = undefined;
+    });
+
     return _this;
   }
 
