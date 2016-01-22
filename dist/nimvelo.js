@@ -372,7 +372,7 @@ var Nimvelo = (function () {
 
         path = this._pathForType(type, object.parent.id);
 
-        url += path ? path + '/' : '';
+        url = (path ? path + '/' : '') + url;
         url = this._buildUrlSection(object.parent.type, object.parent, url);
       } else {
 
