@@ -73,31 +73,8 @@ var Nimvelo = (function () {
   }
 
   _createClass(Nimvelo, [{
-    key: '_buildUrl',
-    value: function _buildUrl(base, type, customerId, resourceId) {
-
-      // Build the url based on the base and the type
-
-      var bases = {
-        rest: this.options.restBase,
-        stream: this.options.streamBase
-      };
-
-      // If we've been given a valid base, use it, else default to rest
-      var baseUrl = bases.hasOwnProperty(base) ? bases[base] : bases.rest;
-      var path = this._pathForType(type, customerId);
-
-      // Let's build our URL
-      var url = baseUrl;
-
-      url += path ? path + '/' : '';
-      url += resourceId ? resourceId + '/' : '';
-
-      return url;
-    }
-  }, {
     key: '_pathForType',
-    value: function _pathForType(type, customerId) {
+    value: function _pathForType(type, id) {
 
       var path = '';
       var normalizedType = type.toLowerCase();
@@ -107,18 +84,18 @@ var Nimvelo = (function () {
           // Use the default base REST URL
           break;
         case 'customer':
-          path = customerId || '';
+          path = id || '';
           break;
         case 'phonebookentry':
-          path = customerId + '/phonebook';
+          path = id + '/phonebook';
           break;
         case 'smsmessage':
-          path = customerId + '/sms';
+          path = id + '/sms';
           break;
         case 'sound':
         case 'prompt':
         case 'music':
-          path = customerId + '/sounds';
+          path = id + '/sounds';
           break;
         case 'callbundle':
         case 'call':
@@ -128,10 +105,10 @@ var Nimvelo = (function () {
         case 'phonenumber':
         case 'recording':
         case 'timeinterval':
-          path = customerId + '/' + normalizedType + 's';
+          path = id + '/' + normalizedType + 's';
           break;
         default:
-          path = customerId + '/' + normalizedType + 's';
+          path = id + '/' + normalizedType + 's';
           break;
       }
 
@@ -157,7 +134,7 @@ var Nimvelo = (function () {
     }
   }, {
     key: '_objectFromItem',
-    value: function _objectFromItem(item) {
+    value: function _objectFromItem(item, parent) {
 
       if (typeof item === 'undefined' || !item.hasOwnProperty('type')) {
         return item;
@@ -170,31 +147,31 @@ var Nimvelo = (function () {
       switch (item.type) {
         /* eslint no-use-before-define: 0 */
         case 'call':
-          object = new Call(this, item);
+          object = new Call(this, item, parent);
           break;
         case 'customer':
           object = new Customer(this, item);
           break;
         case 'did':
-          object = new Phonenumber(this, item);
+          object = new Phonenumber(this, item, parent);
           break;
         case 'music':
-          object = new Music(this, item);
+          object = new Music(this, item, parent);
           break;
         case 'outgoingcallerid':
-          object = new Outgoingcallerid(this, item);
+          object = new Outgoingcallerid(this, item, parent);
           break;
         case 'phonebookentry':
-          object = new Phonebookentry(this, item);
+          object = new Phonebookentry(this, item, parent);
           break;
         case 'prompt':
-          object = new Prompt(this, item);
+          object = new Prompt(this, item, parent);
           break;
         case 'recording':
-          object = new Recording(this, item);
+          object = new Recording(this, item, parent);
           break;
         case 'smsmessage':
-          object = new Smsmessage(this, item);
+          object = new Smsmessage(this, item, parent);
           break;
         default:
           break;
@@ -204,15 +181,15 @@ var Nimvelo = (function () {
     }
   }, {
     key: '_buildObjects',
-    value: function _buildObjects(items) {
+    value: function _buildObjects(items, parent) {
       var _this = this;
 
       // Builds an array of class objects from a given array of items,
       // or returns a single class object if we only give it one object
 
       return Array.isArray(items) ? items.map(function (item) {
-        return _this._objectFromItem(item);
-      }) : this._objectFromItem(items);
+        return _this._objectFromItem(item, parent);
+      }) : this._objectFromItem(items, parent);
     }
   }, {
     key: '_setCustomerIdOnObjects',
@@ -236,87 +213,24 @@ var Nimvelo = (function () {
     }
   }, {
     key: '_request',
-    value: function _request(method, resource) {
+    value: function _request(method, url, json, callback) {
       var _this2 = this;
 
-      var customerId = undefined;
-      var resourceId = undefined;
-      var params = {};
-      var callback = undefined;
+      /* eslint no-param-reassign:0 */
 
-      var base = 'rest';
-      var options = undefined;
+      // Normalize method
+      method = method.toLowerCase();
 
-      var normalizedMethod = method.toLowerCase();
-
-      // Iterate through the given arguments assigning them accordingly
-      // The ID is a string or a number
-      // The object is the params
-      // The function is the callback
-
-      for (var _len = arguments.length, args = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
-        args[_key - 2] = arguments[_key];
+      if (typeof json === 'function') {
+        callback = json;
+        json = null;
       }
 
-      if (Array.isArray(args)) {
-
-        args.forEach(function (arg) {
-
-          switch (typeof arg === 'undefined' ? 'undefined' : _typeof(arg)) {
-            case 'string':
-            case 'number':
-              if (typeof customerId === 'undefined') {
-                customerId = arg;
-              } else {
-                resourceId = arg;
-              }
-              break;
-            case 'object':
-              params = arg;
-              break;
-            case 'function':
-              callback = arg;
-              break;
-            default:
-              break;
-          }
-        });
-      }
-
-      // Build the options to pass to our custom request object
-
-      if (normalizedMethod === 'get') {
-
-        options = {
-          method: 'get',
-          url: this._buildUrl(base, resource, customerId, resourceId), // Generate url
-          qs: extend(params, this._paramsForType(resource))
-        };
-      } else if (normalizedMethod === 'put') {
-
-        // If we're PUTting, the params become the body
-
-        options = {
-          method: 'put',
-          url: this._buildUrl(base, resource, customerId, resourceId), // Generate url
-          json: params
-        };
-      } else if (normalizedMethod === 'post') {
-
-        // If we're POSTting, the params become the body
-
-        options = {
-          method: 'post',
-          url: this._buildUrl(base, resource, customerId), // Generate url
-          json: params
-        };
-      } else if (normalizedMethod === 'delete') {
-
-        options = {
-          method: 'delete',
-          url: this._buildUrl(base, resource, customerId, resourceId) // Generate url
-        };
-      }
+      var options = {
+        method: method,
+        url: url,
+        json: json
+      };
 
       return new Promise(function (resolve, reject) {
 
@@ -372,53 +286,143 @@ var Nimvelo = (function () {
       }).nodeify(callback);
     }
   }, {
+    key: '_buildUrl',
+    value: function _buildUrl(type, object) {
+
+      var url = undefined;
+      var id = undefined;
+      var params = undefined;
+
+      for (var _len = arguments.length, args = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+        args[_key - 2] = arguments[_key];
+      }
+
+      args.forEach(function (arg) {
+
+        switch (typeof arg === 'undefined' ? 'undefined' : _typeof(arg)) {
+          case 'string':
+          case 'number':
+            id = arg;
+            break;
+          case 'object':
+            params = arg;
+            break;
+          default:
+            break;
+        }
+      });
+
+      // if (type !== 'customer') {
+      //
+      //   console.log('');
+      //   console.log('type: ', type);
+      //   console.log('object: ', object);
+      //   console.log('params: ', params);
+      //   console.log('id: ', id);
+      //   console.log('');
+      //
+      // }
+
+      extend(params, this._paramsForType(type));
+
+      url = this._buildUrlSection(type, object);
+
+      url += typeof id !== 'undefined' ? id + '/' : '';
+      url += typeof params !== 'undefined' ? this._paramsToQueryString(params) + '/' : '';
+
+      return url;
+    }
+  }, {
+    key: '_paramsToQueryString',
+    value: function _paramsToQueryString(params) {
+
+      if ((typeof params === 'undefined' ? 'undefined' : _typeof(params)) === 'object') {
+
+        var string = Object.keys(params).reduce(function (prev, key, index) {
+
+          var startChar = '&';
+
+          if (index === 0) {
+            startChar = '?';
+          }
+
+          return '' + prev + startChar + key + '=' + params[key];
+        }, '');
+
+        return string;
+      } else if (typeof params === 'string') {
+
+        return params;
+      } else {
+
+        return '';
+      }
+    }
+  }, {
+    key: '_buildUrlSection',
+    value: function _buildUrlSection(type, object) {
+      var url = arguments.length <= 2 || arguments[2] === undefined ? '' : arguments[2];
+
+      /* eslint no-param-reassign:0 */
+
+      var path = undefined;
+      var baseUrl = this.options.restBase;
+
+      if (object.parent) {
+
+        path = this._pathForType(type, object.parent.id);
+
+        url += path ? path + '/' : '';
+        url = this._buildUrlSection(object.parent.type, object.parent, url);
+      } else {
+
+        path = this._pathForType(type);
+
+        url = baseUrl + (path ? path + '/' : '') + (url ? url : '');
+      }
+
+      return url;
+    }
+  }, {
     key: '_getResource',
-    value: function _getResource(type) {
+    value: function _getResource(type, object) {
       var _this3 = this;
 
-      var customerId = undefined;
-      var resourceId = undefined;
+      var id = undefined;
       var params = undefined;
       var callback = undefined;
 
-      for (var _len2 = arguments.length, args = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-        args[_key2 - 1] = arguments[_key2];
+      for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+        args[_key2 - 2] = arguments[_key2];
       }
 
-      if (Array.isArray(args)) {
+      args.forEach(function (arg) {
 
-        args.forEach(function (arg) {
+        switch (typeof arg === 'undefined' ? 'undefined' : _typeof(arg)) {
+          case 'string':
+          case 'number':
+            id = arg;
+            break;
+          case 'object':
+            params = arg;
+            break;
+          case 'function':
+            callback = arg;
+            break;
+          default:
+            break;
+        }
+      });
 
-          switch (typeof arg === 'undefined' ? 'undefined' : _typeof(arg)) {
-            case 'string':
-            case 'number':
-              if (typeof customerId === 'undefined') {
-                customerId = arg;
-              } else {
-                resourceId = arg;
-              }
-              break;
-            case 'object':
-              params = arg;
-              break;
-            case 'function':
-              callback = arg;
-              break;
-            default:
-              break;
-          }
-        });
-      }
+      var url = this._buildUrl(type, object, id, params);
 
       return new Promise(function (resolve, reject) {
 
-        _this3._request('get', type, customerId, resourceId, params).then(function (data) {
+        _this3._request('get', url).then(function (data) {
 
           if (data.hasOwnProperty('items')) {
 
-            var items = _this3._buildObjects(data.items);
-
-            items = _this3._setCustomerIdOnObjects(items, customerId);
+            var items = _this3._buildObjects(data.items, object.parent);
 
             delete data.items;
 
@@ -427,11 +431,7 @@ var Nimvelo = (function () {
             resolve({ meta: meta, items: items });
           } else {
 
-            var item = _this3._buildObjects(data);
-
-            item = _this3._setCustomerIdOnObjects(item, customerId);
-
-            resolve(_this3._buildObjects(data));
+            resolve(_this3._buildObjects(data, object.parent));
           }
         }, function (error) {
 

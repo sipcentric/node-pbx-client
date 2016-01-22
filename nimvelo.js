@@ -6,19 +6,15 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var extend = require('deep-extend');
-
 var Representation = require('./representation');
 
 var Call = (function (_Representation) {
   _inherits(Call, _Representation);
 
-  function Call(client, item, customerId) {
+  function Call(client, properties, parent) {
     _classCallCheck(this, Call);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Call).call(this, client, customerId));
-
-    extend(_this, item);
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Call).call(this, client, properties, parent));
 
     _this.type = 'call';
 
@@ -42,10 +38,10 @@ var RepresentationList = require('./representationList');
 var CallList = (function (_RepresentationList) {
   _inherits(CallList, _RepresentationList);
 
-  function CallList(client, customerId) {
+  function CallList(client, parent) {
     _classCallCheck(this, CallList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CallList).call(this, client, customerId));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CallList).call(this, client, parent));
 
     _this.type = 'callList';
     _this.itemType = 'call';
@@ -101,15 +97,15 @@ var Customer = (function (_Representation) {
 
     _this.customerId = item.id;
 
-    _this.calls = new CallList(_this.client, _this.customerId);
-    _this.music = new MusicList(_this.client, _this.customerId);
-    _this.outgoingcallerids = new OutgoingcalleridList(_this.client, _this.customerId);
-    _this.phonebook = new PhonebookentryList(_this.client, _this.customerId);
-    _this.phonenumbers = new PhonenumberList(_this.client, _this.customerId);
-    _this.prompts = new PromptList(_this.client, _this.customerId);
-    _this.recordings = new RecordingList(_this.client, _this.customerId);
-    _this.smsmessages = new SmsmessageList(_this.client, _this.customerId);
-    _this.sounds = new SoundList(_this.client, _this.customerId);
+    _this.calls = new CallList(_this.client, _this);
+    _this.music = new MusicList(_this.client, _this);
+    _this.outgoingcallerids = new OutgoingcalleridList(_this.client, _this);
+    _this.phonebook = new PhonebookentryList(_this.client, _this);
+    _this.phonenumbers = new PhonenumberList(_this.client, _this);
+    _this.prompts = new PromptList(_this.client, _this);
+    _this.recordings = new RecordingList(_this.client, _this);
+    _this.smsmessages = new SmsmessageList(_this.client, _this);
+    _this.sounds = new SoundList(_this.client, _this);
 
     _this.unavailableMethods = ['delete'];
     _this.unavailableMethods.forEach(function (method) {
@@ -129,21 +125,21 @@ var Customer = (function (_Representation) {
 
       switch (type) {
         case 'call':
-          return new Call(this.client, properties, this.customerId);
+          return new Call(this.client, properties, this);
         case 'music':
-          return new Music(this.client, properties, this.customerId);
+          return new Music(this.client, properties, this);
         case 'outgoingcallerid':
-          return new Outgoingcallerid(this.client, properties, this.customerId);
+          return new Outgoingcallerid(this.client, properties, this);
         case 'phonebookentry':
-          return new Phonebookentry(this.client, properties, this.customerId);
+          return new Phonebookentry(this.client, properties, this);
         case 'phonenumber':
-          return new Phonenumber(this.client, properties, this.customerId);
+          return new Phonenumber(this.client, properties, this);
         case 'prompt':
-          return new Prompt(this.client, properties, this.customerId);
+          return new Prompt(this.client, properties, this);
         case 'recording':
-          return new Recording(this.client, properties, this.customerId);
+          return new Recording(this.client, properties, this);
         case 'smsmessage':
-          return new Smsmessage(this.client, properties, this.customerId);
+          return new Smsmessage(this.client, properties, this);
         default:
           return false;
       }
@@ -191,19 +187,15 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var extend = require('deep-extend');
-
 var Representation = require('./representation');
 
 var Music = (function (_Representation) {
   _inherits(Music, _Representation);
 
-  function Music(client, item, customerId) {
+  function Music(client, properties, parent) {
     _classCallCheck(this, Music);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Music).call(this, client, customerId));
-
-    extend(_this, item);
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Music).call(this, client, properties, parent));
 
     _this.type = 'music';
 
@@ -227,10 +219,10 @@ var RepresentationList = require('./representationList');
 var MusicList = (function (_RepresentationList) {
   _inherits(MusicList, _RepresentationList);
 
-  function MusicList(client, customerId) {
+  function MusicList(client, parent) {
     _classCallCheck(this, MusicList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(MusicList).call(this, client, customerId));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(MusicList).call(this, client, parent));
 
     _this.type = 'musicList';
     _this.itemType = 'music';
@@ -316,31 +308,8 @@ var Nimvelo = (function () {
   }
 
   _createClass(Nimvelo, [{
-    key: '_buildUrl',
-    value: function _buildUrl(base, type, customerId, resourceId) {
-
-      // Build the url based on the base and the type
-
-      var bases = {
-        rest: this.options.restBase,
-        stream: this.options.streamBase
-      };
-
-      // If we've been given a valid base, use it, else default to rest
-      var baseUrl = bases.hasOwnProperty(base) ? bases[base] : bases.rest;
-      var path = this._pathForType(type, customerId);
-
-      // Let's build our URL
-      var url = baseUrl;
-
-      url += path ? path + '/' : '';
-      url += resourceId ? resourceId + '/' : '';
-
-      return url;
-    }
-  }, {
     key: '_pathForType',
-    value: function _pathForType(type, customerId) {
+    value: function _pathForType(type, id) {
 
       var path = '';
       var normalizedType = type.toLowerCase();
@@ -350,18 +319,18 @@ var Nimvelo = (function () {
           // Use the default base REST URL
           break;
         case 'customer':
-          path = customerId || '';
+          path = id || '';
           break;
         case 'phonebookentry':
-          path = customerId + '/phonebook';
+          path = id + '/phonebook';
           break;
         case 'smsmessage':
-          path = customerId + '/sms';
+          path = id + '/sms';
           break;
         case 'sound':
         case 'prompt':
         case 'music':
-          path = customerId + '/sounds';
+          path = id + '/sounds';
           break;
         case 'callbundle':
         case 'call':
@@ -371,10 +340,10 @@ var Nimvelo = (function () {
         case 'phonenumber':
         case 'recording':
         case 'timeinterval':
-          path = customerId + '/' + normalizedType + 's';
+          path = id + '/' + normalizedType + 's';
           break;
         default:
-          path = customerId + '/' + normalizedType + 's';
+          path = id + '/' + normalizedType + 's';
           break;
       }
 
@@ -400,7 +369,7 @@ var Nimvelo = (function () {
     }
   }, {
     key: '_objectFromItem',
-    value: function _objectFromItem(item) {
+    value: function _objectFromItem(item, parent) {
 
       if (typeof item === 'undefined' || !item.hasOwnProperty('type')) {
         return item;
@@ -413,31 +382,31 @@ var Nimvelo = (function () {
       switch (item.type) {
         /* eslint no-use-before-define: 0 */
         case 'call':
-          object = new Call(this, item);
+          object = new Call(this, item, parent);
           break;
         case 'customer':
           object = new Customer(this, item);
           break;
         case 'did':
-          object = new Phonenumber(this, item);
+          object = new Phonenumber(this, item, parent);
           break;
         case 'music':
-          object = new Music(this, item);
+          object = new Music(this, item, parent);
           break;
         case 'outgoingcallerid':
-          object = new Outgoingcallerid(this, item);
+          object = new Outgoingcallerid(this, item, parent);
           break;
         case 'phonebookentry':
-          object = new Phonebookentry(this, item);
+          object = new Phonebookentry(this, item, parent);
           break;
         case 'prompt':
-          object = new Prompt(this, item);
+          object = new Prompt(this, item, parent);
           break;
         case 'recording':
-          object = new Recording(this, item);
+          object = new Recording(this, item, parent);
           break;
         case 'smsmessage':
-          object = new Smsmessage(this, item);
+          object = new Smsmessage(this, item, parent);
           break;
         default:
           break;
@@ -447,15 +416,15 @@ var Nimvelo = (function () {
     }
   }, {
     key: '_buildObjects',
-    value: function _buildObjects(items) {
+    value: function _buildObjects(items, parent) {
       var _this = this;
 
       // Builds an array of class objects from a given array of items,
       // or returns a single class object if we only give it one object
 
       return Array.isArray(items) ? items.map(function (item) {
-        return _this._objectFromItem(item);
-      }) : this._objectFromItem(items);
+        return _this._objectFromItem(item, parent);
+      }) : this._objectFromItem(items, parent);
     }
   }, {
     key: '_setCustomerIdOnObjects',
@@ -479,87 +448,24 @@ var Nimvelo = (function () {
     }
   }, {
     key: '_request',
-    value: function _request(method, resource) {
+    value: function _request(method, url, json, callback) {
       var _this2 = this;
 
-      var customerId = undefined;
-      var resourceId = undefined;
-      var params = {};
-      var callback = undefined;
+      /* eslint no-param-reassign:0 */
 
-      var base = 'rest';
-      var options = undefined;
+      // Normalize method
+      method = method.toLowerCase();
 
-      var normalizedMethod = method.toLowerCase();
-
-      // Iterate through the given arguments assigning them accordingly
-      // The ID is a string or a number
-      // The object is the params
-      // The function is the callback
-
-      for (var _len = arguments.length, args = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
-        args[_key - 2] = arguments[_key];
+      if (typeof json === 'function') {
+        callback = json;
+        json = null;
       }
 
-      if (Array.isArray(args)) {
-
-        args.forEach(function (arg) {
-
-          switch (typeof arg === 'undefined' ? 'undefined' : _typeof(arg)) {
-            case 'string':
-            case 'number':
-              if (typeof customerId === 'undefined') {
-                customerId = arg;
-              } else {
-                resourceId = arg;
-              }
-              break;
-            case 'object':
-              params = arg;
-              break;
-            case 'function':
-              callback = arg;
-              break;
-            default:
-              break;
-          }
-        });
-      }
-
-      // Build the options to pass to our custom request object
-
-      if (normalizedMethod === 'get') {
-
-        options = {
-          method: 'get',
-          url: this._buildUrl(base, resource, customerId, resourceId), // Generate url
-          qs: extend(params, this._paramsForType(resource))
-        };
-      } else if (normalizedMethod === 'put') {
-
-        // If we're PUTting, the params become the body
-
-        options = {
-          method: 'put',
-          url: this._buildUrl(base, resource, customerId, resourceId), // Generate url
-          json: params
-        };
-      } else if (normalizedMethod === 'post') {
-
-        // If we're POSTting, the params become the body
-
-        options = {
-          method: 'post',
-          url: this._buildUrl(base, resource, customerId), // Generate url
-          json: params
-        };
-      } else if (normalizedMethod === 'delete') {
-
-        options = {
-          method: 'delete',
-          url: this._buildUrl(base, resource, customerId, resourceId) // Generate url
-        };
-      }
+      var options = {
+        method: method,
+        url: url,
+        json: json
+      };
 
       return new Promise(function (resolve, reject) {
 
@@ -615,53 +521,143 @@ var Nimvelo = (function () {
       }).nodeify(callback);
     }
   }, {
+    key: '_buildUrl',
+    value: function _buildUrl(type, object) {
+
+      var url = undefined;
+      var id = undefined;
+      var params = undefined;
+
+      for (var _len = arguments.length, args = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+        args[_key - 2] = arguments[_key];
+      }
+
+      args.forEach(function (arg) {
+
+        switch (typeof arg === 'undefined' ? 'undefined' : _typeof(arg)) {
+          case 'string':
+          case 'number':
+            id = arg;
+            break;
+          case 'object':
+            params = arg;
+            break;
+          default:
+            break;
+        }
+      });
+
+      // if (type !== 'customer') {
+      //
+      //   console.log('');
+      //   console.log('type: ', type);
+      //   console.log('object: ', object);
+      //   console.log('params: ', params);
+      //   console.log('id: ', id);
+      //   console.log('');
+      //
+      // }
+
+      extend(params, this._paramsForType(type));
+
+      url = this._buildUrlSection(type, object);
+
+      url += typeof id !== 'undefined' ? id + '/' : '';
+      url += typeof params !== 'undefined' ? this._paramsToQueryString(params) + '/' : '';
+
+      return url;
+    }
+  }, {
+    key: '_paramsToQueryString',
+    value: function _paramsToQueryString(params) {
+
+      if ((typeof params === 'undefined' ? 'undefined' : _typeof(params)) === 'object') {
+
+        var string = Object.keys(params).reduce(function (prev, key, index) {
+
+          var startChar = '&';
+
+          if (index === 0) {
+            startChar = '?';
+          }
+
+          return '' + prev + startChar + key + '=' + params[key];
+        }, '');
+
+        return string;
+      } else if (typeof params === 'string') {
+
+        return params;
+      } else {
+
+        return '';
+      }
+    }
+  }, {
+    key: '_buildUrlSection',
+    value: function _buildUrlSection(type, object) {
+      var url = arguments.length <= 2 || arguments[2] === undefined ? '' : arguments[2];
+
+      /* eslint no-param-reassign:0 */
+
+      var path = undefined;
+      var baseUrl = this.options.restBase;
+
+      if (object.parent) {
+
+        path = this._pathForType(type, object.parent.id);
+
+        url += path ? path + '/' : '';
+        url = this._buildUrlSection(object.parent.type, object.parent, url);
+      } else {
+
+        path = this._pathForType(type);
+
+        url = baseUrl + (path ? path + '/' : '') + (url ? url : '');
+      }
+
+      return url;
+    }
+  }, {
     key: '_getResource',
-    value: function _getResource(type) {
+    value: function _getResource(type, object) {
       var _this3 = this;
 
-      var customerId = undefined;
-      var resourceId = undefined;
+      var id = undefined;
       var params = undefined;
       var callback = undefined;
 
-      for (var _len2 = arguments.length, args = Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
-        args[_key2 - 1] = arguments[_key2];
+      for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+        args[_key2 - 2] = arguments[_key2];
       }
 
-      if (Array.isArray(args)) {
+      args.forEach(function (arg) {
 
-        args.forEach(function (arg) {
+        switch (typeof arg === 'undefined' ? 'undefined' : _typeof(arg)) {
+          case 'string':
+          case 'number':
+            id = arg;
+            break;
+          case 'object':
+            params = arg;
+            break;
+          case 'function':
+            callback = arg;
+            break;
+          default:
+            break;
+        }
+      });
 
-          switch (typeof arg === 'undefined' ? 'undefined' : _typeof(arg)) {
-            case 'string':
-            case 'number':
-              if (typeof customerId === 'undefined') {
-                customerId = arg;
-              } else {
-                resourceId = arg;
-              }
-              break;
-            case 'object':
-              params = arg;
-              break;
-            case 'function':
-              callback = arg;
-              break;
-            default:
-              break;
-          }
-        });
-      }
+      var url = this._buildUrl(type, object, id, params);
 
       return new Promise(function (resolve, reject) {
 
-        _this3._request('get', type, customerId, resourceId, params).then(function (data) {
+        _this3._request('get', url).then(function (data) {
 
           if (data.hasOwnProperty('items')) {
 
-            var items = _this3._buildObjects(data.items);
-
-            items = _this3._setCustomerIdOnObjects(items, customerId);
+            var items = _this3._buildObjects(data.items, object.parent);
 
             delete data.items;
 
@@ -670,11 +666,7 @@ var Nimvelo = (function () {
             resolve({ meta: meta, items: items });
           } else {
 
-            var item = _this3._buildObjects(data);
-
-            item = _this3._setCustomerIdOnObjects(item, customerId);
-
-            resolve(_this3._buildObjects(data));
+            resolve(_this3._buildObjects(data, object.parent));
           }
         }, function (error) {
 
@@ -696,19 +688,15 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var extend = require('deep-extend');
-
 var Representation = require('./representation');
 
 var Outgoingcallerid = (function (_Representation) {
   _inherits(Outgoingcallerid, _Representation);
 
-  function Outgoingcallerid(client, item, customerId) {
+  function Outgoingcallerid(client, properties, parent) {
     _classCallCheck(this, Outgoingcallerid);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Outgoingcallerid).call(this, client, customerId));
-
-    extend(_this, item);
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Outgoingcallerid).call(this, client, properties, parent));
 
     _this.type = 'outgoingcallerid';
 
@@ -737,10 +725,10 @@ var RepresentationList = require('./representationList');
 var OutgoingcalleridList = (function (_RepresentationList) {
   _inherits(OutgoingcalleridList, _RepresentationList);
 
-  function OutgoingcalleridList(client, customerId) {
+  function OutgoingcalleridList(client, parent) {
     _classCallCheck(this, OutgoingcalleridList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(OutgoingcalleridList).call(this, client, customerId));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(OutgoingcalleridList).call(this, client, parent));
 
     _this.type = 'outgoingcalleridList';
     _this.itemType = 'outgoingcallerid';
@@ -759,19 +747,15 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var extend = require('deep-extend');
-
 var Representation = require('./representation');
 
 var Phonebookentry = (function (_Representation) {
   _inherits(Phonebookentry, _Representation);
 
-  function Phonebookentry(client, item, customerId) {
+  function Phonebookentry(client, properties, parent) {
     _classCallCheck(this, Phonebookentry);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Phonebookentry).call(this, client, customerId));
-
-    extend(_this, item);
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Phonebookentry).call(this, client, properties, parent));
 
     _this.type = 'phonebookentry';
 
@@ -795,10 +779,10 @@ var RepresentationList = require('./representationList');
 var PhonebookentryList = (function (_RepresentationList) {
   _inherits(PhonebookentryList, _RepresentationList);
 
-  function PhonebookentryList(client, customerId) {
+  function PhonebookentryList(client, parent) {
     _classCallCheck(this, PhonebookentryList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PhonebookentryList).call(this, client, customerId));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PhonebookentryList).call(this, client, parent));
 
     _this.type = 'phonebookentryList';
     _this.itemType = 'phonebookentry';
@@ -817,19 +801,15 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var extend = require('deep-extend');
-
 var Representation = require('./representation');
 
 var Phonenumber = (function (_Representation) {
   _inherits(Phonenumber, _Representation);
 
-  function Phonenumber(client, item, customerId) {
+  function Phonenumber(client, properties, parent) {
     _classCallCheck(this, Phonenumber);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Phonenumber).call(this, client, customerId));
-
-    extend(_this, item);
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Phonenumber).call(this, client, properties, parent));
 
     _this.type = 'phonenumber';
 
@@ -853,10 +833,10 @@ var RepresentationList = require('./representationList');
 var PhonenumberList = (function (_RepresentationList) {
   _inherits(PhonenumberList, _RepresentationList);
 
-  function PhonenumberList(client, customerId) {
+  function PhonenumberList(client, parent) {
     _classCallCheck(this, PhonenumberList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PhonenumberList).call(this, client, customerId));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PhonenumberList).call(this, client, parent));
 
     _this.type = 'phonenumberList';
     _this.itemType = 'phonenumber';
@@ -881,19 +861,15 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var extend = require('deep-extend');
-
 var Representation = require('./representation');
 
 var Prompt = (function (_Representation) {
   _inherits(Prompt, _Representation);
 
-  function Prompt(client, item, customerId) {
+  function Prompt(client, properties, parent) {
     _classCallCheck(this, Prompt);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Prompt).call(this, client, customerId));
-
-    extend(_this, item);
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Prompt).call(this, client, properties, parent));
 
     _this.type = 'prompt';
 
@@ -917,10 +893,10 @@ var RepresentationList = require('./representationList');
 var PromptList = (function (_RepresentationList) {
   _inherits(PromptList, _RepresentationList);
 
-  function PromptList(client, customerId) {
+  function PromptList(client, parent) {
     _classCallCheck(this, PromptList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PromptList).call(this, client, customerId));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PromptList).call(this, client, parent));
 
     _this.type = 'promptList';
     _this.itemType = 'prompt';
@@ -939,19 +915,15 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var extend = require('deep-extend');
-
 var Representation = require('./representation');
 
 var Recording = (function (_Representation) {
   _inherits(Recording, _Representation);
 
-  function Recording(client, item, customerId) {
+  function Recording(client, properties, parent) {
     _classCallCheck(this, Recording);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Recording).call(this, client, customerId));
-
-    extend(_this, item);
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Recording).call(this, client, properties, parent));
 
     _this.type = 'recording';
 
@@ -980,10 +952,10 @@ var RepresentationList = require('./representationList');
 var RecordingList = (function (_RepresentationList) {
   _inherits(RecordingList, _RepresentationList);
 
-  function RecordingList(client, customerId) {
+  function RecordingList(client, parent) {
     _classCallCheck(this, RecordingList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(RecordingList).call(this, client, customerId));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(RecordingList).call(this, client, parent));
 
     _this.type = 'recordingList';
     _this.itemType = 'recording';
@@ -1003,11 +975,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var extend = require('deep-extend');
 
 var Representation = (function () {
-  function Representation(client, customerId) {
+  function Representation(client, properties, parent) {
     _classCallCheck(this, Representation);
 
     this.client = client;
-    this.customerId = customerId;
+    extend(this, properties);
+    this.parent = parent;
   }
 
   _createClass(Representation, [{
@@ -1080,22 +1053,22 @@ function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.const
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var RepresentationList = (function () {
-  function RepresentationList(client, customerId) {
+  function RepresentationList(client, parent) {
     _classCallCheck(this, RepresentationList);
 
     this.client = client;
-    this.customerId = customerId;
+    this.parent = parent;
   }
 
   _createClass(RepresentationList, [{
     key: 'list',
     value: function list(params, callback) {
-      return this.client._getResource(this.itemType, this.customerId, params, callback);
+      return this.client._getResource(this.itemType, this, params, callback);
     }
   }, {
     key: 'find',
     value: function find(id, params, callback) {
-      return this.client._getResource(this.itemType, this.customerId, id, params, callback);
+      return this.client._getResource(this.itemType, this, id, params, callback);
     }
   }, {
     key: 'create',
@@ -1128,19 +1101,15 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var extend = require('deep-extend');
-
 var Representation = require('./representation');
 
 var Smsmessage = (function (_Representation) {
   _inherits(Smsmessage, _Representation);
 
-  function Smsmessage(client, item, customerId) {
+  function Smsmessage(client, properties, parent) {
     _classCallCheck(this, Smsmessage);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Smsmessage).call(this, client, customerId));
-
-    extend(_this, item);
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Smsmessage).call(this, client, properties, parent));
 
     _this.type = 'smsmessage';
 
@@ -1169,10 +1138,10 @@ var RepresentationList = require('./representationList');
 var SmsmessageList = (function (_RepresentationList) {
   _inherits(SmsmessageList, _RepresentationList);
 
-  function SmsmessageList(client, customerId) {
+  function SmsmessageList(client, parent) {
     _classCallCheck(this, SmsmessageList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SmsmessageList).call(this, client, customerId));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SmsmessageList).call(this, client, parent));
 
     _this.type = 'smsmessageList';
     _this.itemType = 'smsmessage';
@@ -1196,10 +1165,10 @@ var RepresentationList = require('./representationList');
 var SoundList = (function (_RepresentationList) {
   _inherits(SoundList, _RepresentationList);
 
-  function SoundList(client, customerId) {
+  function SoundList(client, parent) {
     _classCallCheck(this, SoundList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SoundList).call(this, client, customerId));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SoundList).call(this, client, parent));
 
     _this.type = 'soundList';
     _this.itemType = 'sound';

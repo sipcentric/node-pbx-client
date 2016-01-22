@@ -41,8 +41,8 @@ gulp.task('test', ['babel'], function() {
 
 
 gulp.task('watch', function() {
-  gulp.watch('lib/**/*.js', ['test']);
-  gulp.watch('test/**/*.js', ['test']);
+  gulp.watch('lib/**/*.js', ['babel']);
+  gulp.watch('test/**/*.js', ['babel']);
 });
 
 

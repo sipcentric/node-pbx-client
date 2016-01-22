@@ -7,11 +7,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var extend = require('deep-extend');
 
 var Representation = (function () {
-  function Representation(client, customerId) {
+  function Representation(client, properties, parent) {
     _classCallCheck(this, Representation);
 
     this.client = client;
-    this.customerId = customerId;
+    extend(this, properties);
+    this.parent = parent;
   }
 
   _createClass(Representation, [{

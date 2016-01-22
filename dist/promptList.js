@@ -11,10 +11,10 @@ var RepresentationList = require('./representationList');
 var PromptList = (function (_RepresentationList) {
   _inherits(PromptList, _RepresentationList);
 
-  function PromptList(client, customerId) {
+  function PromptList(client, parent) {
     _classCallCheck(this, PromptList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PromptList).call(this, client, customerId));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PromptList).call(this, client, parent));
 
     _this.type = 'promptList';
     _this.itemType = 'prompt';

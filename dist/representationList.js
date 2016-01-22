@@ -7,22 +7,22 @@ function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.const
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var RepresentationList = (function () {
-  function RepresentationList(client, customerId) {
+  function RepresentationList(client, parent) {
     _classCallCheck(this, RepresentationList);
 
     this.client = client;
-    this.customerId = customerId;
+    this.parent = parent;
   }
 
   _createClass(RepresentationList, [{
     key: 'list',
     value: function list(params, callback) {
-      return this.client._getResource(this.itemType, this.customerId, params, callback);
+      return this.client._getResource(this.itemType, this, params, callback);
     }
   }, {
     key: 'find',
     value: function find(id, params, callback) {
-      return this.client._getResource(this.itemType, this.customerId, id, params, callback);
+      return this.client._getResource(this.itemType, this, id, params, callback);
     }
   }, {
     key: 'create',
