@@ -7,24 +7,21 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Representation = require('./representation');
-var RoutingruleList = require('./routingruleList');
 
-var Phonenumber = (function (_Representation) {
-  _inherits(Phonenumber, _Representation);
+var Routingrule = (function (_Representation) {
+  _inherits(Routingrule, _Representation);
 
-  function Phonenumber(client, properties, parent) {
-    _classCallCheck(this, Phonenumber);
+  function Routingrule(client, properties, parent) {
+    _classCallCheck(this, Routingrule);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Phonenumber).call(this, client, properties, parent));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Routingrule).call(this, client, properties, parent));
 
-    _this.type = 'phonenumber';
-
-    _this.routingrules = new RoutingruleList(_this.client, _this);
+    _this.type = 'routingrule';
 
     return _this;
   }
 
-  return Phonenumber;
+  return Routingrule;
 })(Representation);
 
-module.exports = Phonenumber;
+module.exports = Routingrule;
