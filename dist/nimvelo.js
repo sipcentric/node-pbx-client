@@ -19,6 +19,7 @@ var Phonenumber = require('./phonenumber');
 var Prompt = require('./prompt');
 var Stream = require('./stream');
 var Recording = require('./recording');
+var Routingrule = require('./routingrule');
 var Smsmessage = require('./smsmessage');
 
 // Promise + callback polyfill
@@ -97,16 +98,6 @@ var Nimvelo = (function () {
         case 'music':
           path = id + '/sounds';
           break;
-        case 'callbundle':
-        case 'call':
-        case 'creditstatus':
-        case 'endpoint':
-        case 'outgoingcallerid':
-        case 'phonenumber':
-        case 'recording':
-        case 'timeinterval':
-          path = id + '/' + normalizedType + 's';
-          break;
         default:
           path = id + '/' + normalizedType + 's';
           break;
@@ -169,6 +160,9 @@ var Nimvelo = (function () {
           break;
         case 'recording':
           object = new Recording(this, item, parent);
+          break;
+        case 'routingrule':
+          object = new Routingrule(this, item, parent);
           break;
         case 'smsmessage':
           object = new Smsmessage(this, item, parent);
