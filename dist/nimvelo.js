@@ -285,7 +285,7 @@ var Nimvelo = (function () {
 
       var url = undefined;
       var id = undefined;
-      var params = undefined;
+      var params = {};
 
       for (var _len = arguments.length, args = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
         args[_key - 2] = arguments[_key];
@@ -306,23 +306,36 @@ var Nimvelo = (function () {
         }
       });
 
-      // if (type !== 'customer') {
-      //
-      //   console.log('');
-      //   console.log('type: ', type);
-      //   console.log('object: ', object);
-      //   console.log('params: ', params);
-      //   console.log('id: ', id);
-      //   console.log('');
-      //
-      // }
-
       extend(params, this._paramsForType(type));
 
       url = this._buildUrlSection(type, object);
-
       url += typeof id !== 'undefined' ? id + '/' : '';
-      url += typeof params !== 'undefined' ? this._paramsToQueryString(params) + '/' : '';
+      url += Object.keys(params).length > 0 ? this._paramsToQueryString(params) : '';
+
+      return url;
+    }
+  }, {
+    key: '_buildUrlSection',
+    value: function _buildUrlSection(type, object) {
+      var url = arguments.length <= 2 || arguments[2] === undefined ? '' : arguments[2];
+
+      /* eslint no-param-reassign:0 */
+
+      var path = undefined;
+      var baseUrl = this.options.restBase;
+
+      if (object.parent) {
+
+        path = this._pathForType(type, object.parent.id);
+
+        url = (path ? path + '/' : '') + url;
+        url = this._buildUrlSection(object.parent.type, object.parent, url);
+      } else {
+
+        path = this._pathForType(type);
+
+        url = baseUrl + (path ? path + '/' : '') + (url ? url : '');
+      }
 
       return url;
     }
@@ -351,31 +364,6 @@ var Nimvelo = (function () {
 
         return '';
       }
-    }
-  }, {
-    key: '_buildUrlSection',
-    value: function _buildUrlSection(type, object) {
-      var url = arguments.length <= 2 || arguments[2] === undefined ? '' : arguments[2];
-
-      /* eslint no-param-reassign:0 */
-
-      var path = undefined;
-      var baseUrl = this.options.restBase;
-
-      if (object.parent) {
-
-        path = this._pathForType(type, object.parent.id);
-
-        url = (path ? path + '/' : '') + url;
-        url = this._buildUrlSection(object.parent.type, object.parent, url);
-      } else {
-
-        path = this._pathForType(type);
-
-        url = baseUrl + (path ? path + '/' : '') + (url ? url : '');
-      }
-
-      return url;
     }
   }, {
     key: '_getResource',
