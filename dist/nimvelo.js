@@ -12,16 +12,21 @@ var extend = require('deep-extend');
 var Call = require('./call');
 var Customer = require('./customer');
 var CustomerList = require('./customerList');
+var Group = require('./group');
+var Ivr = require('./ivr');
+var Mailbox = require('./mailbox');
 var Music = require('./music');
 var Outgoingcallerid = require('./outgoingcallerid');
 var Phone = require('./phone');
 var Phonebookentry = require('./phonebookentry');
 var Phonenumber = require('./phonenumber');
 var Prompt = require('./prompt');
+var Queue = require('./queue');
 var Stream = require('./stream');
 var Recording = require('./recording');
 var Routingrule = require('./routingrule');
 var Smsmessage = require('./smsmessage');
+var Virtual = require('./virtual');
 
 var Representation = require('./representation');
 var RepresentationList = require('./representationList');
@@ -166,6 +171,15 @@ var Nimvelo = (function () {
         case 'did':
           object = new Phonenumber(this, item, parent);
           break;
+        case 'group':
+          object = new Group(this, item, parent);
+          break;
+        case 'ivr':
+          object = new Ivr(this, item, parent);
+          break;
+        case 'mailbox':
+          object = new Mailbox(this, item, parent);
+          break;
         case 'music':
           object = new Music(this, item, parent);
           break;
@@ -181,6 +195,9 @@ var Nimvelo = (function () {
         case 'prompt':
           object = new Prompt(this, item, parent);
           break;
+        case 'queue':
+          object = new Queue(this, item, parent);
+          break;
         case 'recording':
           object = new Recording(this, item, parent);
           break;
@@ -189,6 +206,9 @@ var Nimvelo = (function () {
           break;
         case 'smsmessage':
           object = new Smsmessage(this, item, parent);
+          break;
+        case 'virtual':
+          object = new Virtual(this, item, parent);
           break;
         default:
           object = item;

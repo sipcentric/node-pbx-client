@@ -13,6 +13,12 @@ var extend = require('deep-extend');
 var Representation = require('./representation');
 var CallList = require('./callList');
 var Call = require('./call');
+var GroupList = require('./groupList');
+var Group = require('./group');
+var IvrList = require('./ivrList');
+var Ivr = require('./ivr');
+var MailboxList = require('./mailboxList');
+var Mailbox = require('./mailbox');
 var MusicList = require('./musicList');
 var Music = require('./music');
 var OutgoingcalleridList = require('./outgoingcalleridList');
@@ -25,11 +31,15 @@ var PhonenumberList = require('./phonenumberList');
 var Phonenumber = require('./phonenumber');
 var PromptList = require('./promptList');
 var Prompt = require('./prompt');
+var QueueList = require('./queueList');
+var Queue = require('./queue');
 var RecordingList = require('./recordingList');
 var Recording = require('./recording');
 var SmsmessageList = require('./smsmessageList');
 var Smsmessage = require('./smsmessage');
 var SoundList = require('./soundList');
+var VirtualList = require('./virtualList');
+var Virtual = require('./virtual');
 
 var Customer = (function (_Representation) {
   _inherits(Customer, _Representation);
@@ -44,15 +54,20 @@ var Customer = (function (_Representation) {
     _this.type = 'customer';
 
     _this.calls = new CallList(_this.client, _this);
+    _this.groups = new GroupList(_this.client, _this);
+    _this.ivrs = new IvrList(_this.client, _this);
+    _this.mailboxes = new MailboxList(_this.client, _this);
     _this.music = new MusicList(_this.client, _this);
     _this.outgoingcallerids = new OutgoingcalleridList(_this.client, _this);
     _this.phones = new PhoneList(_this.client, _this);
     _this.phonebook = new PhonebookentryList(_this.client, _this);
     _this.phonenumbers = new PhonenumberList(_this.client, _this);
     _this.prompts = new PromptList(_this.client, _this);
+    _this.queues = new QueueList(_this.client, _this);
     _this.recordings = new RecordingList(_this.client, _this);
     _this.smsmessages = new SmsmessageList(_this.client, _this);
     _this.sounds = new SoundList(_this.client, _this);
+    _this.virtuals = new VirtualList(_this.client, _this);
 
     _this._unavailableMethods = ['delete'];
     _this._unavailableMethods.forEach(function (method) {
@@ -73,6 +88,12 @@ var Customer = (function (_Representation) {
       switch (type) {
         case 'call':
           return new Call(this.client, properties, this);
+        case 'group':
+          return new Group(this.client, properties, this);
+        case 'ivr':
+          return new Ivr(this.client, properties, this);
+        case 'mailbox':
+          return new Mailbox(this.client, properties, this);
         case 'music':
           return new Music(this.client, properties, this);
         case 'outgoingcallerid':
@@ -85,10 +106,14 @@ var Customer = (function (_Representation) {
           return new Phonenumber(this.client, properties, this);
         case 'prompt':
           return new Prompt(this.client, properties, this);
+        case 'queue':
+          return new Queue(this.client, properties, this);
         case 'recording':
           return new Recording(this.client, properties, this);
         case 'smsmessage':
           return new Smsmessage(this.client, properties, this);
+        case 'virtual':
+          return new Virtual(this.client, properties, this);
         default:
           return false;
       }
