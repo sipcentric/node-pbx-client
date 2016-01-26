@@ -27,6 +27,7 @@ var Stream = require('./stream');
 var Recording = require('./recording');
 var Routingrule = require('./routingrule');
 var Smsmessage = require('./smsmessage');
+var Timeinterval = require('./timeinterval');
 var Virtual = require('./virtual');
 
 var Representation = require('./representation');
@@ -210,6 +211,9 @@ var Nimvelo = (function () {
           break;
         case 'smsmessage':
           object = new Smsmessage(this, item, parent);
+          break;
+        case 'timeinterval':
+          object = new Timeinterval(this, item, parent);
           break;
         case 'virtual':
           object = new Virtual(this, item, parent);

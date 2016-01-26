@@ -41,6 +41,8 @@ var Recording = require('./recording');
 var SmsmessageList = require('./smsmessageList');
 var Smsmessage = require('./smsmessage');
 var SoundList = require('./soundList');
+var TimeintervalList = require('./timeintervalList');
+var Timeinterval = require('./timeinterval');
 var VirtualList = require('./virtualList');
 var Virtual = require('./virtual');
 
@@ -72,6 +74,7 @@ var Customer = (function (_Representation) {
     _this.recordings = new RecordingList(_this.client, _this);
     _this.smsmessages = new SmsmessageList(_this.client, _this);
     _this.sounds = new SoundList(_this.client, _this);
+    _this.timeintervals = new TimeintervalList(_this.client, _this);
     _this.virtuals = new VirtualList(_this.client, _this);
 
     _this._unavailableMethods = ['delete'];
@@ -119,6 +122,8 @@ var Customer = (function (_Representation) {
           return new Recording(this.client, properties, this);
         case 'smsmessage':
           return new Smsmessage(this.client, properties, this);
+        case 'timeinterval':
+          return new Timeinterval(this.client, properties, this);
         case 'virtual':
           return new Virtual(this.client, properties, this);
         default:

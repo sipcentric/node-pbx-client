@@ -149,6 +149,8 @@ var Recording = require('./recording');
 var SmsmessageList = require('./smsmessageList');
 var Smsmessage = require('./smsmessage');
 var SoundList = require('./soundList');
+var TimeintervalList = require('./timeintervalList');
+var Timeinterval = require('./timeinterval');
 var VirtualList = require('./virtualList');
 var Virtual = require('./virtual');
 
@@ -180,6 +182,7 @@ var Customer = (function (_Representation) {
     _this.recordings = new RecordingList(_this.client, _this);
     _this.smsmessages = new SmsmessageList(_this.client, _this);
     _this.sounds = new SoundList(_this.client, _this);
+    _this.timeintervals = new TimeintervalList(_this.client, _this);
     _this.virtuals = new VirtualList(_this.client, _this);
 
     _this._unavailableMethods = ['delete'];
@@ -227,6 +230,8 @@ var Customer = (function (_Representation) {
           return new Recording(this.client, properties, this);
         case 'smsmessage':
           return new Smsmessage(this.client, properties, this);
+        case 'timeinterval':
+          return new Timeinterval(this.client, properties, this);
         case 'virtual':
           return new Virtual(this.client, properties, this);
         default:
@@ -540,6 +545,7 @@ var Stream = require('./stream');
 var Recording = require('./recording');
 var Routingrule = require('./routingrule');
 var Smsmessage = require('./smsmessage');
+var Timeinterval = require('./timeinterval');
 var Virtual = require('./virtual');
 
 var Representation = require('./representation');
@@ -723,6 +729,9 @@ var Nimvelo = (function () {
           break;
         case 'smsmessage':
           object = new Smsmessage(this, item, parent);
+          break;
+        case 'timeinterval':
+          object = new Timeinterval(this, item, parent);
           break;
         case 'virtual':
           object = new Virtual(this, item, parent);
@@ -1701,6 +1710,60 @@ var Stream = (function () {
 })();
 
 module.exports = Stream;
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Representation = require('./representation');
+
+var Timeinterval = (function (_Representation) {
+  _inherits(Timeinterval, _Representation);
+
+  function Timeinterval(client, properties, parent) {
+    _classCallCheck(this, Timeinterval);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Timeinterval).call(this, client, properties, parent));
+
+    _this.type = 'timeinterval';
+
+    return _this;
+  }
+
+  return Timeinterval;
+})(Representation);
+
+module.exports = Timeinterval;
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var RepresentationList = require('./representationList');
+
+var TimeintervalList = (function (_RepresentationList) {
+  _inherits(TimeintervalList, _RepresentationList);
+
+  function TimeintervalList(client, parent) {
+    _classCallCheck(this, TimeintervalList);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TimeintervalList).call(this, client, parent));
+
+    _this.type = 'timeintervalList';
+    _this.itemType = 'timeinterval';
+    return _this;
+  }
+
+  return TimeintervalList;
+})(RepresentationList);
+
+module.exports = TimeintervalList;
 'use strict';
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
