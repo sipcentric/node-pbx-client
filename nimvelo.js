@@ -233,7 +233,6 @@ var CallList = require('./callList');
 var Call = require('./call');
 var CallbundleList = require('./callbundleList');
 var Callbundle = require('./callbundle');
-var Creditstatus = require('./creditstatus');
 var CreditstatusList = require('./creditstatusList');
 var EndpointList = require('./endpointList');
 var GroupList = require('./groupList');
@@ -254,6 +253,7 @@ var PhonenumberList = require('./phonenumberList');
 var Phonenumber = require('./phonenumber');
 var PromptList = require('./promptList');
 var Prompt = require('./prompt');
+var PreferenceList = require('./preferenceList');
 var QueueList = require('./queueList');
 var Queue = require('./queue');
 var RecordingList = require('./recordingList');
@@ -292,6 +292,7 @@ var Customer = (function (_Representation) {
     _this.phonebook = new PhonebookentryList(_this.client, _this);
     _this.phonenumbers = new PhonenumberList(_this.client, _this);
     _this.prompts = new PromptList(_this.client, _this);
+    _this.preferences = new PreferenceList(_this.client, _this);
     _this.queues = new QueueList(_this.client, _this);
     _this.recordings = new RecordingList(_this.client, _this);
     _this.smsmessages = new SmsmessageList(_this.client, _this);
@@ -657,6 +658,7 @@ var Outgoingcallerid = require('./outgoingcallerid');
 var Phone = require('./phone');
 var Phonebookentry = require('./phonebookentry');
 var Phonenumber = require('./phonenumber');
+var Preference = require('./preference');
 var Prompt = require('./prompt');
 var Queue = require('./queue');
 var Stream = require('./stream');
@@ -847,6 +849,9 @@ var Nimvelo = (function () {
           break;
         case 'prompt':
           object = new Prompt(this, item, parent);
+          break;
+        case 'preference':
+          object = new Preference(this, item, parent);
           break;
         case 'queue':
           object = new Queue(this, item, parent);
@@ -1384,6 +1389,60 @@ var PhonenumberList = (function (_RepresentationList) {
 })(RepresentationList);
 
 module.exports = PhonenumberList;
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Representation = require('./representation');
+
+var Preference = (function (_Representation) {
+  _inherits(Preference, _Representation);
+
+  function Preference(client, properties, parent) {
+    _classCallCheck(this, Preference);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Preference).call(this, client, properties, parent));
+
+    _this.type = 'preference';
+
+    return _this;
+  }
+
+  return Preference;
+})(Representation);
+
+module.exports = Preference;
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var RepresentationList = require('./representationList');
+
+var PreferenceList = (function (_RepresentationList) {
+  _inherits(PreferenceList, _RepresentationList);
+
+  function PreferenceList(client, parent) {
+    _classCallCheck(this, PreferenceList);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PreferenceList).call(this, client, parent));
+
+    _this.type = 'preferenceList';
+    _this.itemType = 'preference';
+    return _this;
+  }
+
+  return PreferenceList;
+})(RepresentationList);
+
+module.exports = PreferenceList;
 'use strict';
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }

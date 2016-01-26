@@ -23,6 +23,7 @@ var Outgoingcallerid = require('./outgoingcallerid');
 var Phone = require('./phone');
 var Phonebookentry = require('./phonebookentry');
 var Phonenumber = require('./phonenumber');
+var Preference = require('./preference');
 var Prompt = require('./prompt');
 var Queue = require('./queue');
 var Stream = require('./stream');
@@ -213,6 +214,9 @@ var Nimvelo = (function () {
           break;
         case 'prompt':
           object = new Prompt(this, item, parent);
+          break;
+        case 'preference':
+          object = new Preference(this, item, parent);
           break;
         case 'queue':
           object = new Queue(this, item, parent);
