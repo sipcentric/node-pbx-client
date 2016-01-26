@@ -14,6 +14,7 @@ var Customer = require('./customer');
 var CustomerList = require('./customerList');
 var Music = require('./music');
 var Outgoingcallerid = require('./outgoingcallerid');
+var Phone = require('./phone');
 var Phonebookentry = require('./phonebookentry');
 var Phonenumber = require('./phonenumber');
 var Prompt = require('./prompt');
@@ -90,6 +91,14 @@ var Nimvelo = (function () {
         case 'customer':
           path = id || '';
           break;
+        case 'phone':
+        case 'virtual':
+        case 'group':
+        case 'queue':
+        case 'ivr':
+        case 'mailbox':
+          path = id + '/endpoints';
+          break;
         case 'phonebookentry':
           path = id + '/phonebook';
           break;
@@ -116,6 +125,14 @@ var Nimvelo = (function () {
       var normalizedType = type.toLowerCase();
 
       switch (normalizedType) {
+        case 'phone':
+        case 'virtual':
+        case 'group':
+        case 'queue':
+        case 'ivr':
+        case 'mailbox':
+          params.type = type;
+          break;
         case 'prompt':
         case 'music':
           params.type = type;
@@ -154,6 +171,9 @@ var Nimvelo = (function () {
           break;
         case 'outgoingcallerid':
           object = new Outgoingcallerid(this, item, parent);
+          break;
+        case 'phone':
+          object = new Phone(this, item, parent);
           break;
         case 'phonebookentry':
           object = new Phonebookentry(this, item, parent);

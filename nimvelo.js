@@ -71,6 +71,8 @@ var MusicList = require('./musicList');
 var Music = require('./music');
 var OutgoingcalleridList = require('./outgoingcalleridList');
 var Outgoingcallerid = require('./outgoingcallerid');
+var PhoneList = require('./phoneList');
+var Phone = require('./phone');
 var PhonebookentryList = require('./phonebookentryList');
 var Phonebookentry = require('./phonebookentry');
 var PhonenumberList = require('./phonenumberList');
@@ -98,6 +100,7 @@ var Customer = (function (_Representation) {
     _this.calls = new CallList(_this.client, _this);
     _this.music = new MusicList(_this.client, _this);
     _this.outgoingcallerids = new OutgoingcalleridList(_this.client, _this);
+    _this.phones = new PhoneList(_this.client, _this);
     _this.phonebook = new PhonebookentryList(_this.client, _this);
     _this.phonenumbers = new PhonenumberList(_this.client, _this);
     _this.prompts = new PromptList(_this.client, _this);
@@ -128,6 +131,8 @@ var Customer = (function (_Representation) {
           return new Music(this.client, properties, this);
         case 'outgoingcallerid':
           return new Outgoingcallerid(this.client, properties, this);
+        case 'phone':
+          return new Phone(this.client, properties, this);
         case 'phonebookentry':
           return new Phonebookentry(this.client, properties, this);
         case 'phonenumber':
@@ -247,6 +252,7 @@ var Customer = require('./customer');
 var CustomerList = require('./customerList');
 var Music = require('./music');
 var Outgoingcallerid = require('./outgoingcallerid');
+var Phone = require('./phone');
 var Phonebookentry = require('./phonebookentry');
 var Phonenumber = require('./phonenumber');
 var Prompt = require('./prompt');
@@ -323,6 +329,14 @@ var Nimvelo = (function () {
         case 'customer':
           path = id || '';
           break;
+        case 'phone':
+        case 'virtual':
+        case 'group':
+        case 'queue':
+        case 'ivr':
+        case 'mailbox':
+          path = id + '/endpoints';
+          break;
         case 'phonebookentry':
           path = id + '/phonebook';
           break;
@@ -349,6 +363,14 @@ var Nimvelo = (function () {
       var normalizedType = type.toLowerCase();
 
       switch (normalizedType) {
+        case 'phone':
+        case 'virtual':
+        case 'group':
+        case 'queue':
+        case 'ivr':
+        case 'mailbox':
+          params.type = type;
+          break;
         case 'prompt':
         case 'music':
           params.type = type;
@@ -387,6 +409,9 @@ var Nimvelo = (function () {
           break;
         case 'outgoingcallerid':
           object = new Outgoingcallerid(this, item, parent);
+          break;
+        case 'phone':
+          object = new Phone(this, item, parent);
           break;
         case 'phonebookentry':
           object = new Phonebookentry(this, item, parent);
@@ -750,6 +775,60 @@ var OutgoingcalleridList = (function (_RepresentationList) {
 })(RepresentationList);
 
 module.exports = OutgoingcalleridList;
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Representation = require('./representation');
+
+var Phone = (function (_Representation) {
+  _inherits(Phone, _Representation);
+
+  function Phone(client, properties, parent) {
+    _classCallCheck(this, Phone);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Phone).call(this, client, properties, parent));
+
+    _this.type = 'phone';
+
+    return _this;
+  }
+
+  return Phone;
+})(Representation);
+
+module.exports = Phone;
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var RepresentationList = require('./representationList');
+
+var PhoneList = (function (_RepresentationList) {
+  _inherits(PhoneList, _RepresentationList);
+
+  function PhoneList(client, parent) {
+    _classCallCheck(this, PhoneList);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PhoneList).call(this, client, parent));
+
+    _this.type = 'phoneList';
+    _this.itemType = 'phone';
+    return _this;
+  }
+
+  return PhoneList;
+})(RepresentationList);
+
+module.exports = PhoneList;
 'use strict';
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }

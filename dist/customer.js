@@ -17,6 +17,8 @@ var MusicList = require('./musicList');
 var Music = require('./music');
 var OutgoingcalleridList = require('./outgoingcalleridList');
 var Outgoingcallerid = require('./outgoingcallerid');
+var PhoneList = require('./phoneList');
+var Phone = require('./phone');
 var PhonebookentryList = require('./phonebookentryList');
 var Phonebookentry = require('./phonebookentry');
 var PhonenumberList = require('./phonenumberList');
@@ -44,6 +46,7 @@ var Customer = (function (_Representation) {
     _this.calls = new CallList(_this.client, _this);
     _this.music = new MusicList(_this.client, _this);
     _this.outgoingcallerids = new OutgoingcalleridList(_this.client, _this);
+    _this.phones = new PhoneList(_this.client, _this);
     _this.phonebook = new PhonebookentryList(_this.client, _this);
     _this.phonenumbers = new PhonenumberList(_this.client, _this);
     _this.prompts = new PromptList(_this.client, _this);
@@ -74,6 +77,8 @@ var Customer = (function (_Representation) {
           return new Music(this.client, properties, this);
         case 'outgoingcallerid':
           return new Outgoingcallerid(this.client, properties, this);
+        case 'phone':
+          return new Phone(this.client, properties, this);
         case 'phonebookentry':
           return new Phonebookentry(this.client, properties, this);
         case 'phonenumber':
