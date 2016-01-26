@@ -171,6 +171,7 @@ var Nimvelo = (function () {
           object = new Smsmessage(this, item, parent);
           break;
         default:
+          object = item;
           break;
       }
 
