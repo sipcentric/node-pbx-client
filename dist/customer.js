@@ -13,6 +13,7 @@ var extend = require('deep-extend');
 var Representation = require('./representation');
 var CallList = require('./callList');
 var Call = require('./call');
+var EndpointList = require('./endpointList');
 var GroupList = require('./groupList');
 var Group = require('./group');
 var IvrList = require('./ivrList');
@@ -54,6 +55,7 @@ var Customer = (function (_Representation) {
     _this.type = 'customer';
 
     _this.calls = new CallList(_this.client, _this);
+    _this.endpoints = new EndpointList(_this.client, _this);
     _this.groups = new GroupList(_this.client, _this);
     _this.ivrs = new IvrList(_this.client, _this);
     _this.mailboxes = new MailboxList(_this.client, _this);
