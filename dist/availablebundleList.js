@@ -8,20 +8,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var RepresentationList = require('./representationList');
 
-var CallbundleList = (function (_RepresentationList) {
-  _inherits(CallbundleList, _RepresentationList);
+var AvailablebundleList = (function (_RepresentationList) {
+  _inherits(AvailablebundleList, _RepresentationList);
 
-  function CallbundleList(client, parent) {
-    _classCallCheck(this, CallbundleList);
+  function AvailablebundleList(client, parent) {
+    _classCallCheck(this, AvailablebundleList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CallbundleList).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AvailablebundleList).call(this, client, parent));
 
-    _this.type = 'callbundleList';
-    _this.itemType = 'callbundle';
+    _this.type = 'availablebundleList';
+    _this.itemType = 'availablebundle';
     return _this;
   }
 
-  return CallbundleList;
+  return AvailablebundleList;
 })(RepresentationList);
 
-module.exports = CallbundleList;
+module.exports = AvailablebundleList;

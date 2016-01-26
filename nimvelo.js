@@ -8,6 +8,60 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var Representation = require('./representation');
 
+var Availablebundle = (function (_Representation) {
+  _inherits(Availablebundle, _Representation);
+
+  function Availablebundle(client, properties, parent) {
+    _classCallCheck(this, Availablebundle);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Availablebundle).call(this, client, properties, parent));
+
+    _this.type = 'availablebundle';
+
+    return _this;
+  }
+
+  return Availablebundle;
+})(Representation);
+
+module.exports = Availablebundle;
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var RepresentationList = require('./representationList');
+
+var AvailablebundleList = (function (_RepresentationList) {
+  _inherits(AvailablebundleList, _RepresentationList);
+
+  function AvailablebundleList(client, parent) {
+    _classCallCheck(this, AvailablebundleList);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AvailablebundleList).call(this, client, parent));
+
+    _this.type = 'availablebundleList';
+    _this.itemType = 'availablebundle';
+    return _this;
+  }
+
+  return AvailablebundleList;
+})(RepresentationList);
+
+module.exports = AvailablebundleList;
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Representation = require('./representation');
+
 var Call = (function (_Representation) {
   _inherits(Call, _Representation);
 
@@ -89,23 +143,23 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var RepresentationList = require('./representationList');
 
-var CallBundleList = (function (_RepresentationList) {
-  _inherits(CallBundleList, _RepresentationList);
+var CallbundleList = (function (_RepresentationList) {
+  _inherits(CallbundleList, _RepresentationList);
 
-  function CallBundleList(client, parent) {
-    _classCallCheck(this, CallBundleList);
+  function CallbundleList(client, parent) {
+    _classCallCheck(this, CallbundleList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CallBundleList).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CallbundleList).call(this, client, parent));
 
-    _this.type = 'callBundleList';
-    _this.itemType = 'callBundle';
+    _this.type = 'callbundleList';
+    _this.itemType = 'callbundle';
     return _this;
   }
 
-  return CallBundleList;
+  return CallbundleList;
 })(RepresentationList);
 
-module.exports = CallBundleList;
+module.exports = CallbundleList;
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -119,6 +173,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var extend = require('deep-extend');
 
 var Representation = require('./representation');
+var AvailablebundleList = require('./availablebundleList');
+var Availablebundle = require('./availablebundle');
 var CallList = require('./callList');
 var Call = require('./call');
 var CallbundleList = require('./callbundleList');
@@ -166,6 +222,7 @@ var Customer = (function (_Representation) {
 
     _this.type = 'customer';
 
+    _this.availablebundles = new AvailablebundleList(_this.client, _this);
     _this.calls = new CallList(_this.client, _this);
     _this.callbundles = new CallbundleList(_this.client, _this);
     _this.endpoints = new EndpointList(_this.client, _this);
@@ -202,6 +259,8 @@ var Customer = (function (_Representation) {
       // Figure out which class to use for this type
 
       switch (type) {
+        case 'availablebundle':
+          return new Availablebundle(this.client, properties, this);
         case 'call':
           return new Call(this.client, properties, this);
         case 'callbundle':
@@ -527,6 +586,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var request = require('request');
 var extend = require('deep-extend');
 
+var Availablebundle = require('./availablebundle');
 var Call = require('./call');
 var Callbundle = require('./callbundle');
 var Customer = require('./customer');
@@ -610,6 +670,9 @@ var Nimvelo = (function () {
       var normalizedType = type.toLowerCase();
 
       switch (normalizedType) {
+        case 'availablebundle':
+          path = id + '/callbundles/available';
+          break;
         case 'customers':
           // Use the default base REST URL
           break;
@@ -682,6 +745,9 @@ var Nimvelo = (function () {
 
       switch (item.type) {
         /* eslint no-use-before-define: 0 */
+        case 'availablebundle':
+          object = new Availablebundle(this, item, parent);
+          break;
         case 'call':
           object = new Call(this, item, parent);
           break;

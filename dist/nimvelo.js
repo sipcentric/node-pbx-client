@@ -9,6 +9,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var request = require('request');
 var extend = require('deep-extend');
 
+var Availablebundle = require('./availablebundle');
 var Call = require('./call');
 var Callbundle = require('./callbundle');
 var Customer = require('./customer');
@@ -92,6 +93,9 @@ var Nimvelo = (function () {
       var normalizedType = type.toLowerCase();
 
       switch (normalizedType) {
+        case 'availablebundle':
+          path = id + '/callbundles/available';
+          break;
         case 'customers':
           // Use the default base REST URL
           break;
@@ -164,6 +168,9 @@ var Nimvelo = (function () {
 
       switch (item.type) {
         /* eslint no-use-before-define: 0 */
+        case 'availablebundle':
+          object = new Availablebundle(this, item, parent);
+          break;
         case 'call':
           object = new Call(this, item, parent);
           break;

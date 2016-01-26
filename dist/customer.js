@@ -11,6 +11,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var extend = require('deep-extend');
 
 var Representation = require('./representation');
+var AvailablebundleList = require('./availablebundleList');
+var Availablebundle = require('./availablebundle');
 var CallList = require('./callList');
 var Call = require('./call');
 var CallbundleList = require('./callbundleList');
@@ -58,6 +60,7 @@ var Customer = (function (_Representation) {
 
     _this.type = 'customer';
 
+    _this.availablebundles = new AvailablebundleList(_this.client, _this);
     _this.calls = new CallList(_this.client, _this);
     _this.callbundles = new CallbundleList(_this.client, _this);
     _this.endpoints = new EndpointList(_this.client, _this);
@@ -94,6 +97,8 @@ var Customer = (function (_Representation) {
       // Figure out which class to use for this type
 
       switch (type) {
+        case 'availablebundle':
+          return new Availablebundle(this.client, properties, this);
         case 'call':
           return new Call(this.client, properties, this);
         case 'callbundle':
