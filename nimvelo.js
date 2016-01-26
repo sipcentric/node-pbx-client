@@ -228,11 +228,9 @@ var extend = require('deep-extend');
 
 var Representation = require('./representation');
 var AvailablebundleList = require('./availablebundleList');
-var Availablebundle = require('./availablebundle');
 var CallList = require('./callList');
 var Call = require('./call');
 var CallbundleList = require('./callbundleList');
-var Callbundle = require('./callbundle');
 var CreditstatusList = require('./creditstatusList');
 var EndpointList = require('./endpointList');
 var GroupList = require('./groupList');
@@ -244,20 +242,17 @@ var Mailbox = require('./mailbox');
 var MusicList = require('./musicList');
 var Music = require('./music');
 var OutgoingcalleridList = require('./outgoingcalleridList');
-var Outgoingcallerid = require('./outgoingcallerid');
 var PhoneList = require('./phoneList');
 var Phone = require('./phone');
 var PhonebookentryList = require('./phonebookentryList');
 var Phonebookentry = require('./phonebookentry');
 var PhonenumberList = require('./phonenumberList');
-var Phonenumber = require('./phonenumber');
 var PromptList = require('./promptList');
 var Prompt = require('./prompt');
 var PreferenceList = require('./preferenceList');
 var QueueList = require('./queueList');
 var Queue = require('./queue');
 var RecordingList = require('./recordingList');
-var Recording = require('./recording');
 var SmsmessageList = require('./smsmessageList');
 var Smsmessage = require('./smsmessage');
 var SoundList = require('./soundList');
@@ -317,12 +312,8 @@ var Customer = (function (_Representation) {
       // Figure out which class to use for this type
 
       switch (type) {
-        case 'availablebundle':
-          return new Availablebundle(this.client, properties, this);
         case 'call':
           return new Call(this.client, properties, this);
-        case 'callbundle':
-          return new Callbundle(this.client, properties, this);
         case 'group':
           return new Group(this.client, properties, this);
         case 'ivr':
@@ -331,20 +322,14 @@ var Customer = (function (_Representation) {
           return new Mailbox(this.client, properties, this);
         case 'music':
           return new Music(this.client, properties, this);
-        case 'outgoingcallerid':
-          return new Outgoingcallerid(this.client, properties, this);
         case 'phone':
           return new Phone(this.client, properties, this);
         case 'phonebookentry':
           return new Phonebookentry(this.client, properties, this);
-        case 'phonenumber':
-          return new Phonenumber(this.client, properties, this);
         case 'prompt':
           return new Prompt(this.client, properties, this);
         case 'queue':
           return new Queue(this.client, properties, this);
-        case 'recording':
-          return new Recording(this.client, properties, this);
         case 'smsmessage':
           return new Smsmessage(this.client, properties, this);
         case 'timeinterval':
