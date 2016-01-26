@@ -12,6 +12,7 @@ var extend = require('deep-extend');
 var Availablebundle = require('./availablebundle');
 var Call = require('./call');
 var Callbundle = require('./callbundle');
+var Creditstatus = require('./creditstatus');
 var Customer = require('./customer');
 var CustomerList = require('./customerList');
 var Group = require('./group');
@@ -96,6 +97,9 @@ var Nimvelo = (function () {
         case 'availablebundle':
           path = id + '/callbundles/available';
           break;
+        case 'creditstatus':
+          path = id + '/creditstatus';
+          break;
         case 'customers':
           // Use the default base REST URL
           break;
@@ -176,6 +180,9 @@ var Nimvelo = (function () {
           break;
         case 'callbundle':
           object = new Callbundle(this, item, parent);
+          break;
+        case 'creditstatus':
+          object = new Creditstatus(this, item, parent);
           break;
         case 'customer':
           object = new Customer(this, item);
