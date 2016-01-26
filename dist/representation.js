@@ -18,57 +18,12 @@ var Representation = (function () {
   _createClass(Representation, [{
     key: 'save',
     value: function save(callback) {
-      var _this = this;
-
-      if (this.id) {
-
-        return new Promise(function (resolve, reject) {
-
-          _this.client._request('put', _this.type, _this.customerId, _this.id, _this).then(function (data) {
-
-            // Update our object with the newly returned propreties
-            extend(_this, data);
-
-            resolve(data);
-          }, function (error) {
-
-            reject(error);
-          });
-        }).nodeify(callback);
-      } else {
-
-        return new Promise(function (resolve, reject) {
-
-          _this.client._request('post', _this.type, _this.customerId, _this).then(function (data) {
-
-            // Update our object with the newly returned propreties
-            extend(_this, data);
-
-            resolve(data);
-          }, function (error) {
-
-            reject(error);
-          });
-        }).nodeify(callback);
-      }
+      return this.client._saveRepresentation(this, callback);
     }
   }, {
     key: 'delete',
     value: function _delete(callback) {
-      var _this2 = this;
-
-      var type = this.type;
-
-      return new Promise(function (resolve, reject) {
-
-        _this2.client._request('delete', type, _this2.customerId, _this2.id).then(function () {
-
-          resolve();
-        }, function (error) {
-
-          reject(error);
-        });
-      }).nodeify(callback);
+      return this.client._deleteRepresentation(this, callback);
     }
   }]);
 

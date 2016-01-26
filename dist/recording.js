@@ -18,9 +18,9 @@ var Recording = (function (_Representation) {
 
     _this.type = 'recording';
 
-    _this.unavailableMethods = ['save'];
-    _this.unavailableMethods.forEach(function (method) {
-      return _this[method] = undefined;
+    _this._unavailableMethods = ['save'];
+    _this._unavailableMethods.forEach(function (method) {
+      return delete _this[method];
     });
 
     return _this;

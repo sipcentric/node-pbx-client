@@ -41,8 +41,6 @@ var Customer = (function (_Representation) {
 
     _this.type = 'customer';
 
-    _this.customerId = item.id;
-
     _this.calls = new CallList(_this.client, _this);
     _this.music = new MusicList(_this.client, _this);
     _this.outgoingcallerids = new OutgoingcalleridList(_this.client, _this);
@@ -53,9 +51,9 @@ var Customer = (function (_Representation) {
     _this.smsmessages = new SmsmessageList(_this.client, _this);
     _this.sounds = new SoundList(_this.client, _this);
 
-    _this.unavailableMethods = ['delete'];
-    _this.unavailableMethods.forEach(function (method) {
-      return _this[method] = undefined;
+    _this._unavailableMethods = ['delete'];
+    _this._unavailableMethods.forEach(function (method) {
+      return delete _this[method];
     });
 
     return _this;

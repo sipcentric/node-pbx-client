@@ -25,7 +25,7 @@ module.exports = function(testParams) {
       NvObject = require(`../dist/${objectType}`);
       mockData = require(`./mock/${objectType}`);
       newObject = (client, properties, customerId) => new NvObject(client, properties, customerId);
-      unavailableMethods = newObject().unavailableMethods || [];
+      unavailableMethods = newObject()._unavailableMethods || [];
 
     });
 

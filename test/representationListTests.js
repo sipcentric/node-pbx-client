@@ -30,7 +30,7 @@ module.exports = function(testParams) {
       NvListObject = require(`../dist/${listObjectType}`);
       mockData = require(`./mock/${objectType}`);
       newListObject = client => new NvListObject(client, 5);
-      unavailableMethods = newListObject().unavailableMethods || [];
+      unavailableMethods = newListObject()._unavailableMethods || [];
 
     });
 

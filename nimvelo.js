@@ -95,8 +95,6 @@ var Customer = (function (_Representation) {
 
     _this.type = 'customer';
 
-    _this.customerId = item.id;
-
     _this.calls = new CallList(_this.client, _this);
     _this.music = new MusicList(_this.client, _this);
     _this.outgoingcallerids = new OutgoingcalleridList(_this.client, _this);
@@ -107,9 +105,9 @@ var Customer = (function (_Representation) {
     _this.smsmessages = new SmsmessageList(_this.client, _this);
     _this.sounds = new SoundList(_this.client, _this);
 
-    _this.unavailableMethods = ['delete'];
-    _this.unavailableMethods.forEach(function (method) {
-      return _this[method] = undefined;
+    _this._unavailableMethods = ['delete'];
+    _this._unavailableMethods.forEach(function (method) {
+      return delete _this[method];
     });
 
     return _this;
@@ -256,6 +254,9 @@ var Stream = require('./stream');
 var Recording = require('./recording');
 var Routingrule = require('./routingrule');
 var Smsmessage = require('./smsmessage');
+
+var Representation = require('./representation');
+var RepresentationList = require('./representationList');
 
 // Promise + callback polyfill
 Promise.prototype.nodeify = require('./polyfills/nodeify'); // eslint-disable-line no-extend-native
@@ -421,28 +422,8 @@ var Nimvelo = (function () {
       }) : this._objectFromItem(items, parent);
     }
   }, {
-    key: '_setCustomerIdOnObjects',
-    value: function _setCustomerIdOnObjects(objects, customerId) {
-
-      if (!customerId) {
-        return objects;
-      }
-
-      if (Array.isArray(objects)) {
-
-        objects.map(function (obj) {
-          obj.customerId = customerId;
-        });
-      } else {
-
-        objects.customerId = customerId;
-      }
-
-      return objects;
-    }
-  }, {
     key: '_request',
-    value: function _request(method, url, json, callback) {
+    value: function _request(method, url, params, callback) {
       var _this2 = this;
 
       /* eslint no-param-reassign:0 */
@@ -450,9 +431,25 @@ var Nimvelo = (function () {
       // Normalize method
       method = method.toLowerCase();
 
-      if (typeof json === 'function') {
-        callback = json;
-        json = null;
+      if (typeof params === 'function') {
+        callback = params;
+        params = null;
+      }
+
+      var json = {};
+
+      // Filter out properties which shouldn't be sent back to the server in
+      // the json body. This won't affect query params
+      for (var key in params) {
+
+        if (params.hasOwnProperty(key)) {
+
+          var property = params[key];
+          if (key.charAt(0) !== '_' && key !== 'client' && key !== 'parent' && !(property instanceof Representation) && !(property instanceof RepresentationList)) {
+
+            json[key] = property;
+          }
+        }
       }
 
       var options = {
@@ -656,6 +653,37 @@ var Nimvelo = (function () {
         });
       }).nodeify(callback);
     }
+  }, {
+    key: '_saveRepresentation',
+    value: function _saveRepresentation(object, callback) {
+      var _this4 = this;
+
+      var url = this._buildUrl(object.type, object, object.id);
+      var requestMethod = object.id ? 'put' : 'post';
+
+      return new Promise(function (resolve, reject) {
+
+        _this4._request(requestMethod, url, object).then(function (data) {
+
+          // Update our object with the newly returned propreties
+          extend(object, data);
+
+          resolve(data);
+        }, reject);
+      }).nodeify(callback);
+    }
+  }, {
+    key: '_deleteRepresentation',
+    value: function _deleteRepresentation(object, callback) {
+      var _this5 = this;
+
+      var url = this._buildUrl(object.type, object, object.id);
+
+      return new Promise(function (resolve, reject) {
+
+        _this5._request('delete', url, object).then(resolve, reject);
+      }).nodeify(callback);
+    }
   }]);
 
   return Nimvelo;
@@ -682,9 +710,9 @@ var Outgoingcallerid = (function (_Representation) {
 
     _this.type = 'outgoingcallerid';
 
-    _this.unavailableMethods = ['save', 'delete'];
-    _this.unavailableMethods.forEach(function (method) {
-      return _this[method] = undefined;
+    _this._unavailableMethods = ['save', 'delete'];
+    _this._unavailableMethods.forEach(function (method) {
+      return delete _this[method];
     });
 
     return _this;
@@ -826,9 +854,9 @@ var PhonenumberList = (function (_RepresentationList) {
     _this.type = 'phonenumberList';
     _this.itemType = 'phonenumber';
 
-    _this.unavailableMethods = ['create'];
-    _this.unavailableMethods.forEach(function (method) {
-      return _this[method] = undefined;
+    _this._unavailableMethods = ['create'];
+    _this._unavailableMethods.forEach(function (method) {
+      return delete _this[method];
     });
 
     return _this;
@@ -912,9 +940,9 @@ var Recording = (function (_Representation) {
 
     _this.type = 'recording';
 
-    _this.unavailableMethods = ['save'];
-    _this.unavailableMethods.forEach(function (method) {
-      return _this[method] = undefined;
+    _this._unavailableMethods = ['save'];
+    _this._unavailableMethods.forEach(function (method) {
+      return delete _this[method];
     });
 
     return _this;
@@ -971,57 +999,12 @@ var Representation = (function () {
   _createClass(Representation, [{
     key: 'save',
     value: function save(callback) {
-      var _this = this;
-
-      if (this.id) {
-
-        return new Promise(function (resolve, reject) {
-
-          _this.client._request('put', _this.type, _this.customerId, _this.id, _this).then(function (data) {
-
-            // Update our object with the newly returned propreties
-            extend(_this, data);
-
-            resolve(data);
-          }, function (error) {
-
-            reject(error);
-          });
-        }).nodeify(callback);
-      } else {
-
-        return new Promise(function (resolve, reject) {
-
-          _this.client._request('post', _this.type, _this.customerId, _this).then(function (data) {
-
-            // Update our object with the newly returned propreties
-            extend(_this, data);
-
-            resolve(data);
-          }, function (error) {
-
-            reject(error);
-          });
-        }).nodeify(callback);
-      }
+      return this.client._saveRepresentation(this, callback);
     }
   }, {
     key: 'delete',
     value: function _delete(callback) {
-      var _this2 = this;
-
-      var type = this.type;
-
-      return new Promise(function (resolve, reject) {
-
-        _this2.client._request('delete', type, _this2.customerId, _this2.id).then(function () {
-
-          resolve();
-        }, function (error) {
-
-          reject(error);
-        });
-      }).nodeify(callback);
+      return this.client._deleteRepresentation(this, callback);
     }
   }]);
 
@@ -1032,8 +1015,6 @@ module.exports = Representation;
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1057,20 +1038,14 @@ var RepresentationList = (function () {
     }
   }, {
     key: 'create',
-    value: function create(properties) {
-
-      if ((typeof properties === 'undefined' ? 'undefined' : _typeof(properties)) !== 'object') {
-        /* eslint no-param-reassign:0 */
-        properties = {};
-      }
+    value: function create() {
+      var properties = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
       // Make sure the type is correct, and it has no ID
       properties.id = undefined;
       properties.type = this.itemType;
 
-      var object = this.client._objectFromItem(properties);
-
-      return this.client._setCustomerIdOnObjects(object, this.customerId);
+      return this.client._objectFromItem(properties, this.parent);
     }
   }]);
 
@@ -1152,9 +1127,9 @@ var Smsmessage = (function (_Representation) {
 
     _this.type = 'smsmessage';
 
-    _this.unavailableMethods = ['save', 'delete'];
-    _this.unavailableMethods.forEach(function (method) {
-      return _this[method] = undefined;
+    _this._unavailableMethods = ['save', 'delete'];
+    _this._unavailableMethods.forEach(function (method) {
+      return delete _this[method];
     });
 
     return _this;

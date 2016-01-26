@@ -19,9 +19,9 @@ var PhonenumberList = (function (_RepresentationList) {
     _this.type = 'phonenumberList';
     _this.itemType = 'phonenumber';
 
-    _this.unavailableMethods = ['create'];
-    _this.unavailableMethods.forEach(function (method) {
-      return _this[method] = undefined;
+    _this._unavailableMethods = ['create'];
+    _this._unavailableMethods.forEach(function (method) {
+      return delete _this[method];
     });
 
     return _this;

@@ -22,6 +22,9 @@ var Recording = require('./recording');
 var Routingrule = require('./routingrule');
 var Smsmessage = require('./smsmessage');
 
+var Representation = require('./representation');
+var RepresentationList = require('./representationList');
+
 // Promise + callback polyfill
 Promise.prototype.nodeify = require('./polyfills/nodeify'); // eslint-disable-line no-extend-native
 
@@ -186,28 +189,8 @@ var Nimvelo = (function () {
       }) : this._objectFromItem(items, parent);
     }
   }, {
-    key: '_setCustomerIdOnObjects',
-    value: function _setCustomerIdOnObjects(objects, customerId) {
-
-      if (!customerId) {
-        return objects;
-      }
-
-      if (Array.isArray(objects)) {
-
-        objects.map(function (obj) {
-          obj.customerId = customerId;
-        });
-      } else {
-
-        objects.customerId = customerId;
-      }
-
-      return objects;
-    }
-  }, {
     key: '_request',
-    value: function _request(method, url, json, callback) {
+    value: function _request(method, url, params, callback) {
       var _this2 = this;
 
       /* eslint no-param-reassign:0 */
@@ -215,9 +198,25 @@ var Nimvelo = (function () {
       // Normalize method
       method = method.toLowerCase();
 
-      if (typeof json === 'function') {
-        callback = json;
-        json = null;
+      if (typeof params === 'function') {
+        callback = params;
+        params = null;
+      }
+
+      var json = {};
+
+      // Filter out properties which shouldn't be sent back to the server in
+      // the json body. This won't affect query params
+      for (var key in params) {
+
+        if (params.hasOwnProperty(key)) {
+
+          var property = params[key];
+          if (key.charAt(0) !== '_' && key !== 'client' && key !== 'parent' && !(property instanceof Representation) && !(property instanceof RepresentationList)) {
+
+            json[key] = property;
+          }
+        }
       }
 
       var options = {
@@ -419,6 +418,37 @@ var Nimvelo = (function () {
 
           reject(error);
         });
+      }).nodeify(callback);
+    }
+  }, {
+    key: '_saveRepresentation',
+    value: function _saveRepresentation(object, callback) {
+      var _this4 = this;
+
+      var url = this._buildUrl(object.type, object, object.id);
+      var requestMethod = object.id ? 'put' : 'post';
+
+      return new Promise(function (resolve, reject) {
+
+        _this4._request(requestMethod, url, object).then(function (data) {
+
+          // Update our object with the newly returned propreties
+          extend(object, data);
+
+          resolve(data);
+        }, reject);
+      }).nodeify(callback);
+    }
+  }, {
+    key: '_deleteRepresentation',
+    value: function _deleteRepresentation(object, callback) {
+      var _this5 = this;
+
+      var url = this._buildUrl(object.type, object, object.id);
+
+      return new Promise(function (resolve, reject) {
+
+        _this5._request('delete', url, object).then(resolve, reject);
       }).nodeify(callback);
     }
   }]);

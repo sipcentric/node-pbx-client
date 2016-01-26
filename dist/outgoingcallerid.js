@@ -18,9 +18,9 @@ var Outgoingcallerid = (function (_Representation) {
 
     _this.type = 'outgoingcallerid';
 
-    _this.unavailableMethods = ['save', 'delete'];
-    _this.unavailableMethods.forEach(function (method) {
-      return _this[method] = undefined;
+    _this._unavailableMethods = ['save', 'delete'];
+    _this._unavailableMethods.forEach(function (method) {
+      return delete _this[method];
     });
 
     return _this;
