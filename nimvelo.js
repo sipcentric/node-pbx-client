@@ -54,6 +54,60 @@ var CallList = (function (_RepresentationList) {
 module.exports = CallList;
 'use strict';
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Representation = require('./representation');
+
+var Callbundle = (function (_Representation) {
+  _inherits(Callbundle, _Representation);
+
+  function Callbundle(client, properties, parent) {
+    _classCallCheck(this, Callbundle);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Callbundle).call(this, client, properties, parent));
+
+    _this.type = 'callbundle';
+
+    return _this;
+  }
+
+  return Callbundle;
+})(Representation);
+
+module.exports = Callbundle;
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var RepresentationList = require('./representationList');
+
+var CallBundleList = (function (_RepresentationList) {
+  _inherits(CallBundleList, _RepresentationList);
+
+  function CallBundleList(client, parent) {
+    _classCallCheck(this, CallBundleList);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CallBundleList).call(this, client, parent));
+
+    _this.type = 'callBundleList';
+    _this.itemType = 'callBundle';
+    return _this;
+  }
+
+  return CallBundleList;
+})(RepresentationList);
+
+module.exports = CallBundleList;
+'use strict';
+
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -67,6 +121,8 @@ var extend = require('deep-extend');
 var Representation = require('./representation');
 var CallList = require('./callList');
 var Call = require('./call');
+var CallbundleList = require('./callbundleList');
+var Callbundle = require('./callbundle');
 var EndpointList = require('./endpointList');
 var GroupList = require('./groupList');
 var Group = require('./group');
@@ -109,6 +165,7 @@ var Customer = (function (_Representation) {
     _this.type = 'customer';
 
     _this.calls = new CallList(_this.client, _this);
+    _this.callbundles = new CallbundleList(_this.client, _this);
     _this.endpoints = new EndpointList(_this.client, _this);
     _this.groups = new GroupList(_this.client, _this);
     _this.ivrs = new IvrList(_this.client, _this);
@@ -144,6 +201,8 @@ var Customer = (function (_Representation) {
       switch (type) {
         case 'call':
           return new Call(this.client, properties, this);
+        case 'callbundle':
+          return new Callbundle(this.client, properties, this);
         case 'group':
           return new Group(this.client, properties, this);
         case 'ivr':
@@ -464,6 +523,7 @@ var request = require('request');
 var extend = require('deep-extend');
 
 var Call = require('./call');
+var Callbundle = require('./callbundle');
 var Customer = require('./customer');
 var CustomerList = require('./customerList');
 var Group = require('./group');
@@ -618,6 +678,9 @@ var Nimvelo = (function () {
         /* eslint no-use-before-define: 0 */
         case 'call':
           object = new Call(this, item, parent);
+          break;
+        case 'callbundle':
+          object = new Callbundle(this, item, parent);
           break;
         case 'customer':
           object = new Customer(this, item);

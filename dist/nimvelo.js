@@ -10,6 +10,7 @@ var request = require('request');
 var extend = require('deep-extend');
 
 var Call = require('./call');
+var Callbundle = require('./callbundle');
 var Customer = require('./customer');
 var CustomerList = require('./customerList');
 var Group = require('./group');
@@ -164,6 +165,9 @@ var Nimvelo = (function () {
         /* eslint no-use-before-define: 0 */
         case 'call':
           object = new Call(this, item, parent);
+          break;
+        case 'callbundle':
+          object = new Callbundle(this, item, parent);
           break;
         case 'customer':
           object = new Customer(this, item);
