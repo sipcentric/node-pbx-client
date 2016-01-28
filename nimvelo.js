@@ -1643,13 +1643,8 @@ var RepresentationList = (function () {
   }
 
   _createClass(RepresentationList, [{
-    key: 'list',
-    value: function list(params, callback) {
-      return this.client._getResource(this.itemType, this, params, callback);
-    }
-  }, {
-    key: 'find',
-    value: function find(id, params, callback) {
+    key: 'get',
+    value: function get(id, params, callback) {
       return this.client._getResource(this.itemType, this, id, params, callback);
     }
   }, {
