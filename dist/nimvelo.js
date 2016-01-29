@@ -117,6 +117,9 @@ var Nimvelo = (function () {
         case 'customer':
           path = id || '';
           break;
+        case 'estimate':
+          path = 'estimate';
+          break;
         case 'phone':
         case 'virtual':
         case 'group':
