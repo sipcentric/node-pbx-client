@@ -29,6 +29,7 @@ var Queue = require('./queue');
 var Stream = require('./stream');
 var Recording = require('./recording');
 var Routingrule = require('./routingrule');
+var Sipidentity = require('./sipidentity');
 var Smsmessage = require('./smsmessage');
 var Timeinterval = require('./timeinterval');
 var Virtual = require('./virtual');
@@ -117,6 +118,9 @@ var Nimvelo = (function () {
           break;
         case 'phonebookentry':
           path = id + '/phonebook';
+          break;
+        case 'sipidentity':
+          path = id + '/sip';
           break;
         case 'smsmessage':
           path = id + '/sms';
@@ -229,6 +233,9 @@ var Nimvelo = (function () {
           break;
         case 'smsmessage':
           object = new Smsmessage(this, item, parent);
+          break;
+        case 'sipidentity':
+          object = new Sipidentity(this, item, parent);
           break;
         case 'timeinterval':
           object = new Timeinterval(this, item, parent);
