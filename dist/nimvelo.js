@@ -27,6 +27,7 @@ var Phonenumber = require('./phonenumber');
 var Preference = require('./preference');
 var Prompt = require('./prompt');
 var Queue = require('./queue');
+var Queueentries = require('./queueentries');
 var Queuestatus = require('./queuestatus');
 var Stream = require('./stream');
 var Recording = require('./recording');
@@ -121,6 +122,9 @@ var Nimvelo = (function () {
           break;
         case 'phonebookentry':
           path = id + '/phonebook';
+          break;
+        case 'queueentries':
+          path = id + '/queueentries';
           break;
         case 'queuestatus':
           path = id + '/queuestatus';
@@ -236,6 +240,9 @@ var Nimvelo = (function () {
           break;
         case 'queue':
           object = new Queue(this, item, parent);
+          break;
+        case 'queueentries':
+          object = new Queueentries(this, item, parent);
           break;
         case 'queuestatus':
           object = new Queuestatus(this, item, parent);
