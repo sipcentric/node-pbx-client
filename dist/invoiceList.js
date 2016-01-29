@@ -6,25 +6,22 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Representation = require('./representation');
-var InvoiceList = require('./invoiceList');
+var RepresentationList = require('./representationList');
 
-var Billingaccount = (function (_Representation) {
-  _inherits(Billingaccount, _Representation);
+var InvoiceList = (function (_RepresentationList) {
+  _inherits(InvoiceList, _RepresentationList);
 
-  function Billingaccount(client, properties, parent) {
-    _classCallCheck(this, Billingaccount);
+  function InvoiceList(client, parent) {
+    _classCallCheck(this, InvoiceList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Billingaccount).call(this, client, properties, parent));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(InvoiceList).call(this, client, parent));
 
-    _this.type = 'billingaccount';
-
-    _this.invoices = new InvoiceList(_this.client, _this);
-
+    _this.type = 'invoiceList';
+    _this.itemType = 'invoice';
     return _this;
   }
 
-  return Billingaccount;
-})(Representation);
+  return InvoiceList;
+})(RepresentationList);
 
-module.exports = Billingaccount;
+module.exports = InvoiceList;

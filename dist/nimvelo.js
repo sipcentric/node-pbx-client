@@ -18,6 +18,7 @@ var Customer = require('./customer');
 var CustomerList = require('./customerList');
 var Forwardingrule = require('./forwardingrule');
 var Group = require('./group');
+var Invoice = require('./invoice');
 var Ivr = require('./ivr');
 var Mailbox = require('./mailbox');
 var Music = require('./music');
@@ -124,6 +125,9 @@ var Nimvelo = (function () {
         case 'mailbox':
           path = id + '/endpoints';
           break;
+        case 'invoice':
+          path = 'invoices';
+          break;
         case 'phonebookentry':
           path = id + '/phonebook';
           break;
@@ -220,6 +224,9 @@ var Nimvelo = (function () {
           break;
         case 'group':
           object = new Group(this, item, parent);
+          break;
+        case 'invoice':
+          object = new Invoice(this, item, parent);
           break;
         case 'ivr':
           object = new Ivr(this, item, parent);

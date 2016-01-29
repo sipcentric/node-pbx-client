@@ -61,6 +61,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Representation = require('./representation');
+var InvoiceList = require('./invoiceList');
 
 var Billingaccount = (function (_Representation) {
   _inherits(Billingaccount, _Representation);
@@ -71,6 +72,8 @@ var Billingaccount = (function (_Representation) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Billingaccount).call(this, client, properties, parent));
 
     _this.type = 'billingaccount';
+
+    _this.invoices = new InvoiceList(_this.client, _this);
 
     return _this;
   }
@@ -576,6 +579,60 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var Representation = require('./representation');
 
+var Invoice = (function (_Representation) {
+  _inherits(Invoice, _Representation);
+
+  function Invoice(client, properties, parent) {
+    _classCallCheck(this, Invoice);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Invoice).call(this, client, properties, parent));
+
+    _this.type = 'invoice';
+
+    return _this;
+  }
+
+  return Invoice;
+})(Representation);
+
+module.exports = Invoice;
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var RepresentationList = require('./representationList');
+
+var InvoiceList = (function (_RepresentationList) {
+  _inherits(InvoiceList, _RepresentationList);
+
+  function InvoiceList(client, parent) {
+    _classCallCheck(this, InvoiceList);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(InvoiceList).call(this, client, parent));
+
+    _this.type = 'invoiceList';
+    _this.itemType = 'invoice';
+    return _this;
+  }
+
+  return InvoiceList;
+})(RepresentationList);
+
+module.exports = InvoiceList;
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Representation = require('./representation');
+
 var Ivr = (function (_Representation) {
   _inherits(Ivr, _Representation);
 
@@ -748,6 +805,7 @@ var Customer = require('./customer');
 var CustomerList = require('./customerList');
 var Forwardingrule = require('./forwardingrule');
 var Group = require('./group');
+var Invoice = require('./invoice');
 var Ivr = require('./ivr');
 var Mailbox = require('./mailbox');
 var Music = require('./music');
@@ -854,6 +912,9 @@ var Nimvelo = (function () {
         case 'mailbox':
           path = id + '/endpoints';
           break;
+        case 'invoice':
+          path = 'invoices';
+          break;
         case 'phonebookentry':
           path = id + '/phonebook';
           break;
@@ -950,6 +1011,9 @@ var Nimvelo = (function () {
           break;
         case 'group':
           object = new Group(this, item, parent);
+          break;
+        case 'invoice':
+          object = new Invoice(this, item, parent);
           break;
         case 'ivr':
           object = new Ivr(this, item, parent);
