@@ -6,27 +6,22 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Representation = require('./representation');
-var ForwardingruleList = require('./forwardingruleList');
-var SipidentityList = require('./sipidentityList');
+var RepresentationList = require('./representationList');
 
-var Phone = (function (_Representation) {
-  _inherits(Phone, _Representation);
+var ForwardingruleList = (function (_RepresentationList) {
+  _inherits(ForwardingruleList, _RepresentationList);
 
-  function Phone(client, properties, parent) {
-    _classCallCheck(this, Phone);
+  function ForwardingruleList(client, parent) {
+    _classCallCheck(this, ForwardingruleList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Phone).call(this, client, properties, parent));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ForwardingruleList).call(this, client, parent));
 
-    _this.type = 'phone';
-
-    _this.sip = new SipidentityList(_this.client, _this);
-    _this.forwardingrules = new ForwardingruleList(_this.client, _this);
-
+    _this.type = 'forwardingruleList';
+    _this.itemType = 'forwardingrule';
     return _this;
   }
 
-  return Phone;
-})(Representation);
+  return ForwardingruleList;
+})(RepresentationList);
 
-module.exports = Phone;
+module.exports = ForwardingruleList;

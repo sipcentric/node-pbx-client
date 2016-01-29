@@ -412,6 +412,60 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var Representation = require('./representation');
 
+var Forwardingrule = (function (_Representation) {
+  _inherits(Forwardingrule, _Representation);
+
+  function Forwardingrule(client, properties, parent) {
+    _classCallCheck(this, Forwardingrule);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Forwardingrule).call(this, client, properties, parent));
+
+    _this.type = 'forwardingrule';
+
+    return _this;
+  }
+
+  return Forwardingrule;
+})(Representation);
+
+module.exports = Forwardingrule;
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var RepresentationList = require('./representationList');
+
+var ForwardingruleList = (function (_RepresentationList) {
+  _inherits(ForwardingruleList, _RepresentationList);
+
+  function ForwardingruleList(client, parent) {
+    _classCallCheck(this, ForwardingruleList);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ForwardingruleList).call(this, client, parent));
+
+    _this.type = 'forwardingruleList';
+    _this.itemType = 'forwardingrule';
+    return _this;
+  }
+
+  return ForwardingruleList;
+})(RepresentationList);
+
+module.exports = ForwardingruleList;
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Representation = require('./representation');
+
 var Group = (function (_Representation) {
   _inherits(Group, _Representation);
 
@@ -635,6 +689,7 @@ var Callbundle = require('./callbundle');
 var Creditstatus = require('./creditstatus');
 var Customer = require('./customer');
 var CustomerList = require('./customerList');
+var Forwardingrule = require('./forwardingrule');
 var Group = require('./group');
 var Ivr = require('./ivr');
 var Mailbox = require('./mailbox');
@@ -818,6 +873,9 @@ var Nimvelo = (function () {
           break;
         case 'did':
           object = new Phonenumber(this, item, parent);
+          break;
+        case 'forwardingrule':
+          object = new Forwardingrule(this, item, parent);
           break;
         case 'group':
           object = new Group(this, item, parent);
@@ -1226,6 +1284,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Representation = require('./representation');
+var ForwardingruleList = require('./forwardingruleList');
 var SipidentityList = require('./sipidentityList');
 
 var Phone = (function (_Representation) {
@@ -1239,6 +1298,7 @@ var Phone = (function (_Representation) {
     _this.type = 'phone';
 
     _this.sip = new SipidentityList(_this.client, _this);
+    _this.forwardingrules = new ForwardingruleList(_this.client, _this);
 
     return _this;
   }

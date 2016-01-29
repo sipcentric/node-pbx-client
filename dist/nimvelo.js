@@ -15,6 +15,7 @@ var Callbundle = require('./callbundle');
 var Creditstatus = require('./creditstatus');
 var Customer = require('./customer');
 var CustomerList = require('./customerList');
+var Forwardingrule = require('./forwardingrule');
 var Group = require('./group');
 var Ivr = require('./ivr');
 var Mailbox = require('./mailbox');
@@ -198,6 +199,9 @@ var Nimvelo = (function () {
           break;
         case 'did':
           object = new Phonenumber(this, item, parent);
+          break;
+        case 'forwardingrule':
+          object = new Forwardingrule(this, item, parent);
           break;
         case 'group':
           object = new Group(this, item, parent);
