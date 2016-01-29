@@ -701,6 +701,7 @@ var Phonenumber = require('./phonenumber');
 var Preference = require('./preference');
 var Prompt = require('./prompt');
 var Queue = require('./queue');
+var Queuestatus = require('./queuestatus');
 var Stream = require('./stream');
 var Recording = require('./recording');
 var Routingrule = require('./routingrule');
@@ -794,6 +795,9 @@ var Nimvelo = (function () {
           break;
         case 'phonebookentry':
           path = id + '/phonebook';
+          break;
+        case 'queuestatus':
+          path = id + '/queuestatus';
           break;
         case 'sipidentity':
           path = id + '/sip';
@@ -906,6 +910,9 @@ var Nimvelo = (function () {
           break;
         case 'queue':
           object = new Queue(this, item, parent);
+          break;
+        case 'queuestatus':
+          object = new Queuestatus(this, item, parent);
           break;
         case 'recording':
           object = new Recording(this, item, parent);
@@ -1568,6 +1575,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Representation = require('./representation');
+var QueuestatusList = require('./queuestatusList');
 
 var Queue = (function (_Representation) {
   _inherits(Queue, _Representation);
@@ -1578,6 +1586,8 @@ var Queue = (function (_Representation) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Queue).call(this, client, properties, parent));
 
     _this.type = 'queue';
+
+    _this.status = new QueuestatusList(_this.client, _this);
 
     return _this;
   }
@@ -1613,6 +1623,60 @@ var QueueList = (function (_RepresentationList) {
 })(RepresentationList);
 
 module.exports = QueueList;
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Representation = require('./representation');
+
+var Queuestatus = (function (_Representation) {
+  _inherits(Queuestatus, _Representation);
+
+  function Queuestatus(client, properties, parent) {
+    _classCallCheck(this, Queuestatus);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Queuestatus).call(this, client, properties, parent));
+
+    _this.type = 'queuestatus';
+
+    return _this;
+  }
+
+  return Queuestatus;
+})(Representation);
+
+module.exports = Queuestatus;
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var RepresentationList = require('./representationList');
+
+var QueuestatusList = (function (_RepresentationList) {
+  _inherits(QueuestatusList, _RepresentationList);
+
+  function QueuestatusList(client, parent) {
+    _classCallCheck(this, QueuestatusList);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(QueuestatusList).call(this, client, parent));
+
+    _this.type = 'queuestatusList';
+    _this.itemType = 'queuestatus';
+    return _this;
+  }
+
+  return QueuestatusList;
+})(RepresentationList);
+
+module.exports = QueuestatusList;
 'use strict';
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
