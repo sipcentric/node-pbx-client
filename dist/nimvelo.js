@@ -23,6 +23,7 @@ var Ivr = require('./ivr');
 var Mailbox = require('./mailbox');
 var Music = require('./music');
 var Outgoingcallerid = require('./outgoingcallerid');
+var Paymentmethod = require('./paymentmethod');
 var Phone = require('./phone');
 var Phonebookentry = require('./phonebookentry');
 var Phonenumber = require('./phonenumber');
@@ -134,6 +135,9 @@ var Nimvelo = (function () {
         case 'phonebookentry':
           path = id + '/phonebook';
           break;
+        case 'paymentmethod':
+          path = 'paymentmethods';
+          break;
         case 'queueentries':
           path = id + '/queueentries';
           break;
@@ -242,6 +246,10 @@ var Nimvelo = (function () {
           break;
         case 'outgoingcallerid':
           object = new Outgoingcallerid(this, item, parent);
+          break;
+        case 'paymentmethod':
+        case 'worldpay':
+          object = new Paymentmethod(this, item, parent);
           break;
         case 'phone':
           object = new Phone(this, item, parent);
