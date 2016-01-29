@@ -10,6 +10,7 @@ var request = require('request');
 var extend = require('deep-extend');
 
 var Availablebundle = require('./availablebundle');
+var Billingaccount = require('./billingaccount');
 var Call = require('./call');
 var Callbundle = require('./callbundle');
 var Creditstatus = require('./creditstatus');
@@ -103,6 +104,9 @@ var Nimvelo = (function () {
         case 'availablebundle':
           path = id + '/callbundles/available';
           break;
+        case 'billingaccount':
+          path = id + '/billing';
+          break;
         case 'creditstatus':
           path = id + '/creditstatus';
           break;
@@ -192,6 +196,9 @@ var Nimvelo = (function () {
         /* eslint no-use-before-define: 0 */
         case 'availablebundle':
           object = new Availablebundle(this, item, parent);
+          break;
+        case 'billingaccount':
+          object = new Billingaccount(this, item, parent);
           break;
         case 'call':
           object = new Call(this, item, parent);

@@ -62,6 +62,60 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var Representation = require('./representation');
 
+var Billingaccount = (function (_Representation) {
+  _inherits(Billingaccount, _Representation);
+
+  function Billingaccount(client, properties, parent) {
+    _classCallCheck(this, Billingaccount);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Billingaccount).call(this, client, properties, parent));
+
+    _this.type = 'billingaccount';
+
+    return _this;
+  }
+
+  return Billingaccount;
+})(Representation);
+
+module.exports = Billingaccount;
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var RepresentationList = require('./representationList');
+
+var BillingaccountList = (function (_RepresentationList) {
+  _inherits(BillingaccountList, _RepresentationList);
+
+  function BillingaccountList(client, parent) {
+    _classCallCheck(this, BillingaccountList);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(BillingaccountList).call(this, client, parent));
+
+    _this.type = 'billingaccountList';
+    _this.itemType = 'billingaccount';
+    return _this;
+  }
+
+  return BillingaccountList;
+})(RepresentationList);
+
+module.exports = BillingaccountList;
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Representation = require('./representation');
+
 var Call = (function (_Representation) {
   _inherits(Call, _Representation);
 
@@ -228,6 +282,7 @@ var extend = require('deep-extend');
 
 var Representation = require('./representation');
 var AvailablebundleList = require('./availablebundleList');
+var BillingaccountList = require('./billingaccountList');
 var CallList = require('./callList');
 var Call = require('./call');
 var CallbundleList = require('./callbundleList');
@@ -274,6 +329,7 @@ var Customer = (function (_Representation) {
     _this.type = 'customer';
 
     _this.availablebundles = new AvailablebundleList(_this.client, _this);
+    _this.billing = new BillingaccountList(_this.client, _this);
     _this.calls = new CallList(_this.client, _this);
     _this.callbundles = new CallbundleList(_this.client, _this);
     _this.creditstatus = new CreditstatusList(_this.client, _this);
@@ -684,6 +740,7 @@ var request = require('request');
 var extend = require('deep-extend');
 
 var Availablebundle = require('./availablebundle');
+var Billingaccount = require('./billingaccount');
 var Call = require('./call');
 var Callbundle = require('./callbundle');
 var Creditstatus = require('./creditstatus');
@@ -777,6 +834,9 @@ var Nimvelo = (function () {
         case 'availablebundle':
           path = id + '/callbundles/available';
           break;
+        case 'billingaccount':
+          path = id + '/billing';
+          break;
         case 'creditstatus':
           path = id + '/creditstatus';
           break;
@@ -866,6 +926,9 @@ var Nimvelo = (function () {
         /* eslint no-use-before-define: 0 */
         case 'availablebundle':
           object = new Availablebundle(this, item, parent);
+          break;
+        case 'billingaccount':
+          object = new Billingaccount(this, item, parent);
           break;
         case 'call':
           object = new Call(this, item, parent);

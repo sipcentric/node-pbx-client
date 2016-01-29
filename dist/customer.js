@@ -12,6 +12,7 @@ var extend = require('deep-extend');
 
 var Representation = require('./representation');
 var AvailablebundleList = require('./availablebundleList');
+var BillingaccountList = require('./billingaccountList');
 var CallList = require('./callList');
 var Call = require('./call');
 var CallbundleList = require('./callbundleList');
@@ -58,6 +59,7 @@ var Customer = (function (_Representation) {
     _this.type = 'customer';
 
     _this.availablebundles = new AvailablebundleList(_this.client, _this);
+    _this.billing = new BillingaccountList(_this.client, _this);
     _this.calls = new CallList(_this.client, _this);
     _this.callbundles = new CallbundleList(_this.client, _this);
     _this.creditstatus = new CreditstatusList(_this.client, _this);
