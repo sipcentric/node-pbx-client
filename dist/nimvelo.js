@@ -30,6 +30,7 @@ var Stream = require('./stream');
 var Recording = require('./recording');
 var Routingrule = require('./routingrule');
 var Sipidentity = require('./sipidentity');
+var Sipregistration = require('./sipregistration');
 var Smsmessage = require('./smsmessage');
 var Timeinterval = require('./timeinterval');
 var Virtual = require('./virtual');
@@ -121,6 +122,9 @@ var Nimvelo = (function () {
           break;
         case 'sipidentity':
           path = id + '/sip';
+          break;
+        case 'sipregistration':
+          path = 'registrations';
           break;
         case 'smsmessage':
           path = id + '/sms';
@@ -236,6 +240,9 @@ var Nimvelo = (function () {
           break;
         case 'sipidentity':
           object = new Sipidentity(this, item, parent);
+          break;
+        case 'sipregistration':
+          object = new Sipregistration(this, item, parent);
           break;
         case 'timeinterval':
           object = new Timeinterval(this, item, parent);

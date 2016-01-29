@@ -650,6 +650,7 @@ var Stream = require('./stream');
 var Recording = require('./recording');
 var Routingrule = require('./routingrule');
 var Sipidentity = require('./sipidentity');
+var Sipregistration = require('./sipregistration');
 var Smsmessage = require('./smsmessage');
 var Timeinterval = require('./timeinterval');
 var Virtual = require('./virtual');
@@ -741,6 +742,9 @@ var Nimvelo = (function () {
           break;
         case 'sipidentity':
           path = id + '/sip';
+          break;
+        case 'sipregistration':
+          path = 'registrations';
           break;
         case 'smsmessage':
           path = id + '/sms';
@@ -856,6 +860,9 @@ var Nimvelo = (function () {
           break;
         case 'sipidentity':
           object = new Sipidentity(this, item, parent);
+          break;
+        case 'sipregistration':
+          object = new Sipregistration(this, item, parent);
           break;
         case 'timeinterval':
           object = new Timeinterval(this, item, parent);
@@ -1737,6 +1744,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Representation = require('./representation');
+var SipregistrationList = require('./sipregistrationList');
 
 var Sipidentity = (function (_Representation) {
   _inherits(Sipidentity, _Representation);
@@ -1747,6 +1755,8 @@ var Sipidentity = (function (_Representation) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Sipidentity).call(this, client, properties, parent));
 
     _this.type = 'sipidentity';
+
+    _this.registrations = new SipregistrationList(_this.client, _this);
 
     return _this;
   }
@@ -1782,6 +1792,60 @@ var SipidentityList = (function (_RepresentationList) {
 })(RepresentationList);
 
 module.exports = SipidentityList;
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Representation = require('./representation');
+
+var Sipregistration = (function (_Representation) {
+  _inherits(Sipregistration, _Representation);
+
+  function Sipregistration(client, properties, parent) {
+    _classCallCheck(this, Sipregistration);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Sipregistration).call(this, client, properties, parent));
+
+    _this.type = 'sipregistration';
+
+    return _this;
+  }
+
+  return Sipregistration;
+})(Representation);
+
+module.exports = Sipregistration;
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var RepresentationList = require('./representationList');
+
+var SipregistrationList = (function (_RepresentationList) {
+  _inherits(SipregistrationList, _RepresentationList);
+
+  function SipregistrationList(client, parent) {
+    _classCallCheck(this, SipregistrationList);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SipregistrationList).call(this, client, parent));
+
+    _this.type = 'sipregistrationList';
+    _this.itemType = 'sipregistration';
+    return _this;
+  }
+
+  return SipregistrationList;
+})(RepresentationList);
+
+module.exports = SipregistrationList;
 'use strict';
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
