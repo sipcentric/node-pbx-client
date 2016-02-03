@@ -1,15 +1,28 @@
 'use strict';
 
+var _representation = require('./representation');
+
+var _representation2 = _interopRequireDefault(_representation);
+
+var _estimateList = require('./estimateList');
+
+var _estimateList2 = _interopRequireDefault(_estimateList);
+
+var _invoiceList = require('./invoiceList');
+
+var _invoiceList2 = _interopRequireDefault(_invoiceList);
+
+var _paymentmethodList = require('./paymentmethodList');
+
+var _paymentmethodList2 = _interopRequireDefault(_paymentmethodList);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Representation = require('./representation');
-var EstimateList = require('./estimateList');
-var InvoiceList = require('./invoiceList');
-var PaymentmethodList = require('./paymentmethodList');
 
 var Billingaccount = (function (_Representation) {
   _inherits(Billingaccount, _Representation);
@@ -21,14 +34,14 @@ var Billingaccount = (function (_Representation) {
 
     _this.type = 'billingaccount';
 
-    _this.invoices = new InvoiceList(_this.client, _this);
-    _this.estimate = new EstimateList(_this.client, _this);
-    _this.paymentmethods = new PaymentmethodList(_this.client, _this);
+    _this.invoices = new _invoiceList2.default(_this.client, _this);
+    _this.estimate = new _estimateList2.default(_this.client, _this);
+    _this.paymentmethods = new _paymentmethodList2.default(_this.client, _this);
 
     return _this;
   }
 
   return Billingaccount;
-})(Representation);
+})(_representation2.default);
 
 module.exports = Billingaccount;

@@ -5,7 +5,10 @@
   http://derpturkey.com/promise-callback-pattern-for-javascript/
 */
 
-module.exports = function replacePromiseWithCallback(callback) {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var nodeify = function replacePromiseWithCallback(callback) {
 
   if (callback) {
 
@@ -25,3 +28,5 @@ module.exports = function replacePromiseWithCallback(callback) {
     return this;
   }
 };
+
+exports.default = nodeify;

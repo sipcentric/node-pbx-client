@@ -2,53 +2,171 @@
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
+// Promise + callback polyfill
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _request2 = require('request');
+
+var _request3 = _interopRequireDefault(_request2);
+
+var _deepExtend = require('deep-extend');
+
+var _deepExtend2 = _interopRequireDefault(_deepExtend);
+
+var _availablebundle = require('./availablebundle');
+
+var _availablebundle2 = _interopRequireDefault(_availablebundle);
+
+var _billingaccount = require('./billingaccount');
+
+var _billingaccount2 = _interopRequireDefault(_billingaccount);
+
+var _call = require('./call');
+
+var _call2 = _interopRequireDefault(_call);
+
+var _callbundle = require('./callbundle');
+
+var _callbundle2 = _interopRequireDefault(_callbundle);
+
+var _creditstatus = require('./creditstatus');
+
+var _creditstatus2 = _interopRequireDefault(_creditstatus);
+
+var _customer = require('./customer');
+
+var _customer2 = _interopRequireDefault(_customer);
+
+var _customerList = require('./customerList');
+
+var _customerList2 = _interopRequireDefault(_customerList);
+
+var _forwardingrule = require('./forwardingrule');
+
+var _forwardingrule2 = _interopRequireDefault(_forwardingrule);
+
+var _group = require('./group');
+
+var _group2 = _interopRequireDefault(_group);
+
+var _invoice = require('./invoice');
+
+var _invoice2 = _interopRequireDefault(_invoice);
+
+var _ivr = require('./ivr');
+
+var _ivr2 = _interopRequireDefault(_ivr);
+
+var _mailbox = require('./mailbox');
+
+var _mailbox2 = _interopRequireDefault(_mailbox);
+
+var _music = require('./music');
+
+var _music2 = _interopRequireDefault(_music);
+
+var _outgoingcallerid = require('./outgoingcallerid');
+
+var _outgoingcallerid2 = _interopRequireDefault(_outgoingcallerid);
+
+var _paymentmethod = require('./paymentmethod');
+
+var _paymentmethod2 = _interopRequireDefault(_paymentmethod);
+
+var _phone = require('./phone');
+
+var _phone2 = _interopRequireDefault(_phone);
+
+var _phonebookentry = require('./phonebookentry');
+
+var _phonebookentry2 = _interopRequireDefault(_phonebookentry);
+
+var _phonenumber = require('./phonenumber');
+
+var _phonenumber2 = _interopRequireDefault(_phonenumber);
+
+var _preference = require('./preference');
+
+var _preference2 = _interopRequireDefault(_preference);
+
+var _prompt = require('./prompt');
+
+var _prompt2 = _interopRequireDefault(_prompt);
+
+var _queue = require('./queue');
+
+var _queue2 = _interopRequireDefault(_queue);
+
+var _queueentries = require('./queueentries');
+
+var _queueentries2 = _interopRequireDefault(_queueentries);
+
+var _queuestatus = require('./queuestatus');
+
+var _queuestatus2 = _interopRequireDefault(_queuestatus);
+
+var _stream = require('./stream');
+
+var _stream2 = _interopRequireDefault(_stream);
+
+var _recording = require('./recording');
+
+var _recording2 = _interopRequireDefault(_recording);
+
+var _routingrule = require('./routingrule');
+
+var _routingrule2 = _interopRequireDefault(_routingrule);
+
+var _sipidentity = require('./sipidentity');
+
+var _sipidentity2 = _interopRequireDefault(_sipidentity);
+
+var _sipregistration = require('./sipregistration');
+
+var _sipregistration2 = _interopRequireDefault(_sipregistration);
+
+var _smsmessage = require('./smsmessage');
+
+var _smsmessage2 = _interopRequireDefault(_smsmessage);
+
+var _timeinterval = require('./timeinterval');
+
+var _timeinterval2 = _interopRequireDefault(_timeinterval);
+
+var _virtual = require('./virtual');
+
+var _virtual2 = _interopRequireDefault(_virtual);
+
+var _representation = require('./representation');
+
+var _representation2 = _interopRequireDefault(_representation);
+
+var _representationList = require('./representationList');
+
+var _representationList2 = _interopRequireDefault(_representationList);
+
+var _nodeify = require('./polyfills/nodeify');
+
+var _nodeify2 = _interopRequireDefault(_nodeify);
+
+var _package = require('../package.json');
+
+var _package2 = _interopRequireDefault(_package);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var request = require('request');
-var extend = require('deep-extend');
-
-var Availablebundle = require('./availablebundle');
-var Billingaccount = require('./billingaccount');
-var Call = require('./call');
-var Callbundle = require('./callbundle');
-var Creditstatus = require('./creditstatus');
-var Customer = require('./customer');
-var CustomerList = require('./customerList');
-var Forwardingrule = require('./forwardingrule');
-var Group = require('./group');
-var Invoice = require('./invoice');
-var Ivr = require('./ivr');
-var Mailbox = require('./mailbox');
-var Music = require('./music');
-var Outgoingcallerid = require('./outgoingcallerid');
-var Paymentmethod = require('./paymentmethod');
-var Phone = require('./phone');
-var Phonebookentry = require('./phonebookentry');
-var Phonenumber = require('./phonenumber');
-var Preference = require('./preference');
-var Prompt = require('./prompt');
-var Queue = require('./queue');
-var Queueentries = require('./queueentries');
-var Queuestatus = require('./queuestatus');
-var Stream = require('./stream');
-var Recording = require('./recording');
-var Routingrule = require('./routingrule');
-var Sipidentity = require('./sipidentity');
-var Sipregistration = require('./sipregistration');
-var Smsmessage = require('./smsmessage');
-var Timeinterval = require('./timeinterval');
-var Virtual = require('./virtual');
-
-var Representation = require('./representation');
-var RepresentationList = require('./representationList');
-
-// Promise + callback polyfill
-Promise.prototype.nodeify = require('./polyfills/nodeify'); // eslint-disable-line no-extend-native
+Promise.prototype.nodeify = _nodeify2.default; // eslint-disable-line no-extend-native
 
 // Package version
-var VERSION = require('../package.json').version;
+
+var VERSION = _package2.default.version;
 
 var Nimvelo = (function () {
   function Nimvelo(options) {
@@ -68,7 +186,7 @@ var Nimvelo = (function () {
     }
 
     // Merge the default options with the client submitted options
-    this.options = extend({
+    this.options = (0, _deepExtend2.default)({
       username: null,
       password: null,
       customer: 'me',
@@ -87,12 +205,12 @@ var Nimvelo = (function () {
     }, options);
 
     // Build a request object
-    this.request = request.defaults(extend(
+    this.request = _request3.default.defaults((0, _deepExtend2.default)(
     // Pass the client submitted request options
     this.options.requestOptions));
 
-    this.customers = new CustomerList(this);
-    this.stream = new Stream(this);
+    this.customers = new _customerList2.default(this);
+    this.stream = new _stream2.default(this);
   }
 
   _createClass(Nimvelo, [{
@@ -206,92 +324,92 @@ var Nimvelo = (function () {
       switch (item.type) {
         /* eslint no-use-before-define: 0 */
         case 'availablebundle':
-          object = new Availablebundle(this, item, parent);
+          object = new _availablebundle2.default(this, item, parent);
           break;
         case 'billingaccount':
-          object = new Billingaccount(this, item, parent);
+          object = new _billingaccount2.default(this, item, parent);
           break;
         case 'call':
-          object = new Call(this, item, parent);
+          object = new _call2.default(this, item, parent);
           break;
         case 'callbundle':
-          object = new Callbundle(this, item, parent);
+          object = new _callbundle2.default(this, item, parent);
           break;
         case 'creditstatus':
-          object = new Creditstatus(this, item, parent);
+          object = new _creditstatus2.default(this, item, parent);
           break;
         case 'customer':
-          object = new Customer(this, item);
+          object = new _customer2.default(this, item);
           break;
         case 'did':
-          object = new Phonenumber(this, item, parent);
+          object = new _phonenumber2.default(this, item, parent);
           break;
         case 'forwardingrule':
-          object = new Forwardingrule(this, item, parent);
+          object = new _forwardingrule2.default(this, item, parent);
           break;
         case 'group':
-          object = new Group(this, item, parent);
+          object = new _group2.default(this, item, parent);
           break;
         case 'invoice':
-          object = new Invoice(this, item, parent);
+          object = new _invoice2.default(this, item, parent);
           break;
         case 'ivr':
-          object = new Ivr(this, item, parent);
+          object = new _ivr2.default(this, item, parent);
           break;
         case 'mailbox':
-          object = new Mailbox(this, item, parent);
+          object = new _mailbox2.default(this, item, parent);
           break;
         case 'music':
-          object = new Music(this, item, parent);
+          object = new _music2.default(this, item, parent);
           break;
         case 'outgoingcallerid':
-          object = new Outgoingcallerid(this, item, parent);
+          object = new _outgoingcallerid2.default(this, item, parent);
           break;
         case 'paymentmethod':
         case 'worldpay':
-          object = new Paymentmethod(this, item, parent);
+          object = new _paymentmethod2.default(this, item, parent);
           break;
         case 'phone':
-          object = new Phone(this, item, parent);
+          object = new _phone2.default(this, item, parent);
           break;
         case 'phonebookentry':
-          object = new Phonebookentry(this, item, parent);
+          object = new _phonebookentry2.default(this, item, parent);
           break;
         case 'prompt':
-          object = new Prompt(this, item, parent);
+          object = new _prompt2.default(this, item, parent);
           break;
         case 'preference':
-          object = new Preference(this, item, parent);
+          object = new _preference2.default(this, item, parent);
           break;
         case 'queue':
-          object = new Queue(this, item, parent);
+          object = new _queue2.default(this, item, parent);
           break;
         case 'queueentries':
-          object = new Queueentries(this, item, parent);
+          object = new _queueentries2.default(this, item, parent);
           break;
         case 'queuestatus':
-          object = new Queuestatus(this, item, parent);
+          object = new _queuestatus2.default(this, item, parent);
           break;
         case 'recording':
-          object = new Recording(this, item, parent);
+          object = new _recording2.default(this, item, parent);
           break;
         case 'routingrule':
-          object = new Routingrule(this, item, parent);
+          object = new _routingrule2.default(this, item, parent);
           break;
         case 'smsmessage':
-          object = new Smsmessage(this, item, parent);
+          object = new _smsmessage2.default(this, item, parent);
           break;
         case 'sipidentity':
-          object = new Sipidentity(this, item, parent);
+          object = new _sipidentity2.default(this, item, parent);
           break;
         case 'sipregistration':
-          object = new Sipregistration(this, item, parent);
+          object = new _sipregistration2.default(this, item, parent);
           break;
         case 'timeinterval':
-          object = new Timeinterval(this, item, parent);
+          object = new _timeinterval2.default(this, item, parent);
           break;
         case 'virtual':
-          object = new Virtual(this, item, parent);
+          object = new _virtual2.default(this, item, parent);
           break;
         default:
           object = item;
@@ -336,7 +454,7 @@ var Nimvelo = (function () {
         if (params.hasOwnProperty(key)) {
 
           var property = params[key];
-          if (key.charAt(0) !== '_' && key !== 'client' && key !== 'parent' && !(property instanceof Representation) && !(property instanceof RepresentationList)) {
+          if (key.charAt(0) !== '_' && key !== 'client' && key !== 'parent' && !(property instanceof _representation2.default) && !(property instanceof _representationList2.default)) {
 
             json[key] = property;
           }
@@ -429,7 +547,7 @@ var Nimvelo = (function () {
         }
       });
 
-      extend(params, this._paramsForType(type));
+      (0, _deepExtend2.default)(params, this._paramsForType(type));
 
       url = this._buildUrlSection(type, object);
       url += typeof id !== 'undefined' ? id + '/' : '';
@@ -557,7 +675,7 @@ var Nimvelo = (function () {
         _this4._request(requestMethod, url, object).then(function (data) {
 
           // Update our object with the newly returned propreties
-          extend(object, data);
+          (0, _deepExtend2.default)(object, data);
 
           resolve(data);
         }, reject);
@@ -580,4 +698,4 @@ var Nimvelo = (function () {
   return Nimvelo;
 })();
 
-module.exports = Nimvelo;
+exports.default = Nimvelo;
