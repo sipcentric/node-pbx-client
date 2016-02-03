@@ -1,5 +1,9 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _representation = require('./representation');
 
 var _representation2 = _interopRequireDefault(_representation);
@@ -28,8 +32,12 @@ var Availablebundle = (function (_Representation) {
   return Availablebundle;
 })(_representation2.default);
 
-module.exports = Availablebundle;
+exports.default = Availablebundle;
 'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _representationList = require('./representationList');
 
@@ -59,8 +67,12 @@ var AvailablebundleList = (function (_RepresentationList) {
   return AvailablebundleList;
 })(_representationList2.default);
 
-module.exports = AvailablebundleList;
+exports.default = AvailablebundleList;
 'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _representation = require('./representation');
 
@@ -106,8 +118,12 @@ var Billingaccount = (function (_Representation) {
   return Billingaccount;
 })(_representation2.default);
 
-module.exports = Billingaccount;
+exports.default = Billingaccount;
 'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _representationList = require('./representationList');
 
@@ -137,8 +153,12 @@ var BillingaccountList = (function (_RepresentationList) {
   return BillingaccountList;
 })(_representationList2.default);
 
-module.exports = BillingaccountList;
+exports.default = BillingaccountList;
 'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _representation = require('./representation');
 
@@ -168,8 +188,12 @@ var Call = (function (_Representation) {
   return Call;
 })(_representation2.default);
 
-module.exports = Call;
+exports.default = Call;
 'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _representationList = require('./representationList');
 
@@ -199,8 +223,12 @@ var CallList = (function (_RepresentationList) {
   return CallList;
 })(_representationList2.default);
 
-module.exports = CallList;
+exports.default = CallList;
 'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _representation = require('./representation');
 
@@ -230,8 +258,12 @@ var Callbundle = (function (_Representation) {
   return Callbundle;
 })(_representation2.default);
 
-module.exports = Callbundle;
+exports.default = Callbundle;
 'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _representationList = require('./representationList');
 
@@ -261,8 +293,12 @@ var CallbundleList = (function (_RepresentationList) {
   return CallbundleList;
 })(_representationList2.default);
 
-module.exports = CallbundleList;
+exports.default = CallbundleList;
 'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _representation = require('./representation');
 
@@ -292,8 +328,12 @@ var Creditstatus = (function (_Representation) {
   return Creditstatus;
 })(_representation2.default);
 
-module.exports = Creditstatus;
+exports.default = Creditstatus;
 'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _representationList = require('./representationList');
 
@@ -323,10 +363,14 @@ var CreditstatusList = (function (_RepresentationList) {
   return CreditstatusList;
 })(_representationList2.default);
 
-module.exports = CreditstatusList;
+exports.default = CreditstatusList;
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 var _deepExtend = require('deep-extend');
 
@@ -567,7 +611,7 @@ var Customer = (function (_Representation) {
   return Customer;
 })(_representation2.default);
 
-module.exports = Customer;
+exports.default = Customer;
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1702,9 +1746,40 @@ var Nimvelo = (function () {
       }
     }
   }, {
+    key: '_formatResponse',
+    value: function _formatResponse(response, parent) {
+      var _this3 = this;
+
+      var items = this._buildObjects(response.items, parent);
+
+      delete response.items;
+
+      var meta = response;
+
+      if (meta.hasOwnProperty('nextPage')) {
+        (function () {
+          var nextPageUrl = meta.nextPage;
+          meta.nextPage = function () {
+            return _this3._request('get', nextPageUrl);
+          };
+        })();
+      }
+
+      if (meta.hasOwnProperty('prevPage')) {
+        (function () {
+          var prevPageUrl = meta.prevPage;
+          meta.prevPage = function () {
+            return _this3._request('get', prevPageUrl);
+          };
+        })();
+      }
+
+      return { meta: meta, items: items };
+    }
+  }, {
     key: '_getResource',
     value: function _getResource(type, object) {
-      var _this3 = this;
+      var _this4 = this;
 
       var id = undefined;
       var params = undefined;
@@ -1736,20 +1811,38 @@ var Nimvelo = (function () {
 
       return new Promise(function (resolve, reject) {
 
-        _this3._request('get', url).then(function (data) {
+        _this4._request('get', url).then(function (data) {
 
           if (data.hasOwnProperty('items')) {
 
-            var items = _this3._buildObjects(data.items, object.parent);
+            var items = _this4._buildObjects(data.items, object.parent);
 
             delete data.items;
 
             var meta = data;
 
+            if (meta.hasOwnProperty('nextPage')) {
+              (function () {
+                var nextPageUrl = meta.nextPage;
+                meta.nextPage = function () {
+                  return _this4._request('get', nextPageUrl);
+                };
+              })();
+            }
+
+            if (meta.hasOwnProperty('prevPage')) {
+              (function () {
+                var prevPageUrl = meta.prevPage;
+                meta.prevPage = function () {
+                  return _this4._request('get', prevPageUrl);
+                };
+              })();
+            }
+
             resolve({ meta: meta, items: items });
           } else {
 
-            resolve(_this3._buildObjects(data, object.parent));
+            resolve(_this4._buildObjects(data, object.parent));
           }
         }, function (error) {
 
@@ -1760,14 +1853,14 @@ var Nimvelo = (function () {
   }, {
     key: '_saveRepresentation',
     value: function _saveRepresentation(object, callback) {
-      var _this4 = this;
+      var _this5 = this;
 
       var url = this._buildUrl(object.type, object, object.id);
       var requestMethod = object.id ? 'put' : 'post';
 
       return new Promise(function (resolve, reject) {
 
-        _this4._request(requestMethod, url, object).then(function (data) {
+        _this5._request(requestMethod, url, object).then(function (data) {
 
           // Update our object with the newly returned propreties
           (0, _deepExtend2.default)(object, data);
@@ -1779,13 +1872,13 @@ var Nimvelo = (function () {
   }, {
     key: '_deleteRepresentation',
     value: function _deleteRepresentation(object, callback) {
-      var _this5 = this;
+      var _this6 = this;
 
       var url = this._buildUrl(object.type, object, object.id);
 
       return new Promise(function (resolve, reject) {
 
-        _this5._request('delete', url, object).then(resolve, reject);
+        _this6._request('delete', url, object).then(resolve, reject);
       }).nodeify(callback);
     }
   }]);

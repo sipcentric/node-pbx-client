@@ -607,9 +607,40 @@ var Nimvelo = (function () {
       }
     }
   }, {
+    key: '_formatResponse',
+    value: function _formatResponse(response, parent) {
+      var _this3 = this;
+
+      var items = this._buildObjects(response.items, parent);
+
+      delete response.items;
+
+      var meta = response;
+
+      if (meta.hasOwnProperty('nextPage')) {
+        (function () {
+          var nextPageUrl = meta.nextPage;
+          meta.nextPage = function () {
+            return _this3._request('get', nextPageUrl);
+          };
+        })();
+      }
+
+      if (meta.hasOwnProperty('prevPage')) {
+        (function () {
+          var prevPageUrl = meta.prevPage;
+          meta.prevPage = function () {
+            return _this3._request('get', prevPageUrl);
+          };
+        })();
+      }
+
+      return { meta: meta, items: items };
+    }
+  }, {
     key: '_getResource',
     value: function _getResource(type, object) {
-      var _this3 = this;
+      var _this4 = this;
 
       var id = undefined;
       var params = undefined;
@@ -641,20 +672,38 @@ var Nimvelo = (function () {
 
       return new Promise(function (resolve, reject) {
 
-        _this3._request('get', url).then(function (data) {
+        _this4._request('get', url).then(function (data) {
 
           if (data.hasOwnProperty('items')) {
 
-            var items = _this3._buildObjects(data.items, object.parent);
+            var items = _this4._buildObjects(data.items, object.parent);
 
             delete data.items;
 
             var meta = data;
 
+            if (meta.hasOwnProperty('nextPage')) {
+              (function () {
+                var nextPageUrl = meta.nextPage;
+                meta.nextPage = function () {
+                  return _this4._request('get', nextPageUrl);
+                };
+              })();
+            }
+
+            if (meta.hasOwnProperty('prevPage')) {
+              (function () {
+                var prevPageUrl = meta.prevPage;
+                meta.prevPage = function () {
+                  return _this4._request('get', prevPageUrl);
+                };
+              })();
+            }
+
             resolve({ meta: meta, items: items });
           } else {
 
-            resolve(_this3._buildObjects(data, object.parent));
+            resolve(_this4._buildObjects(data, object.parent));
           }
         }, function (error) {
 
@@ -665,14 +714,14 @@ var Nimvelo = (function () {
   }, {
     key: '_saveRepresentation',
     value: function _saveRepresentation(object, callback) {
-      var _this4 = this;
+      var _this5 = this;
 
       var url = this._buildUrl(object.type, object, object.id);
       var requestMethod = object.id ? 'put' : 'post';
 
       return new Promise(function (resolve, reject) {
 
-        _this4._request(requestMethod, url, object).then(function (data) {
+        _this5._request(requestMethod, url, object).then(function (data) {
 
           // Update our object with the newly returned propreties
           (0, _deepExtend2.default)(object, data);
@@ -684,13 +733,13 @@ var Nimvelo = (function () {
   }, {
     key: '_deleteRepresentation',
     value: function _deleteRepresentation(object, callback) {
-      var _this5 = this;
+      var _this6 = this;
 
       var url = this._buildUrl(object.type, object, object.id);
 
       return new Promise(function (resolve, reject) {
 
-        _this5._request('delete', url, object).then(resolve, reject);
+        _this6._request('delete', url, object).then(resolve, reject);
       }).nodeify(callback);
     }
   }]);

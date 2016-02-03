@@ -1,5 +1,9 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _representation = require('./representation');
 
 var _representation2 = _interopRequireDefault(_representation);
@@ -44,4 +48,4 @@ var Billingaccount = (function (_Representation) {
   return Billingaccount;
 })(_representation2.default);
 
-module.exports = Billingaccount;
+exports.default = Billingaccount;

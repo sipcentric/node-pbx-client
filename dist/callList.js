@@ -1,5 +1,9 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _representationList = require('./representationList');
 
 var _representationList2 = _interopRequireDefault(_representationList);
@@ -28,4 +32,4 @@ var CallList = (function (_RepresentationList) {
   return CallList;
 })(_representationList2.default);
 
-module.exports = CallList;
+exports.default = CallList;

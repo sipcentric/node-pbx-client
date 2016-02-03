@@ -1,5 +1,9 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _representation = require('./representation');
 
 var _representation2 = _interopRequireDefault(_representation);
@@ -28,4 +32,4 @@ var Call = (function (_Representation) {
   return Call;
 })(_representation2.default);
 
-module.exports = Call;
+exports.default = Call;
