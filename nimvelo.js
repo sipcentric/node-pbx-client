@@ -1746,35 +1746,55 @@ var Nimvelo = (function () {
       }
     }
   }, {
-    key: '_formatResponse',
-    value: function _formatResponse(response, parent) {
+    key: '_formatGetResponse',
+    value: function _formatGetResponse(response, parent) {
       var _this3 = this;
 
-      var items = this._buildObjects(response.items, parent);
+      if (response.hasOwnProperty('items')) {
 
-      delete response.items;
+        var items = this._buildObjects(response.items, parent);
 
-      var meta = response;
+        delete response.items;
 
-      if (meta.hasOwnProperty('nextPage')) {
-        (function () {
-          var nextPageUrl = meta.nextPage;
-          meta.nextPage = function () {
-            return _this3._request('get', nextPageUrl);
-          };
-        })();
+        var meta = response;
+
+        if (meta.hasOwnProperty('nextPage')) {
+          (function () {
+
+            var nextPageUrl = meta.nextPage;
+            meta.nextPage = function (callback) {
+
+              return new Promise(function (resolve, reject) {
+                _this3._request('get', nextPageUrl).then(function (data) {
+                  var formattedResponse = _this3._formatGetResponse(data, parent);
+                  resolve(formattedResponse);
+                }, reject);
+              }).nodeify(callback);
+            };
+          })();
+        }
+
+        if (meta.hasOwnProperty('prevPage')) {
+          (function () {
+
+            var prevPageUrl = meta.prevPage;
+            meta.prevPage = function (callback) {
+
+              return new Promise(function (resolve, reject) {
+                _this3._request('get', prevPageUrl).then(function (data) {
+                  var formattedResponse = _this3._formatGetResponse(data, parent);
+                  resolve(formattedResponse);
+                }, reject);
+              }).nodeify(callback);
+            };
+          })();
+        }
+
+        return { meta: meta, items: items };
+      } else {
+
+        return this._buildObjects(response, parent);
       }
-
-      if (meta.hasOwnProperty('prevPage')) {
-        (function () {
-          var prevPageUrl = meta.prevPage;
-          meta.prevPage = function () {
-            return _this3._request('get', prevPageUrl);
-          };
-        })();
-      }
-
-      return { meta: meta, items: items };
     }
   }, {
     key: '_getResource',
@@ -1813,37 +1833,9 @@ var Nimvelo = (function () {
 
         _this4._request('get', url).then(function (data) {
 
-          if (data.hasOwnProperty('items')) {
+          var formattedResponse = _this4._formatGetResponse(data, object.parent);
 
-            var items = _this4._buildObjects(data.items, object.parent);
-
-            delete data.items;
-
-            var meta = data;
-
-            if (meta.hasOwnProperty('nextPage')) {
-              (function () {
-                var nextPageUrl = meta.nextPage;
-                meta.nextPage = function () {
-                  return _this4._request('get', nextPageUrl);
-                };
-              })();
-            }
-
-            if (meta.hasOwnProperty('prevPage')) {
-              (function () {
-                var prevPageUrl = meta.prevPage;
-                meta.prevPage = function () {
-                  return _this4._request('get', prevPageUrl);
-                };
-              })();
-            }
-
-            resolve({ meta: meta, items: items });
-          } else {
-
-            resolve(_this4._buildObjects(data, object.parent));
-          }
+          resolve(formattedResponse);
         }, function (error) {
 
           reject(error);
