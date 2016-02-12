@@ -35,6 +35,8 @@ var Nimvelo = require('./dist/nimvelo.js');
 
 ### Examples
 
+All of the following examples use callbacks, however ES6 promises are also supported. To use promises, just don't pass a callback and a promise will be returned instead.
+
 #### Get account details
 
 ```js
@@ -42,7 +44,7 @@ var Nimvelo = require('nimvelo');
 
 var nimvelo = new Nimvelo({username: 'myusername', password: 'mypassword'});
 
-nimvelo.customer(function(err, customer) {
+nimvelo.customers.get(function(err, customer) {
 
   if (err) {
     // Handle errors here
@@ -60,13 +62,13 @@ var Nimvelo = require('nimvelo');
 
 var nimvelo = new Nimvelo({username: 'myusername', password: 'mypassword'});
 
-nimvelo.customer(function(err, customer) {
+nimvelo.customers.get(function(err, customer) {
 
   if (err) {
     // Handle errors here
   }
 
-  customer.phonebook(function(err, phonebook) {
+  customer.phonebook.get(function(err, phonebook) {
 
     if (err) {
       // Handle errors here
@@ -86,19 +88,21 @@ var Nimvelo = require('nimvelo');
 
 var nimvelo = new Nimvelo({username: 'myusername', password: 'mypassword'});
 
-nimvelo.customer(function(err, customer) {
+nimvelo.customers.get(function(err, customer) {
 
   if (err) {
     // Handle errors here
   }
 
-  customer.phonebook('1234', function(err, phonebookEntry) {
+  customer.phonebook.create('1234', function(err, phonebookEntry) {
 
     if (err) {
       // Handle errors here
     }
 
-    phonebookEntry.update({name: 'Nimvelo'}).save(function(err, updatedEntry) {
+    phonebookEntry.name = 'Nimvelo';
+
+    phonebookEntry.save(function(err, updatedEntry) {
       console.log(updatedEntry);
     });
 
@@ -114,7 +118,7 @@ var Nimvelo = require('nimvelo');
 
 var nimvelo = new Nimvelo({username: 'myusername', password: 'mypassword'});
 
-nimvelo.customer(function(err, customer) {
+nimvelo.customers.get(function(err, customer) {
 
   if (err) {
     // Handle errors here
@@ -126,7 +130,7 @@ nimvelo.customer(function(err, customer) {
     email: 'hello@nimvelo.com'
   };
 
-  customer.create('phonebookentry', phonebookentry).save(function(err, newEntry) {
+  customer.phonebook.create(phonebookentry).save(function(err, newEntry) {
     console.log(newEntry);
   });
 
@@ -140,13 +144,13 @@ var Nimvelo = require('nimvelo');
 
 var nimvelo = new Nimvelo({username: 'myusername', password: 'mypassword'});
 
-nimvelo.customer(function(err, customer) {
+nimvelo.customers.get(function(err, customer) {
 
   if (err) {
     // Handle errors here
   }
 
-  customer.phonebook('1234', function(err, phonebookEntry) {
+  customer.phonebook.get('1234', function(err, phonebookEntry) {
 
     if (err) {
       // Handle errors here
