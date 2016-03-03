@@ -26,7 +26,7 @@ var Smsmessage = (function (_Representation) {
 
     _this.type = 'smsmessage';
 
-    _this._unavailableMethods = ['save', 'delete'];
+    _this._unavailableMethods = ['delete'];
     _this._unavailableMethods.forEach(function (method) {
       return delete _this[method];
     });
