@@ -1,6 +1,6 @@
 # Nimvelo Node.js Client
 
-Node.js client for the [Nimvelo/Sipcentric API](https://developer.sipcentric.com/)
+Node.js client for the [Nimvelo/Sipcentric API](https://developer.nimvelo.com/)
 
 
 ## Installation
