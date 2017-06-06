@@ -16,13 +16,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Preference = (function (_Representation) {
+var Preference = function (_Representation) {
   _inherits(Preference, _Representation);
 
   function Preference(client, properties, parent) {
     _classCallCheck(this, Preference);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Preference).call(this, client, properties, parent));
+    var _this = _possibleConstructorReturn(this, (Preference.__proto__ || Object.getPrototypeOf(Preference)).call(this, client, properties, parent));
 
     _this.type = 'preference';
 
@@ -30,6 +30,6 @@ var Preference = (function (_Representation) {
   }
 
   return Preference;
-})(_representation2.default);
+}(_representation2.default);
 
 exports.default = Preference;

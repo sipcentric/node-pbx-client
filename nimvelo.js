@@ -16,13 +16,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Availablebundle = (function (_Representation) {
+var Availablebundle = function (_Representation) {
   _inherits(Availablebundle, _Representation);
 
   function Availablebundle(client, properties, parent) {
     _classCallCheck(this, Availablebundle);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Availablebundle).call(this, client, properties, parent));
+    var _this = _possibleConstructorReturn(this, (Availablebundle.__proto__ || Object.getPrototypeOf(Availablebundle)).call(this, client, properties, parent));
 
     _this.type = 'availablebundle';
 
@@ -30,7 +30,7 @@ var Availablebundle = (function (_Representation) {
   }
 
   return Availablebundle;
-})(_representation2.default);
+}(_representation2.default);
 
 exports.default = Availablebundle;
 'use strict';
@@ -51,13 +51,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var AvailablebundleList = (function (_RepresentationList) {
+var AvailablebundleList = function (_RepresentationList) {
   _inherits(AvailablebundleList, _RepresentationList);
 
   function AvailablebundleList(client, parent) {
     _classCallCheck(this, AvailablebundleList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(AvailablebundleList).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, (AvailablebundleList.__proto__ || Object.getPrototypeOf(AvailablebundleList)).call(this, client, parent));
 
     _this.type = 'availablebundleList';
     _this.itemType = 'availablebundle';
@@ -65,7 +65,7 @@ var AvailablebundleList = (function (_RepresentationList) {
   }
 
   return AvailablebundleList;
-})(_representationList2.default);
+}(_representationList2.default);
 
 exports.default = AvailablebundleList;
 'use strict';
@@ -98,13 +98,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Billingaccount = (function (_Representation) {
+var Billingaccount = function (_Representation) {
   _inherits(Billingaccount, _Representation);
 
   function Billingaccount(client, properties, parent) {
     _classCallCheck(this, Billingaccount);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Billingaccount).call(this, client, properties, parent));
+    var _this = _possibleConstructorReturn(this, (Billingaccount.__proto__ || Object.getPrototypeOf(Billingaccount)).call(this, client, properties, parent));
 
     _this.type = 'billingaccount';
 
@@ -116,7 +116,7 @@ var Billingaccount = (function (_Representation) {
   }
 
   return Billingaccount;
-})(_representation2.default);
+}(_representation2.default);
 
 exports.default = Billingaccount;
 'use strict';
@@ -137,13 +137,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var BillingaccountList = (function (_RepresentationList) {
+var BillingaccountList = function (_RepresentationList) {
   _inherits(BillingaccountList, _RepresentationList);
 
   function BillingaccountList(client, parent) {
     _classCallCheck(this, BillingaccountList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(BillingaccountList).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, (BillingaccountList.__proto__ || Object.getPrototypeOf(BillingaccountList)).call(this, client, parent));
 
     _this.type = 'billingaccountList';
     _this.itemType = 'billingaccount';
@@ -151,7 +151,7 @@ var BillingaccountList = (function (_RepresentationList) {
   }
 
   return BillingaccountList;
-})(_representationList2.default);
+}(_representationList2.default);
 
 exports.default = BillingaccountList;
 'use strict';
@@ -172,13 +172,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Call = (function (_Representation) {
+var Call = function (_Representation) {
   _inherits(Call, _Representation);
 
   function Call(client, properties, parent) {
     _classCallCheck(this, Call);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Call).call(this, client, properties, parent));
+    var _this = _possibleConstructorReturn(this, (Call.__proto__ || Object.getPrototypeOf(Call)).call(this, client, properties, parent));
 
     _this.type = 'call';
 
@@ -186,7 +186,7 @@ var Call = (function (_Representation) {
   }
 
   return Call;
-})(_representation2.default);
+}(_representation2.default);
 
 exports.default = Call;
 'use strict';
@@ -207,13 +207,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var CallList = (function (_RepresentationList) {
+var CallList = function (_RepresentationList) {
   _inherits(CallList, _RepresentationList);
 
   function CallList(client, parent) {
     _classCallCheck(this, CallList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CallList).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, (CallList.__proto__ || Object.getPrototypeOf(CallList)).call(this, client, parent));
 
     _this.type = 'callList';
     _this.itemType = 'call';
@@ -221,7 +221,7 @@ var CallList = (function (_RepresentationList) {
   }
 
   return CallList;
-})(_representationList2.default);
+}(_representationList2.default);
 
 exports.default = CallList;
 'use strict';
@@ -242,13 +242,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Callbundle = (function (_Representation) {
+var Callbundle = function (_Representation) {
   _inherits(Callbundle, _Representation);
 
   function Callbundle(client, properties, parent) {
     _classCallCheck(this, Callbundle);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Callbundle).call(this, client, properties, parent));
+    var _this = _possibleConstructorReturn(this, (Callbundle.__proto__ || Object.getPrototypeOf(Callbundle)).call(this, client, properties, parent));
 
     _this.type = 'callbundle';
 
@@ -256,7 +256,7 @@ var Callbundle = (function (_Representation) {
   }
 
   return Callbundle;
-})(_representation2.default);
+}(_representation2.default);
 
 exports.default = Callbundle;
 'use strict';
@@ -277,13 +277,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var CallbundleList = (function (_RepresentationList) {
+var CallbundleList = function (_RepresentationList) {
   _inherits(CallbundleList, _RepresentationList);
 
   function CallbundleList(client, parent) {
     _classCallCheck(this, CallbundleList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CallbundleList).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, (CallbundleList.__proto__ || Object.getPrototypeOf(CallbundleList)).call(this, client, parent));
 
     _this.type = 'callbundleList';
     _this.itemType = 'callbundle';
@@ -291,7 +291,7 @@ var CallbundleList = (function (_RepresentationList) {
   }
 
   return CallbundleList;
-})(_representationList2.default);
+}(_representationList2.default);
 
 exports.default = CallbundleList;
 'use strict';
@@ -312,13 +312,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Creditstatus = (function (_Representation) {
+var Creditstatus = function (_Representation) {
   _inherits(Creditstatus, _Representation);
 
   function Creditstatus(client, properties, parent) {
     _classCallCheck(this, Creditstatus);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Creditstatus).call(this, client, properties, parent));
+    var _this = _possibleConstructorReturn(this, (Creditstatus.__proto__ || Object.getPrototypeOf(Creditstatus)).call(this, client, properties, parent));
 
     _this.type = 'creditstatus';
 
@@ -326,7 +326,7 @@ var Creditstatus = (function (_Representation) {
   }
 
   return Creditstatus;
-})(_representation2.default);
+}(_representation2.default);
 
 exports.default = Creditstatus;
 'use strict';
@@ -347,13 +347,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var CreditstatusList = (function (_RepresentationList) {
+var CreditstatusList = function (_RepresentationList) {
   _inherits(CreditstatusList, _RepresentationList);
 
   function CreditstatusList(client, parent) {
     _classCallCheck(this, CreditstatusList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CreditstatusList).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, (CreditstatusList.__proto__ || Object.getPrototypeOf(CreditstatusList)).call(this, client, parent));
 
     _this.type = 'creditstatusList';
     _this.itemType = 'creditstatus';
@@ -361,16 +361,16 @@ var CreditstatusList = (function (_RepresentationList) {
   }
 
   return CreditstatusList;
-})(_representationList2.default);
+}(_representationList2.default);
 
 exports.default = CreditstatusList;
 'use strict';
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _deepExtend = require('deep-extend');
 
@@ -524,13 +524,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Customer = (function (_Representation) {
+var Customer = function (_Representation) {
   _inherits(Customer, _Representation);
 
   function Customer(client, item) {
     _classCallCheck(this, Customer);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Customer).call(this, client));
+    var _this = _possibleConstructorReturn(this, (Customer.__proto__ || Object.getPrototypeOf(Customer)).call(this, client));
 
     (0, _deepExtend2.default)(_this, item);
 
@@ -571,7 +571,7 @@ var Customer = (function (_Representation) {
     key: 'create',
     value: function create(type, properties) {
 
-      var instance = undefined;
+      var instance = void 0;
 
       // Figure out which class to use for this type
 
@@ -609,7 +609,7 @@ var Customer = (function (_Representation) {
   }]);
 
   return Customer;
-})(_representation2.default);
+}(_representation2.default);
 
 exports.default = Customer;
 'use strict';
@@ -630,13 +630,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var CustomerList = (function (_RepresentationList) {
+var CustomerList = function (_RepresentationList) {
   _inherits(CustomerList, _RepresentationList);
 
   function CustomerList(client) {
     _classCallCheck(this, CustomerList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(CustomerList).call(this, client));
+    var _this = _possibleConstructorReturn(this, (CustomerList.__proto__ || Object.getPrototypeOf(CustomerList)).call(this, client));
 
     _this.type = 'customerList';
     _this.itemType = 'customer';
@@ -644,7 +644,7 @@ var CustomerList = (function (_RepresentationList) {
   }
 
   return CustomerList;
-})(_representationList2.default);
+}(_representationList2.default);
 
 exports.default = CustomerList;
 'use strict';
@@ -665,13 +665,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var EndpointList = (function (_RepresentationList) {
+var EndpointList = function (_RepresentationList) {
   _inherits(EndpointList, _RepresentationList);
 
   function EndpointList(client, parent) {
     _classCallCheck(this, EndpointList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(EndpointList).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, (EndpointList.__proto__ || Object.getPrototypeOf(EndpointList)).call(this, client, parent));
 
     _this.type = 'endpointList';
     _this.itemType = 'endpoint';
@@ -679,7 +679,7 @@ var EndpointList = (function (_RepresentationList) {
   }
 
   return EndpointList;
-})(_representationList2.default);
+}(_representationList2.default);
 
 exports.default = EndpointList;
 'use strict';
@@ -700,13 +700,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var EstimateList = (function (_RepresentationList) {
+var EstimateList = function (_RepresentationList) {
   _inherits(EstimateList, _RepresentationList);
 
   function EstimateList(client, parent) {
     _classCallCheck(this, EstimateList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(EstimateList).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, (EstimateList.__proto__ || Object.getPrototypeOf(EstimateList)).call(this, client, parent));
 
     _this.type = 'estimateList';
     _this.itemType = 'estimate';
@@ -714,7 +714,7 @@ var EstimateList = (function (_RepresentationList) {
   }
 
   return EstimateList;
-})(_representationList2.default);
+}(_representationList2.default);
 
 exports.default = EstimateList;
 'use strict';
@@ -735,13 +735,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Forwardingrule = (function (_Representation) {
+var Forwardingrule = function (_Representation) {
   _inherits(Forwardingrule, _Representation);
 
   function Forwardingrule(client, properties, parent) {
     _classCallCheck(this, Forwardingrule);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Forwardingrule).call(this, client, properties, parent));
+    var _this = _possibleConstructorReturn(this, (Forwardingrule.__proto__ || Object.getPrototypeOf(Forwardingrule)).call(this, client, properties, parent));
 
     _this.type = 'forwardingrule';
 
@@ -749,7 +749,7 @@ var Forwardingrule = (function (_Representation) {
   }
 
   return Forwardingrule;
-})(_representation2.default);
+}(_representation2.default);
 
 exports.default = Forwardingrule;
 'use strict';
@@ -770,13 +770,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var ForwardingruleList = (function (_RepresentationList) {
+var ForwardingruleList = function (_RepresentationList) {
   _inherits(ForwardingruleList, _RepresentationList);
 
   function ForwardingruleList(client, parent) {
     _classCallCheck(this, ForwardingruleList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ForwardingruleList).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, (ForwardingruleList.__proto__ || Object.getPrototypeOf(ForwardingruleList)).call(this, client, parent));
 
     _this.type = 'forwardingruleList';
     _this.itemType = 'forwardingrule';
@@ -784,7 +784,7 @@ var ForwardingruleList = (function (_RepresentationList) {
   }
 
   return ForwardingruleList;
-})(_representationList2.default);
+}(_representationList2.default);
 
 exports.default = ForwardingruleList;
 'use strict';
@@ -805,13 +805,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Group = (function (_Representation) {
+var Group = function (_Representation) {
   _inherits(Group, _Representation);
 
   function Group(client, properties, parent) {
     _classCallCheck(this, Group);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Group).call(this, client, properties, parent));
+    var _this = _possibleConstructorReturn(this, (Group.__proto__ || Object.getPrototypeOf(Group)).call(this, client, properties, parent));
 
     _this.type = 'group';
 
@@ -819,7 +819,7 @@ var Group = (function (_Representation) {
   }
 
   return Group;
-})(_representation2.default);
+}(_representation2.default);
 
 exports.default = Group;
 'use strict';
@@ -840,13 +840,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var GroupList = (function (_RepresentationList) {
+var GroupList = function (_RepresentationList) {
   _inherits(GroupList, _RepresentationList);
 
   function GroupList(client, parent) {
     _classCallCheck(this, GroupList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(GroupList).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, (GroupList.__proto__ || Object.getPrototypeOf(GroupList)).call(this, client, parent));
 
     _this.type = 'groupList';
     _this.itemType = 'group';
@@ -854,7 +854,7 @@ var GroupList = (function (_RepresentationList) {
   }
 
   return GroupList;
-})(_representationList2.default);
+}(_representationList2.default);
 
 exports.default = GroupList;
 'use strict';
@@ -875,13 +875,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Invoice = (function (_Representation) {
+var Invoice = function (_Representation) {
   _inherits(Invoice, _Representation);
 
   function Invoice(client, properties, parent) {
     _classCallCheck(this, Invoice);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Invoice).call(this, client, properties, parent));
+    var _this = _possibleConstructorReturn(this, (Invoice.__proto__ || Object.getPrototypeOf(Invoice)).call(this, client, properties, parent));
 
     _this.type = 'invoice';
 
@@ -889,7 +889,7 @@ var Invoice = (function (_Representation) {
   }
 
   return Invoice;
-})(_representation2.default);
+}(_representation2.default);
 
 exports.default = Invoice;
 'use strict';
@@ -910,13 +910,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var InvoiceList = (function (_RepresentationList) {
+var InvoiceList = function (_RepresentationList) {
   _inherits(InvoiceList, _RepresentationList);
 
   function InvoiceList(client, parent) {
     _classCallCheck(this, InvoiceList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(InvoiceList).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, (InvoiceList.__proto__ || Object.getPrototypeOf(InvoiceList)).call(this, client, parent));
 
     _this.type = 'invoiceList';
     _this.itemType = 'invoice';
@@ -924,7 +924,7 @@ var InvoiceList = (function (_RepresentationList) {
   }
 
   return InvoiceList;
-})(_representationList2.default);
+}(_representationList2.default);
 
 exports.default = InvoiceList;
 'use strict';
@@ -945,13 +945,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Ivr = (function (_Representation) {
+var Ivr = function (_Representation) {
   _inherits(Ivr, _Representation);
 
   function Ivr(client, properties, parent) {
     _classCallCheck(this, Ivr);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Ivr).call(this, client, properties, parent));
+    var _this = _possibleConstructorReturn(this, (Ivr.__proto__ || Object.getPrototypeOf(Ivr)).call(this, client, properties, parent));
 
     _this.type = 'ivr';
 
@@ -959,7 +959,7 @@ var Ivr = (function (_Representation) {
   }
 
   return Ivr;
-})(_representation2.default);
+}(_representation2.default);
 
 exports.default = Ivr;
 'use strict';
@@ -980,13 +980,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var IvrList = (function (_RepresentationList) {
+var IvrList = function (_RepresentationList) {
   _inherits(IvrList, _RepresentationList);
 
   function IvrList(client, parent) {
     _classCallCheck(this, IvrList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(IvrList).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, (IvrList.__proto__ || Object.getPrototypeOf(IvrList)).call(this, client, parent));
 
     _this.type = 'ivrList';
     _this.itemType = 'ivr';
@@ -994,7 +994,7 @@ var IvrList = (function (_RepresentationList) {
   }
 
   return IvrList;
-})(_representationList2.default);
+}(_representationList2.default);
 
 exports.default = IvrList;
 'use strict';
@@ -1015,13 +1015,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Mailbox = (function (_Representation) {
+var Mailbox = function (_Representation) {
   _inherits(Mailbox, _Representation);
 
   function Mailbox(client, properties, parent) {
     _classCallCheck(this, Mailbox);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Mailbox).call(this, client, properties, parent));
+    var _this = _possibleConstructorReturn(this, (Mailbox.__proto__ || Object.getPrototypeOf(Mailbox)).call(this, client, properties, parent));
 
     _this.type = 'mailbox';
 
@@ -1029,7 +1029,7 @@ var Mailbox = (function (_Representation) {
   }
 
   return Mailbox;
-})(_representation2.default);
+}(_representation2.default);
 
 exports.default = Mailbox;
 'use strict';
@@ -1050,13 +1050,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var MailboxList = (function (_RepresentationList) {
+var MailboxList = function (_RepresentationList) {
   _inherits(MailboxList, _RepresentationList);
 
   function MailboxList(client, parent) {
     _classCallCheck(this, MailboxList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(MailboxList).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, (MailboxList.__proto__ || Object.getPrototypeOf(MailboxList)).call(this, client, parent));
 
     _this.type = 'mailboxList';
     _this.itemType = 'mailbox';
@@ -1064,7 +1064,7 @@ var MailboxList = (function (_RepresentationList) {
   }
 
   return MailboxList;
-})(_representationList2.default);
+}(_representationList2.default);
 
 exports.default = MailboxList;
 'use strict';
@@ -1085,13 +1085,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Music = (function (_Representation) {
+var Music = function (_Representation) {
   _inherits(Music, _Representation);
 
   function Music(client, properties, parent) {
     _classCallCheck(this, Music);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Music).call(this, client, properties, parent));
+    var _this = _possibleConstructorReturn(this, (Music.__proto__ || Object.getPrototypeOf(Music)).call(this, client, properties, parent));
 
     _this.type = 'music';
 
@@ -1099,7 +1099,7 @@ var Music = (function (_Representation) {
   }
 
   return Music;
-})(_representation2.default);
+}(_representation2.default);
 
 exports.default = Music;
 'use strict';
@@ -1120,13 +1120,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var MusicList = (function (_RepresentationList) {
+var MusicList = function (_RepresentationList) {
   _inherits(MusicList, _RepresentationList);
 
   function MusicList(client, parent) {
     _classCallCheck(this, MusicList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(MusicList).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, (MusicList.__proto__ || Object.getPrototypeOf(MusicList)).call(this, client, parent));
 
     _this.type = 'musicList';
     _this.itemType = 'music';
@@ -1134,18 +1134,21 @@ var MusicList = (function (_RepresentationList) {
   }
 
   return MusicList;
-})(_representationList2.default);
+}(_representationList2.default);
 
 exports.default = MusicList;
 'use strict';
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-// Promise + callback polyfill
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+// Promise + callback polyfill
+
 
 var _request2 = require('request');
 
@@ -1297,8 +1300,6 @@ var _package2 = _interopRequireDefault(_package);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 Promise.prototype.nodeify = _nodeify2.default; // eslint-disable-line no-extend-native
@@ -1307,7 +1308,7 @@ Promise.prototype.nodeify = _nodeify2.default; // eslint-disable-line no-extend-
 
 var VERSION = _package2.default.version;
 
-var Nimvelo = (function () {
+var Nimvelo = function () {
   function Nimvelo(options) {
     _classCallCheck(this, Nimvelo);
 
@@ -1456,7 +1457,7 @@ var Nimvelo = (function () {
         return item;
       }
 
-      var object = undefined;
+      var object = void 0;
 
       // Figure out which class to use for this type
 
@@ -1618,7 +1619,7 @@ var Nimvelo = (function () {
             reject(error);
           } else {
 
-            var parsedData = undefined;
+            var parsedData = void 0;
 
             if (data && typeof data === 'string') {
 
@@ -1663,8 +1664,8 @@ var Nimvelo = (function () {
     key: '_buildUrl',
     value: function _buildUrl(type, object) {
 
-      var url = undefined;
-      var id = undefined;
+      var url = void 0;
+      var id = void 0;
       var params = {};
 
       for (var _len = arguments.length, args = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
@@ -1697,11 +1698,11 @@ var Nimvelo = (function () {
   }, {
     key: '_buildUrlSection',
     value: function _buildUrlSection(type, object) {
-      var url = arguments.length <= 2 || arguments[2] === undefined ? '' : arguments[2];
+      var url = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
 
       /* eslint no-param-reassign:0 */
 
-      var path = undefined;
+      var path = void 0;
       var baseUrl = this.options.restBase;
 
       if (object.parent) {
@@ -1759,35 +1760,31 @@ var Nimvelo = (function () {
         var meta = response;
 
         if (meta.hasOwnProperty('nextPage')) {
-          (function () {
 
-            var nextPageUrl = meta.nextPage;
-            meta.nextPage = function (callback) {
+          var nextPageUrl = meta.nextPage;
+          meta.nextPage = function (callback) {
 
-              return new Promise(function (resolve, reject) {
-                _this3._request('get', nextPageUrl).then(function (data) {
-                  var formattedResponse = _this3._formatGetResponse(data, parent);
-                  resolve(formattedResponse);
-                }, reject);
-              }).nodeify(callback);
-            };
-          })();
+            return new Promise(function (resolve, reject) {
+              _this3._request('get', nextPageUrl).then(function (data) {
+                var formattedResponse = _this3._formatGetResponse(data, parent);
+                resolve(formattedResponse);
+              }, reject);
+            }).nodeify(callback);
+          };
         }
 
         if (meta.hasOwnProperty('prevPage')) {
-          (function () {
 
-            var prevPageUrl = meta.prevPage;
-            meta.prevPage = function (callback) {
+          var prevPageUrl = meta.prevPage;
+          meta.prevPage = function (callback) {
 
-              return new Promise(function (resolve, reject) {
-                _this3._request('get', prevPageUrl).then(function (data) {
-                  var formattedResponse = _this3._formatGetResponse(data, parent);
-                  resolve(formattedResponse);
-                }, reject);
-              }).nodeify(callback);
-            };
-          })();
+            return new Promise(function (resolve, reject) {
+              _this3._request('get', prevPageUrl).then(function (data) {
+                var formattedResponse = _this3._formatGetResponse(data, parent);
+                resolve(formattedResponse);
+              }, reject);
+            }).nodeify(callback);
+          };
         }
 
         return { meta: meta, items: items };
@@ -1801,9 +1798,9 @@ var Nimvelo = (function () {
     value: function _getResource(type, object) {
       var _this4 = this;
 
-      var id = undefined;
-      var params = undefined;
-      var callback = undefined;
+      var id = void 0;
+      var params = void 0;
+      var callback = void 0;
 
       for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
         args[_key2 - 2] = arguments[_key2];
@@ -1876,7 +1873,7 @@ var Nimvelo = (function () {
   }]);
 
   return Nimvelo;
-})();
+}();
 
 exports.default = Nimvelo;
 'use strict';
@@ -1897,13 +1894,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Outgoingcallerid = (function (_Representation) {
+var Outgoingcallerid = function (_Representation) {
   _inherits(Outgoingcallerid, _Representation);
 
   function Outgoingcallerid(client, properties, parent) {
     _classCallCheck(this, Outgoingcallerid);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Outgoingcallerid).call(this, client, properties, parent));
+    var _this = _possibleConstructorReturn(this, (Outgoingcallerid.__proto__ || Object.getPrototypeOf(Outgoingcallerid)).call(this, client, properties, parent));
 
     _this.type = 'outgoingcallerid';
 
@@ -1916,7 +1913,7 @@ var Outgoingcallerid = (function (_Representation) {
   }
 
   return Outgoingcallerid;
-})(_representation2.default);
+}(_representation2.default);
 
 exports.default = Outgoingcallerid;
 'use strict';
@@ -1937,13 +1934,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var OutgoingcalleridList = (function (_RepresentationList) {
+var OutgoingcalleridList = function (_RepresentationList) {
   _inherits(OutgoingcalleridList, _RepresentationList);
 
   function OutgoingcalleridList(client, parent) {
     _classCallCheck(this, OutgoingcalleridList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(OutgoingcalleridList).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, (OutgoingcalleridList.__proto__ || Object.getPrototypeOf(OutgoingcalleridList)).call(this, client, parent));
 
     _this.type = 'outgoingcalleridList';
     _this.itemType = 'outgoingcallerid';
@@ -1951,7 +1948,7 @@ var OutgoingcalleridList = (function (_RepresentationList) {
   }
 
   return OutgoingcalleridList;
-})(_representationList2.default);
+}(_representationList2.default);
 
 exports.default = OutgoingcalleridList;
 'use strict';
@@ -1972,13 +1969,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Paymentmethod = (function (_Representation) {
+var Paymentmethod = function (_Representation) {
   _inherits(Paymentmethod, _Representation);
 
   function Paymentmethod(client, properties, parent) {
     _classCallCheck(this, Paymentmethod);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Paymentmethod).call(this, client, properties, parent));
+    var _this = _possibleConstructorReturn(this, (Paymentmethod.__proto__ || Object.getPrototypeOf(Paymentmethod)).call(this, client, properties, parent));
 
     _this.type = 'paymentmethod';
 
@@ -1986,7 +1983,7 @@ var Paymentmethod = (function (_Representation) {
   }
 
   return Paymentmethod;
-})(_representation2.default);
+}(_representation2.default);
 
 exports.default = Paymentmethod;
 'use strict';
@@ -2007,13 +2004,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Paymentmethod = (function (_RepresentationList) {
+var Paymentmethod = function (_RepresentationList) {
   _inherits(Paymentmethod, _RepresentationList);
 
   function Paymentmethod(client, parent) {
     _classCallCheck(this, Paymentmethod);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Paymentmethod).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, (Paymentmethod.__proto__ || Object.getPrototypeOf(Paymentmethod)).call(this, client, parent));
 
     _this.type = 'paymentmethodList';
     _this.itemType = 'paymentmethod';
@@ -2021,7 +2018,7 @@ var Paymentmethod = (function (_RepresentationList) {
   }
 
   return Paymentmethod;
-})(_representationList2.default);
+}(_representationList2.default);
 
 exports.default = Paymentmethod;
 'use strict';
@@ -2050,13 +2047,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Phone = (function (_Representation) {
+var Phone = function (_Representation) {
   _inherits(Phone, _Representation);
 
   function Phone(client, properties, parent) {
     _classCallCheck(this, Phone);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Phone).call(this, client, properties, parent));
+    var _this = _possibleConstructorReturn(this, (Phone.__proto__ || Object.getPrototypeOf(Phone)).call(this, client, properties, parent));
 
     _this.type = 'phone';
 
@@ -2067,7 +2064,7 @@ var Phone = (function (_Representation) {
   }
 
   return Phone;
-})(_representation2.default);
+}(_representation2.default);
 
 exports.default = Phone;
 'use strict';
@@ -2088,13 +2085,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var PhoneList = (function (_RepresentationList) {
+var PhoneList = function (_RepresentationList) {
   _inherits(PhoneList, _RepresentationList);
 
   function PhoneList(client, parent) {
     _classCallCheck(this, PhoneList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PhoneList).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, (PhoneList.__proto__ || Object.getPrototypeOf(PhoneList)).call(this, client, parent));
 
     _this.type = 'phoneList';
     _this.itemType = 'phone';
@@ -2102,7 +2099,7 @@ var PhoneList = (function (_RepresentationList) {
   }
 
   return PhoneList;
-})(_representationList2.default);
+}(_representationList2.default);
 
 exports.default = PhoneList;
 'use strict';
@@ -2123,13 +2120,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Phonebookentry = (function (_Representation) {
+var Phonebookentry = function (_Representation) {
   _inherits(Phonebookentry, _Representation);
 
   function Phonebookentry(client, properties, parent) {
     _classCallCheck(this, Phonebookentry);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Phonebookentry).call(this, client, properties, parent));
+    var _this = _possibleConstructorReturn(this, (Phonebookentry.__proto__ || Object.getPrototypeOf(Phonebookentry)).call(this, client, properties, parent));
 
     _this.type = 'phonebookentry';
 
@@ -2137,7 +2134,7 @@ var Phonebookentry = (function (_Representation) {
   }
 
   return Phonebookentry;
-})(_representation2.default);
+}(_representation2.default);
 
 exports.default = Phonebookentry;
 'use strict';
@@ -2158,13 +2155,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var PhonebookentryList = (function (_RepresentationList) {
+var PhonebookentryList = function (_RepresentationList) {
   _inherits(PhonebookentryList, _RepresentationList);
 
   function PhonebookentryList(client, parent) {
     _classCallCheck(this, PhonebookentryList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PhonebookentryList).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, (PhonebookentryList.__proto__ || Object.getPrototypeOf(PhonebookentryList)).call(this, client, parent));
 
     _this.type = 'phonebookentryList';
     _this.itemType = 'phonebookentry';
@@ -2172,7 +2169,7 @@ var PhonebookentryList = (function (_RepresentationList) {
   }
 
   return PhonebookentryList;
-})(_representationList2.default);
+}(_representationList2.default);
 
 exports.default = PhonebookentryList;
 'use strict';
@@ -2197,13 +2194,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Phonenumber = (function (_Representation) {
+var Phonenumber = function (_Representation) {
   _inherits(Phonenumber, _Representation);
 
   function Phonenumber(client, properties, parent) {
     _classCallCheck(this, Phonenumber);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Phonenumber).call(this, client, properties, parent));
+    var _this = _possibleConstructorReturn(this, (Phonenumber.__proto__ || Object.getPrototypeOf(Phonenumber)).call(this, client, properties, parent));
 
     _this.type = 'phonenumber';
 
@@ -2213,7 +2210,7 @@ var Phonenumber = (function (_Representation) {
   }
 
   return Phonenumber;
-})(_representation2.default);
+}(_representation2.default);
 
 exports.default = Phonenumber;
 'use strict';
@@ -2234,13 +2231,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var PhonenumberList = (function (_RepresentationList) {
+var PhonenumberList = function (_RepresentationList) {
   _inherits(PhonenumberList, _RepresentationList);
 
   function PhonenumberList(client, parent) {
     _classCallCheck(this, PhonenumberList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PhonenumberList).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, (PhonenumberList.__proto__ || Object.getPrototypeOf(PhonenumberList)).call(this, client, parent));
 
     _this.type = 'phonenumberList';
     _this.itemType = 'phonenumber';
@@ -2254,7 +2251,7 @@ var PhonenumberList = (function (_RepresentationList) {
   }
 
   return PhonenumberList;
-})(_representationList2.default);
+}(_representationList2.default);
 
 exports.default = PhonenumberList;
 'use strict';
@@ -2275,13 +2272,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Preference = (function (_Representation) {
+var Preference = function (_Representation) {
   _inherits(Preference, _Representation);
 
   function Preference(client, properties, parent) {
     _classCallCheck(this, Preference);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Preference).call(this, client, properties, parent));
+    var _this = _possibleConstructorReturn(this, (Preference.__proto__ || Object.getPrototypeOf(Preference)).call(this, client, properties, parent));
 
     _this.type = 'preference';
 
@@ -2289,7 +2286,7 @@ var Preference = (function (_Representation) {
   }
 
   return Preference;
-})(_representation2.default);
+}(_representation2.default);
 
 exports.default = Preference;
 'use strict';
@@ -2310,13 +2307,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var PreferenceList = (function (_RepresentationList) {
+var PreferenceList = function (_RepresentationList) {
   _inherits(PreferenceList, _RepresentationList);
 
   function PreferenceList(client, parent) {
     _classCallCheck(this, PreferenceList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PreferenceList).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, (PreferenceList.__proto__ || Object.getPrototypeOf(PreferenceList)).call(this, client, parent));
 
     _this.type = 'preferenceList';
     _this.itemType = 'preference';
@@ -2324,7 +2321,7 @@ var PreferenceList = (function (_RepresentationList) {
   }
 
   return PreferenceList;
-})(_representationList2.default);
+}(_representationList2.default);
 
 exports.default = PreferenceList;
 'use strict';
@@ -2345,13 +2342,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Prompt = (function (_Representation) {
+var Prompt = function (_Representation) {
   _inherits(Prompt, _Representation);
 
   function Prompt(client, properties, parent) {
     _classCallCheck(this, Prompt);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Prompt).call(this, client, properties, parent));
+    var _this = _possibleConstructorReturn(this, (Prompt.__proto__ || Object.getPrototypeOf(Prompt)).call(this, client, properties, parent));
 
     _this.type = 'prompt';
 
@@ -2359,7 +2356,7 @@ var Prompt = (function (_Representation) {
   }
 
   return Prompt;
-})(_representation2.default);
+}(_representation2.default);
 
 exports.default = Prompt;
 'use strict';
@@ -2380,13 +2377,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var PromptList = (function (_RepresentationList) {
+var PromptList = function (_RepresentationList) {
   _inherits(PromptList, _RepresentationList);
 
   function PromptList(client, parent) {
     _classCallCheck(this, PromptList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PromptList).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, (PromptList.__proto__ || Object.getPrototypeOf(PromptList)).call(this, client, parent));
 
     _this.type = 'promptList';
     _this.itemType = 'prompt';
@@ -2394,7 +2391,7 @@ var PromptList = (function (_RepresentationList) {
   }
 
   return PromptList;
-})(_representationList2.default);
+}(_representationList2.default);
 
 exports.default = PromptList;
 'use strict';
@@ -2423,13 +2420,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Queue = (function (_Representation) {
+var Queue = function (_Representation) {
   _inherits(Queue, _Representation);
 
   function Queue(client, properties, parent) {
     _classCallCheck(this, Queue);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Queue).call(this, client, properties, parent));
+    var _this = _possibleConstructorReturn(this, (Queue.__proto__ || Object.getPrototypeOf(Queue)).call(this, client, properties, parent));
 
     _this.type = 'queue';
 
@@ -2440,7 +2437,7 @@ var Queue = (function (_Representation) {
   }
 
   return Queue;
-})(_representation2.default);
+}(_representation2.default);
 
 exports.default = Queue;
 'use strict';
@@ -2461,13 +2458,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var QueueList = (function (_RepresentationList) {
+var QueueList = function (_RepresentationList) {
   _inherits(QueueList, _RepresentationList);
 
   function QueueList(client, parent) {
     _classCallCheck(this, QueueList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(QueueList).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, (QueueList.__proto__ || Object.getPrototypeOf(QueueList)).call(this, client, parent));
 
     _this.type = 'queueList';
     _this.itemType = 'queue';
@@ -2475,7 +2472,7 @@ var QueueList = (function (_RepresentationList) {
   }
 
   return QueueList;
-})(_representationList2.default);
+}(_representationList2.default);
 
 exports.default = QueueList;
 'use strict';
@@ -2496,13 +2493,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Queueentries = (function (_Representation) {
+var Queueentries = function (_Representation) {
   _inherits(Queueentries, _Representation);
 
   function Queueentries(client, properties, parent) {
     _classCallCheck(this, Queueentries);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Queueentries).call(this, client, properties, parent));
+    var _this = _possibleConstructorReturn(this, (Queueentries.__proto__ || Object.getPrototypeOf(Queueentries)).call(this, client, properties, parent));
 
     _this.type = 'queueentries';
 
@@ -2510,7 +2507,7 @@ var Queueentries = (function (_Representation) {
   }
 
   return Queueentries;
-})(_representation2.default);
+}(_representation2.default);
 
 exports.default = Queueentries;
 'use strict';
@@ -2531,13 +2528,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var QueueentriesList = (function (_RepresentationList) {
+var QueueentriesList = function (_RepresentationList) {
   _inherits(QueueentriesList, _RepresentationList);
 
   function QueueentriesList(client, parent) {
     _classCallCheck(this, QueueentriesList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(QueueentriesList).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, (QueueentriesList.__proto__ || Object.getPrototypeOf(QueueentriesList)).call(this, client, parent));
 
     _this.type = 'queueentriesList';
     _this.itemType = 'queueentries';
@@ -2545,7 +2542,7 @@ var QueueentriesList = (function (_RepresentationList) {
   }
 
   return QueueentriesList;
-})(_representationList2.default);
+}(_representationList2.default);
 
 exports.default = QueueentriesList;
 'use strict';
@@ -2566,13 +2563,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Queuestatus = (function (_Representation) {
+var Queuestatus = function (_Representation) {
   _inherits(Queuestatus, _Representation);
 
   function Queuestatus(client, properties, parent) {
     _classCallCheck(this, Queuestatus);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Queuestatus).call(this, client, properties, parent));
+    var _this = _possibleConstructorReturn(this, (Queuestatus.__proto__ || Object.getPrototypeOf(Queuestatus)).call(this, client, properties, parent));
 
     _this.type = 'queuestatus';
 
@@ -2580,7 +2577,7 @@ var Queuestatus = (function (_Representation) {
   }
 
   return Queuestatus;
-})(_representation2.default);
+}(_representation2.default);
 
 exports.default = Queuestatus;
 'use strict';
@@ -2601,13 +2598,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var QueuestatusList = (function (_RepresentationList) {
+var QueuestatusList = function (_RepresentationList) {
   _inherits(QueuestatusList, _RepresentationList);
 
   function QueuestatusList(client, parent) {
     _classCallCheck(this, QueuestatusList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(QueuestatusList).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, (QueuestatusList.__proto__ || Object.getPrototypeOf(QueuestatusList)).call(this, client, parent));
 
     _this.type = 'queuestatusList';
     _this.itemType = 'queuestatus';
@@ -2615,7 +2612,7 @@ var QueuestatusList = (function (_RepresentationList) {
   }
 
   return QueuestatusList;
-})(_representationList2.default);
+}(_representationList2.default);
 
 exports.default = QueuestatusList;
 'use strict';
@@ -2636,13 +2633,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Recording = (function (_Representation) {
+var Recording = function (_Representation) {
   _inherits(Recording, _Representation);
 
   function Recording(client, properties, parent) {
     _classCallCheck(this, Recording);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Recording).call(this, client, properties, parent));
+    var _this = _possibleConstructorReturn(this, (Recording.__proto__ || Object.getPrototypeOf(Recording)).call(this, client, properties, parent));
 
     _this.type = 'recording';
 
@@ -2655,7 +2652,7 @@ var Recording = (function (_Representation) {
   }
 
   return Recording;
-})(_representation2.default);
+}(_representation2.default);
 
 exports.default = Recording;
 'use strict';
@@ -2676,13 +2673,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var RecordingList = (function (_RepresentationList) {
+var RecordingList = function (_RepresentationList) {
   _inherits(RecordingList, _RepresentationList);
 
   function RecordingList(client, parent) {
     _classCallCheck(this, RecordingList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(RecordingList).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, (RecordingList.__proto__ || Object.getPrototypeOf(RecordingList)).call(this, client, parent));
 
     _this.type = 'recordingList';
     _this.itemType = 'recording';
@@ -2690,16 +2687,16 @@ var RecordingList = (function (_RepresentationList) {
   }
 
   return RecordingList;
-})(_representationList2.default);
+}(_representationList2.default);
 
 exports.default = RecordingList;
 'use strict';
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _deepExtend = require('deep-extend');
 
@@ -2709,7 +2706,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Representation = (function () {
+var Representation = function () {
   function Representation(client, properties, parent) {
     _classCallCheck(this, Representation);
 
@@ -2731,20 +2728,20 @@ var Representation = (function () {
   }]);
 
   return Representation;
-})();
+}();
 
 exports.default = Representation;
 'use strict';
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var RepresentationList = (function () {
+var RepresentationList = function () {
   function RepresentationList(client, parent) {
     _classCallCheck(this, RepresentationList);
 
@@ -2760,7 +2757,8 @@ var RepresentationList = (function () {
   }, {
     key: 'create',
     value: function create() {
-      var properties = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+      var properties = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
 
       // Make sure the type is correct, and it has no ID
       properties.id = undefined;
@@ -2771,7 +2769,7 @@ var RepresentationList = (function () {
   }]);
 
   return RepresentationList;
-})();
+}();
 
 exports.default = RepresentationList;
 'use strict';
@@ -2792,13 +2790,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Routingrule = (function (_Representation) {
+var Routingrule = function (_Representation) {
   _inherits(Routingrule, _Representation);
 
   function Routingrule(client, properties, parent) {
     _classCallCheck(this, Routingrule);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Routingrule).call(this, client, properties, parent));
+    var _this = _possibleConstructorReturn(this, (Routingrule.__proto__ || Object.getPrototypeOf(Routingrule)).call(this, client, properties, parent));
 
     _this.type = 'routingrule';
 
@@ -2806,7 +2804,7 @@ var Routingrule = (function (_Representation) {
   }
 
   return Routingrule;
-})(_representation2.default);
+}(_representation2.default);
 
 exports.default = Routingrule;
 'use strict';
@@ -2827,13 +2825,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var RoutingruleList = (function (_RepresentationList) {
+var RoutingruleList = function (_RepresentationList) {
   _inherits(RoutingruleList, _RepresentationList);
 
   function RoutingruleList(client, parent) {
     _classCallCheck(this, RoutingruleList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(RoutingruleList).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, (RoutingruleList.__proto__ || Object.getPrototypeOf(RoutingruleList)).call(this, client, parent));
 
     _this.type = 'routingruleList';
     _this.itemType = 'routingrule';
@@ -2841,7 +2839,7 @@ var RoutingruleList = (function (_RepresentationList) {
   }
 
   return RoutingruleList;
-})(_representationList2.default);
+}(_representationList2.default);
 
 exports.default = RoutingruleList;
 'use strict';
@@ -2866,13 +2864,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Sipidentity = (function (_Representation) {
+var Sipidentity = function (_Representation) {
   _inherits(Sipidentity, _Representation);
 
   function Sipidentity(client, properties, parent) {
     _classCallCheck(this, Sipidentity);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Sipidentity).call(this, client, properties, parent));
+    var _this = _possibleConstructorReturn(this, (Sipidentity.__proto__ || Object.getPrototypeOf(Sipidentity)).call(this, client, properties, parent));
 
     _this.type = 'sipidentity';
 
@@ -2882,7 +2880,7 @@ var Sipidentity = (function (_Representation) {
   }
 
   return Sipidentity;
-})(_representation2.default);
+}(_representation2.default);
 
 exports.default = Sipidentity;
 'use strict';
@@ -2903,13 +2901,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var SipidentityList = (function (_RepresentationList) {
+var SipidentityList = function (_RepresentationList) {
   _inherits(SipidentityList, _RepresentationList);
 
   function SipidentityList(client, parent) {
     _classCallCheck(this, SipidentityList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SipidentityList).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, (SipidentityList.__proto__ || Object.getPrototypeOf(SipidentityList)).call(this, client, parent));
 
     _this.type = 'sipidentityList';
     _this.itemType = 'sipidentity';
@@ -2917,7 +2915,7 @@ var SipidentityList = (function (_RepresentationList) {
   }
 
   return SipidentityList;
-})(_representationList2.default);
+}(_representationList2.default);
 
 exports.default = SipidentityList;
 'use strict';
@@ -2938,13 +2936,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Sipregistration = (function (_Representation) {
+var Sipregistration = function (_Representation) {
   _inherits(Sipregistration, _Representation);
 
   function Sipregistration(client, properties, parent) {
     _classCallCheck(this, Sipregistration);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Sipregistration).call(this, client, properties, parent));
+    var _this = _possibleConstructorReturn(this, (Sipregistration.__proto__ || Object.getPrototypeOf(Sipregistration)).call(this, client, properties, parent));
 
     _this.type = 'sipregistration';
 
@@ -2952,7 +2950,7 @@ var Sipregistration = (function (_Representation) {
   }
 
   return Sipregistration;
-})(_representation2.default);
+}(_representation2.default);
 
 exports.default = Sipregistration;
 'use strict';
@@ -2973,13 +2971,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var SipregistrationList = (function (_RepresentationList) {
+var SipregistrationList = function (_RepresentationList) {
   _inherits(SipregistrationList, _RepresentationList);
 
   function SipregistrationList(client, parent) {
     _classCallCheck(this, SipregistrationList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SipregistrationList).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, (SipregistrationList.__proto__ || Object.getPrototypeOf(SipregistrationList)).call(this, client, parent));
 
     _this.type = 'sipregistrationList';
     _this.itemType = 'sipregistration';
@@ -2987,7 +2985,7 @@ var SipregistrationList = (function (_RepresentationList) {
   }
 
   return SipregistrationList;
-})(_representationList2.default);
+}(_representationList2.default);
 
 exports.default = SipregistrationList;
 'use strict';
@@ -3008,13 +3006,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Smsmessage = (function (_Representation) {
+var Smsmessage = function (_Representation) {
   _inherits(Smsmessage, _Representation);
 
   function Smsmessage(client, properties, parent) {
     _classCallCheck(this, Smsmessage);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Smsmessage).call(this, client, properties, parent));
+    var _this = _possibleConstructorReturn(this, (Smsmessage.__proto__ || Object.getPrototypeOf(Smsmessage)).call(this, client, properties, parent));
 
     _this.type = 'smsmessage';
 
@@ -3027,7 +3025,7 @@ var Smsmessage = (function (_Representation) {
   }
 
   return Smsmessage;
-})(_representation2.default);
+}(_representation2.default);
 
 exports.default = Smsmessage;
 'use strict';
@@ -3048,13 +3046,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var SmsmessageList = (function (_RepresentationList) {
+var SmsmessageList = function (_RepresentationList) {
   _inherits(SmsmessageList, _RepresentationList);
 
   function SmsmessageList(client, parent) {
     _classCallCheck(this, SmsmessageList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SmsmessageList).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, (SmsmessageList.__proto__ || Object.getPrototypeOf(SmsmessageList)).call(this, client, parent));
 
     _this.type = 'smsmessageList';
     _this.itemType = 'smsmessage';
@@ -3062,7 +3060,7 @@ var SmsmessageList = (function (_RepresentationList) {
   }
 
   return SmsmessageList;
-})(_representationList2.default);
+}(_representationList2.default);
 
 exports.default = SmsmessageList;
 'use strict';
@@ -3083,13 +3081,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var SoundList = (function (_RepresentationList) {
+var SoundList = function (_RepresentationList) {
   _inherits(SoundList, _RepresentationList);
 
   function SoundList(client, parent) {
     _classCallCheck(this, SoundList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SoundList).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, (SoundList.__proto__ || Object.getPrototypeOf(SoundList)).call(this, client, parent));
 
     _this.type = 'soundList';
     _this.itemType = 'sound';
@@ -3097,18 +3095,18 @@ var SoundList = (function (_RepresentationList) {
   }
 
   return SoundList;
-})(_representationList2.default);
+}(_representationList2.default);
 
 exports.default = SoundList;
 'use strict';
 
 // Module dependencies
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _atmosphere = require('atmosphere.js');
 
@@ -3118,7 +3116,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Stream = (function () {
+var Stream = function () {
   function Stream(client) {
     _classCallCheck(this, Stream);
 
@@ -3155,7 +3153,7 @@ var Stream = (function () {
 
       this.stream.onMessage = function streamMessage(data) {
 
-        var message = undefined;
+        var message = void 0;
 
         try {
           message = JSON.parse(data.responseBody);
@@ -3180,7 +3178,7 @@ var Stream = (function () {
   }]);
 
   return Stream;
-})();
+}();
 
 exports.default = Stream;
 'use strict';
@@ -3201,13 +3199,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Timeinterval = (function (_Representation) {
+var Timeinterval = function (_Representation) {
   _inherits(Timeinterval, _Representation);
 
   function Timeinterval(client, properties, parent) {
     _classCallCheck(this, Timeinterval);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Timeinterval).call(this, client, properties, parent));
+    var _this = _possibleConstructorReturn(this, (Timeinterval.__proto__ || Object.getPrototypeOf(Timeinterval)).call(this, client, properties, parent));
 
     _this.type = 'timeinterval';
 
@@ -3215,7 +3213,7 @@ var Timeinterval = (function (_Representation) {
   }
 
   return Timeinterval;
-})(_representation2.default);
+}(_representation2.default);
 
 exports.default = Timeinterval;
 'use strict';
@@ -3236,13 +3234,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var TimeintervalList = (function (_RepresentationList) {
+var TimeintervalList = function (_RepresentationList) {
   _inherits(TimeintervalList, _RepresentationList);
 
   function TimeintervalList(client, parent) {
     _classCallCheck(this, TimeintervalList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TimeintervalList).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, (TimeintervalList.__proto__ || Object.getPrototypeOf(TimeintervalList)).call(this, client, parent));
 
     _this.type = 'timeintervalList';
     _this.itemType = 'timeinterval';
@@ -3250,7 +3248,7 @@ var TimeintervalList = (function (_RepresentationList) {
   }
 
   return TimeintervalList;
-})(_representationList2.default);
+}(_representationList2.default);
 
 exports.default = TimeintervalList;
 'use strict';
@@ -3271,13 +3269,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Virtual = (function (_Representation) {
+var Virtual = function (_Representation) {
   _inherits(Virtual, _Representation);
 
   function Virtual(client, properties, parent) {
     _classCallCheck(this, Virtual);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Virtual).call(this, client, properties, parent));
+    var _this = _possibleConstructorReturn(this, (Virtual.__proto__ || Object.getPrototypeOf(Virtual)).call(this, client, properties, parent));
 
     _this.type = 'virtual';
 
@@ -3285,7 +3283,7 @@ var Virtual = (function (_Representation) {
   }
 
   return Virtual;
-})(_representation2.default);
+}(_representation2.default);
 
 exports.default = Virtual;
 'use strict';
@@ -3306,13 +3304,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var VirtualList = (function (_RepresentationList) {
+var VirtualList = function (_RepresentationList) {
   _inherits(VirtualList, _RepresentationList);
 
   function VirtualList(client, parent) {
     _classCallCheck(this, VirtualList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(VirtualList).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, (VirtualList.__proto__ || Object.getPrototypeOf(VirtualList)).call(this, client, parent));
 
     _this.type = 'virtualList';
     _this.itemType = 'virtual';
@@ -3320,7 +3318,7 @@ var VirtualList = (function (_RepresentationList) {
   }
 
   return VirtualList;
-})(_representationList2.default);
+}(_representationList2.default);
 
 exports.default = VirtualList;
 'use strict';

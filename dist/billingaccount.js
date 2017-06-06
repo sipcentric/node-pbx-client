@@ -28,13 +28,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Billingaccount = (function (_Representation) {
+var Billingaccount = function (_Representation) {
   _inherits(Billingaccount, _Representation);
 
   function Billingaccount(client, properties, parent) {
     _classCallCheck(this, Billingaccount);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Billingaccount).call(this, client, properties, parent));
+    var _this = _possibleConstructorReturn(this, (Billingaccount.__proto__ || Object.getPrototypeOf(Billingaccount)).call(this, client, properties, parent));
 
     _this.type = 'billingaccount';
 
@@ -46,6 +46,6 @@ var Billingaccount = (function (_Representation) {
   }
 
   return Billingaccount;
-})(_representation2.default);
+}(_representation2.default);
 
 exports.default = Billingaccount;
