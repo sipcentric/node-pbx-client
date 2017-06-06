@@ -16,13 +16,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var TimeintervalList = function (_RepresentationList) {
+var TimeintervalList = (function (_RepresentationList) {
   _inherits(TimeintervalList, _RepresentationList);
 
   function TimeintervalList(client, parent) {
     _classCallCheck(this, TimeintervalList);
 
-    var _this = _possibleConstructorReturn(this, (TimeintervalList.__proto__ || Object.getPrototypeOf(TimeintervalList)).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(TimeintervalList).call(this, client, parent));
 
     _this.type = 'timeintervalList';
     _this.itemType = 'timeinterval';
@@ -30,6 +30,6 @@ var TimeintervalList = function (_RepresentationList) {
   }
 
   return TimeintervalList;
-}(_representationList2.default);
+})(_representationList2.default);
 
 exports.default = TimeintervalList;

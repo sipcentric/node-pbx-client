@@ -1,10 +1,10 @@
 'use strict';
 
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _deepExtend = require('deep-extend');
 
@@ -158,13 +158,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Customer = function (_Representation) {
+var Customer = (function (_Representation) {
   _inherits(Customer, _Representation);
 
   function Customer(client, item) {
     _classCallCheck(this, Customer);
 
-    var _this = _possibleConstructorReturn(this, (Customer.__proto__ || Object.getPrototypeOf(Customer)).call(this, client));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Customer).call(this, client));
 
     (0, _deepExtend2.default)(_this, item);
 
@@ -205,7 +205,7 @@ var Customer = function (_Representation) {
     key: 'create',
     value: function create(type, properties) {
 
-      var instance = void 0;
+      var instance = undefined;
 
       // Figure out which class to use for this type
 
@@ -243,6 +243,6 @@ var Customer = function (_Representation) {
   }]);
 
   return Customer;
-}(_representation2.default);
+})(_representation2.default);
 
 exports.default = Customer;

@@ -16,13 +16,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var PhonebookentryList = function (_RepresentationList) {
+var PhonebookentryList = (function (_RepresentationList) {
   _inherits(PhonebookentryList, _RepresentationList);
 
   function PhonebookentryList(client, parent) {
     _classCallCheck(this, PhonebookentryList);
 
-    var _this = _possibleConstructorReturn(this, (PhonebookentryList.__proto__ || Object.getPrototypeOf(PhonebookentryList)).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PhonebookentryList).call(this, client, parent));
 
     _this.type = 'phonebookentryList';
     _this.itemType = 'phonebookentry';
@@ -30,6 +30,6 @@ var PhonebookentryList = function (_RepresentationList) {
   }
 
   return PhonebookentryList;
-}(_representationList2.default);
+})(_representationList2.default);
 
 exports.default = PhonebookentryList;

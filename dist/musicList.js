@@ -16,13 +16,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var MusicList = function (_RepresentationList) {
+var MusicList = (function (_RepresentationList) {
   _inherits(MusicList, _RepresentationList);
 
   function MusicList(client, parent) {
     _classCallCheck(this, MusicList);
 
-    var _this = _possibleConstructorReturn(this, (MusicList.__proto__ || Object.getPrototypeOf(MusicList)).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(MusicList).call(this, client, parent));
 
     _this.type = 'musicList';
     _this.itemType = 'music';
@@ -30,6 +30,6 @@ var MusicList = function (_RepresentationList) {
   }
 
   return MusicList;
-}(_representationList2.default);
+})(_representationList2.default);
 
 exports.default = MusicList;

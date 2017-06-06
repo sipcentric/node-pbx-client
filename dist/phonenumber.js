@@ -20,13 +20,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Phonenumber = function (_Representation) {
+var Phonenumber = (function (_Representation) {
   _inherits(Phonenumber, _Representation);
 
   function Phonenumber(client, properties, parent) {
     _classCallCheck(this, Phonenumber);
 
-    var _this = _possibleConstructorReturn(this, (Phonenumber.__proto__ || Object.getPrototypeOf(Phonenumber)).call(this, client, properties, parent));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Phonenumber).call(this, client, properties, parent));
 
     _this.type = 'phonenumber';
 
@@ -36,6 +36,6 @@ var Phonenumber = function (_Representation) {
   }
 
   return Phonenumber;
-}(_representation2.default);
+})(_representation2.default);
 
 exports.default = Phonenumber;

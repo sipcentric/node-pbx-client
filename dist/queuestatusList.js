@@ -16,13 +16,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var QueuestatusList = function (_RepresentationList) {
+var QueuestatusList = (function (_RepresentationList) {
   _inherits(QueuestatusList, _RepresentationList);
 
   function QueuestatusList(client, parent) {
     _classCallCheck(this, QueuestatusList);
 
-    var _this = _possibleConstructorReturn(this, (QueuestatusList.__proto__ || Object.getPrototypeOf(QueuestatusList)).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(QueuestatusList).call(this, client, parent));
 
     _this.type = 'queuestatusList';
     _this.itemType = 'queuestatus';
@@ -30,6 +30,6 @@ var QueuestatusList = function (_RepresentationList) {
   }
 
   return QueuestatusList;
-}(_representationList2.default);
+})(_representationList2.default);
 
 exports.default = QueuestatusList;
