@@ -16,13 +16,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var SipregistrationList = (function (_RepresentationList) {
+var SipregistrationList = function (_RepresentationList) {
   _inherits(SipregistrationList, _RepresentationList);
 
   function SipregistrationList(client, parent) {
     _classCallCheck(this, SipregistrationList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SipregistrationList).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, (SipregistrationList.__proto__ || Object.getPrototypeOf(SipregistrationList)).call(this, client, parent));
 
     _this.type = 'sipregistrationList';
     _this.itemType = 'sipregistration';
@@ -30,6 +30,6 @@ var SipregistrationList = (function (_RepresentationList) {
   }
 
   return SipregistrationList;
-})(_representationList2.default);
+}(_representationList2.default);
 
 exports.default = SipregistrationList;

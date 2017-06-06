@@ -16,13 +16,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var SmsmessageList = (function (_RepresentationList) {
+var SmsmessageList = function (_RepresentationList) {
   _inherits(SmsmessageList, _RepresentationList);
 
   function SmsmessageList(client, parent) {
     _classCallCheck(this, SmsmessageList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SmsmessageList).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, (SmsmessageList.__proto__ || Object.getPrototypeOf(SmsmessageList)).call(this, client, parent));
 
     _this.type = 'smsmessageList';
     _this.itemType = 'smsmessage';
@@ -30,6 +30,6 @@ var SmsmessageList = (function (_RepresentationList) {
   }
 
   return SmsmessageList;
-})(_representationList2.default);
+}(_representationList2.default);
 
 exports.default = SmsmessageList;

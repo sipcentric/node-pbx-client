@@ -16,13 +16,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Timeinterval = (function (_Representation) {
+var Timeinterval = function (_Representation) {
   _inherits(Timeinterval, _Representation);
 
   function Timeinterval(client, properties, parent) {
     _classCallCheck(this, Timeinterval);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Timeinterval).call(this, client, properties, parent));
+    var _this = _possibleConstructorReturn(this, (Timeinterval.__proto__ || Object.getPrototypeOf(Timeinterval)).call(this, client, properties, parent));
 
     _this.type = 'timeinterval';
 
@@ -30,6 +30,6 @@ var Timeinterval = (function (_Representation) {
   }
 
   return Timeinterval;
-})(_representation2.default);
+}(_representation2.default);
 
 exports.default = Timeinterval;

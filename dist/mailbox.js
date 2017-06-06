@@ -16,13 +16,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Mailbox = (function (_Representation) {
+var Mailbox = function (_Representation) {
   _inherits(Mailbox, _Representation);
 
   function Mailbox(client, properties, parent) {
     _classCallCheck(this, Mailbox);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Mailbox).call(this, client, properties, parent));
+    var _this = _possibleConstructorReturn(this, (Mailbox.__proto__ || Object.getPrototypeOf(Mailbox)).call(this, client, properties, parent));
 
     _this.type = 'mailbox';
 
@@ -30,6 +30,6 @@ var Mailbox = (function (_Representation) {
   }
 
   return Mailbox;
-})(_representation2.default);
+}(_representation2.default);
 
 exports.default = Mailbox;

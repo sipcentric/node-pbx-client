@@ -16,13 +16,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var PromptList = (function (_RepresentationList) {
+var PromptList = function (_RepresentationList) {
   _inherits(PromptList, _RepresentationList);
 
   function PromptList(client, parent) {
     _classCallCheck(this, PromptList);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(PromptList).call(this, client, parent));
+    var _this = _possibleConstructorReturn(this, (PromptList.__proto__ || Object.getPrototypeOf(PromptList)).call(this, client, parent));
 
     _this.type = 'promptList';
     _this.itemType = 'prompt';
@@ -30,6 +30,6 @@ var PromptList = (function (_RepresentationList) {
   }
 
   return PromptList;
-})(_representationList2.default);
+}(_representationList2.default);
 
 exports.default = PromptList;

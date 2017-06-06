@@ -1,12 +1,15 @@
 'use strict';
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-// Promise + callback polyfill
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+// Promise + callback polyfill
+
 
 var _request2 = require('request');
 
@@ -158,8 +161,6 @@ var _package2 = _interopRequireDefault(_package);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 Promise.prototype.nodeify = _nodeify2.default; // eslint-disable-line no-extend-native
@@ -168,7 +169,7 @@ Promise.prototype.nodeify = _nodeify2.default; // eslint-disable-line no-extend-
 
 var VERSION = _package2.default.version;
 
-var Nimvelo = (function () {
+var Nimvelo = function () {
   function Nimvelo(options) {
     _classCallCheck(this, Nimvelo);
 
@@ -317,7 +318,7 @@ var Nimvelo = (function () {
         return item;
       }
 
-      var object = undefined;
+      var object = void 0;
 
       // Figure out which class to use for this type
 
@@ -479,7 +480,7 @@ var Nimvelo = (function () {
             reject(error);
           } else {
 
-            var parsedData = undefined;
+            var parsedData = void 0;
 
             if (data && typeof data === 'string') {
 
@@ -524,8 +525,8 @@ var Nimvelo = (function () {
     key: '_buildUrl',
     value: function _buildUrl(type, object) {
 
-      var url = undefined;
-      var id = undefined;
+      var url = void 0;
+      var id = void 0;
       var params = {};
 
       for (var _len = arguments.length, args = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
@@ -558,11 +559,11 @@ var Nimvelo = (function () {
   }, {
     key: '_buildUrlSection',
     value: function _buildUrlSection(type, object) {
-      var url = arguments.length <= 2 || arguments[2] === undefined ? '' : arguments[2];
+      var url = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
 
       /* eslint no-param-reassign:0 */
 
-      var path = undefined;
+      var path = void 0;
       var baseUrl = this.options.restBase;
 
       if (object.parent) {
@@ -620,35 +621,31 @@ var Nimvelo = (function () {
         var meta = response;
 
         if (meta.hasOwnProperty('nextPage')) {
-          (function () {
 
-            var nextPageUrl = meta.nextPage;
-            meta.nextPage = function (callback) {
+          var nextPageUrl = meta.nextPage;
+          meta.nextPage = function (callback) {
 
-              return new Promise(function (resolve, reject) {
-                _this3._request('get', nextPageUrl).then(function (data) {
-                  var formattedResponse = _this3._formatGetResponse(data, parent);
-                  resolve(formattedResponse);
-                }, reject);
-              }).nodeify(callback);
-            };
-          })();
+            return new Promise(function (resolve, reject) {
+              _this3._request('get', nextPageUrl).then(function (data) {
+                var formattedResponse = _this3._formatGetResponse(data, parent);
+                resolve(formattedResponse);
+              }, reject);
+            }).nodeify(callback);
+          };
         }
 
         if (meta.hasOwnProperty('prevPage')) {
-          (function () {
 
-            var prevPageUrl = meta.prevPage;
-            meta.prevPage = function (callback) {
+          var prevPageUrl = meta.prevPage;
+          meta.prevPage = function (callback) {
 
-              return new Promise(function (resolve, reject) {
-                _this3._request('get', prevPageUrl).then(function (data) {
-                  var formattedResponse = _this3._formatGetResponse(data, parent);
-                  resolve(formattedResponse);
-                }, reject);
-              }).nodeify(callback);
-            };
-          })();
+            return new Promise(function (resolve, reject) {
+              _this3._request('get', prevPageUrl).then(function (data) {
+                var formattedResponse = _this3._formatGetResponse(data, parent);
+                resolve(formattedResponse);
+              }, reject);
+            }).nodeify(callback);
+          };
         }
 
         return { meta: meta, items: items };
@@ -662,9 +659,9 @@ var Nimvelo = (function () {
     value: function _getResource(type, object) {
       var _this4 = this;
 
-      var id = undefined;
-      var params = undefined;
-      var callback = undefined;
+      var id = void 0;
+      var params = void 0;
+      var callback = void 0;
 
       for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
         args[_key2 - 2] = arguments[_key2];
@@ -737,6 +734,6 @@ var Nimvelo = (function () {
   }]);
 
   return Nimvelo;
-})();
+}();
 
 exports.default = Nimvelo;
