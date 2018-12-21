@@ -3,32 +3,16 @@
 Node.js client for the [Nimvelo/Sipcentric API](https://developer.nimvelo.com/)
 
 
-## Installation
-
-### Best method
+## Usage
 
 ```
 npm install nimvelo
 ```
 
-### Manual method
-
-Firstly, clone the repo:
-
-```
-git clone git@github.com:Nimvelo/node-client.git
-```
-
-You'll then need to compile the code using babel:
-
-```
-gulp babel
-```
-
-Then just require Nimvelo:
-
 ```js
-var Nimvelo = require('./dist/nimvelo.js');
+const Nimvelo = require('nimvelo');
+
+// ...
 ```
 
 ## Getting started
@@ -40,9 +24,9 @@ All of the following examples use callbacks, however ES6 promises are also suppo
 #### Get account details
 
 ```js
-var Nimvelo = require('nimvelo');
+const Nimvelo = require('nimvelo');
 
-var nimvelo = new Nimvelo({username: 'myusername', password: 'mypassword'});
+const nimvelo = new Nimvelo({username: 'myusername', password: 'mypassword'});
 
 nimvelo.customers.get(function(err, customer) {
 
@@ -58,9 +42,9 @@ nimvelo.customers.get(function(err, customer) {
 #### Get phone book
 
 ```js
-var Nimvelo = require('nimvelo');
+const Nimvelo = require('nimvelo');
 
-var nimvelo = new Nimvelo({username: 'myusername', password: 'mypassword'});
+const nimvelo = new Nimvelo({username: 'myusername', password: 'mypassword'});
 
 nimvelo.customers.get(function(err, customer) {
 
@@ -84,9 +68,9 @@ nimvelo.customers.get(function(err, customer) {
 #### Update phone book entry
 
 ```js
-var Nimvelo = require('nimvelo');
+const Nimvelo = require('nimvelo');
 
-var nimvelo = new Nimvelo({username: 'myusername', password: 'mypassword'});
+const nimvelo = new Nimvelo({username: 'myusername', password: 'mypassword'});
 
 nimvelo.customers.get(function(err, customer) {
 
@@ -114,9 +98,9 @@ nimvelo.customers.get(function(err, customer) {
 #### Create phone book entry
 
 ```js
-var Nimvelo = require('nimvelo');
+const Nimvelo = require('nimvelo');
 
-var nimvelo = new Nimvelo({username: 'myusername', password: 'mypassword'});
+const nimvelo = new Nimvelo({username: 'myusername', password: 'mypassword'});
 
 nimvelo.customers.get(function(err, customer) {
 
@@ -124,7 +108,7 @@ nimvelo.customers.get(function(err, customer) {
     // Handle errors here
   }
 
-  var phonebookentry = {
+  const phonebookentry = {
     name: 'Nimvelo',
     phoneNumber: '03301200030',
     email: 'hello@nimvelo.com'
@@ -140,9 +124,9 @@ nimvelo.customers.get(function(err, customer) {
 #### Delete phone book entry
 
 ```js
-var Nimvelo = require('nimvelo');
+const Nimvelo = require('nimvelo');
 
-var nimvelo = new Nimvelo({username: 'myusername', password: 'mypassword'});
+const nimvelo = new Nimvelo({username: 'myusername', password: 'mypassword'});
 
 nimvelo.customers.get(function(err, customer) {
 
@@ -175,16 +159,78 @@ nimvelo.customers.get(function(err, customer) {
 #### Subscribe to incoming call events
 
 ```js
-var Nimvelo = require('nimvelo');
+const Nimvelo = require('nimvelo');
 
-var nimvelo = new Nimvelo({username: 'myusername', password: 'mypassword'});
+const nimvelo = new Nimvelo({username: 'myusername', password: 'mypassword'});
 
-var stream = nimvelo.stream();
-
-stream.subscribe('incomingcall', function(call) {
+nimvelo.stream.subscribe('incomingcall', function(call) {
 
   console.log(call);
 
 });
 
 ```
+
+
+#### Monitor presence of an extension
+
+```js
+const Nimvelo = require('nimvelo');
+
+const nimvelo = new Nimvelo({
+  username: 'myusername',
+  password: 'mypassword',
+});
+
+const myCustomerId = 1; // Change this to your customer ID
+
+// Returns an array of subscriptions
+const subscriptions = await nimvelo.presenceWatcher.subscribe({
+  customerId: myCustomerId,
+  targets: ['012345'], // The extensions you'd like to monitor
+  onStateChange: (extension, newState) => {
+    console.log(extension); // 012345
+    console.log(newState); // AVAILABLE, BUSY, or RINGING
+  },
+});
+```
+
+
+#### Monitor presence of all extensions on an account
+
+```js
+const Nimvelo = require('nimvelo');
+
+const nimvelo = new Nimvelo({
+  username: 'myusername',
+  password: 'mypassword',
+});
+
+const subscribeToAll = async () => {
+  const myCustomerId = 1; // Change this to your customer ID
+  // Get your customer
+  const customer = await nimvelo.customers.get(myCustomerId);
+  // Get a list of all regular extensions
+  const phones = await customer.phones.get();
+
+  // Get the ids of each extension
+  const extensionIds = phones.items.map(x => x.id);
+
+  // Subscribe to each extension
+  const subscriptions = await nimvelo.presenceWatcher.subscribe({
+    customerId: myCustomerId,
+    targets: extensionIds,
+    onStateChange: (extension, newState) => {
+      console.log(extension);
+      console.log(newState);
+    },
+  });
+};
+
+try {
+  subscribeToAll();
+} catch (err) {
+  console.error('Error: ', err);
+}
+```
+

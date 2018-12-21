@@ -1,20 +1,7 @@
 {
-  "extends": "airbnb",
-  "plugins": [
-    "react"
-  ],
-  "env": {
-    "es6": true,
-    "node": true
-  },
+  "extends": "airbnb-base",
   "rules": {
-    "comma-dangle": 0,
     "no-console": 0,
-    "no-else-return": 0,
-    "no-use-before-define": [2, "nofunc"],
-    "padded-blocks": 0,
-    "prefer-const": 1,
-    "space-before-function-paren": 0,
-    "strict": 0
+    "no-underscore-dangle": 0
   }
 }
