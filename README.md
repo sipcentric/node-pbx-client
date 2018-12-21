@@ -19,7 +19,9 @@ const Nimvelo = require('nimvelo');
 
 ### Examples
 
-All of the following examples use callbacks, however ES6 promises are also supported. To use promises, just don't pass a callback and a promise will be returned instead.
+Many of the following examples use callbacks, however ES6 promises are also supported. To use promises, just don't pass a callback and a promise will be returned instead.
+
+There are further examples in the `examples/` directory. To try them, just clone the project, run an install in the project root, then again in the directory of the example you want to run. Finally, run `npm start` and the example will run.
 
 #### Get account details
 
