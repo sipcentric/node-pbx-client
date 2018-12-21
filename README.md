@@ -182,8 +182,11 @@ const nimvelo = new Nimvelo({
   password: 'mypassword',
 });
 
+const myCustomerId = 1; // Change this to your customer ID
+
 // Returns an array of subscriptions
 const subscriptions = await nimvelo.presenceWatcher.subscribe({
+  customerId: myCustomerId,
   targets: ['012345'], // The extensions you'd like to monitor
   onStateChange: (extension, newState) => {
     console.log(extension); // 012345
@@ -215,6 +218,7 @@ const subscribeToAll = async () => {
 
   // Subscribe to each extension
   const subscriptions = await nimvelo.presenceWatcher.subscribe({
+    customerId: myCustomerId,
     targets: extensionIds,
     onStateChange: (extension, newState) => {
       console.log(extension);
