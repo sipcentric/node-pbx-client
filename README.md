@@ -163,12 +163,70 @@ const Nimvelo = require('nimvelo');
 
 const nimvelo = new Nimvelo({username: 'myusername', password: 'mypassword'});
 
-const stream = nimvelo.stream;
-
-stream.subscribe('incomingcall', function(call) {
+nimvelo.stream.subscribe('incomingcall', function(call) {
 
   console.log(call);
 
 });
 
 ```
+
+
+#### Monitor presence of an extension
+
+```js
+const Nimvelo = require('nimvelo');
+
+const nimvelo = new Nimvelo({
+  username: 'myusername',
+  password: 'mypassword',
+});
+
+// Returns an array of subscriptions
+const subscriptions = await nimvelo.presenceWatcher.subscribe({
+  targets: ['012345'], // The extensions you'd like to monitor
+  onStateChange: (extension, newState) => {
+    console.log(extension); // 012345
+    console.log(newState); // AVAILABLE, BUSY, or RINGING
+  },
+});
+```
+
+
+#### Monitor presence of all extensions on an account
+
+```js
+const Nimvelo = require('nimvelo');
+
+const nimvelo = new Nimvelo({
+  username: 'myusername',
+  password: 'mypassword',
+});
+
+const subscribeToAll = async () => {
+  const myCustomerId = 1; // Change this to your customer ID
+  // Get your customer
+  const customer = await nimvelo.customers.get(myCustomerId);
+  // Get a list of all regular extensions
+  const phones = await customer.phones.get();
+
+  // Get the ids of each extension
+  const extensionIds = phones.items.map(x => x.id);
+
+  // Subscribe to each extension
+  const subscriptions = await nimvelo.presenceWatcher.subscribe({
+    targets: extensionIds,
+    onStateChange: (extension, newState) => {
+      console.log(extension);
+      console.log(newState);
+    },
+  });
+};
+
+try {
+  subscribeToAll();
+} catch (err) {
+  console.error('Error: ', err);
+}
+```
+
