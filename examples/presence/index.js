@@ -1,13 +1,14 @@
 const colors = require('colors/safe');
 
 const Nimvelo = require('../../lib');
+const CONFIG = require('./config');
 
 const myCustomerId = 5;
 
 // Enter your API credentials here
 const nimvelo = new Nimvelo({
-  username: 'myUsername',
-  password: 'myPassword',
+  username: CONFIG.USERNAME,
+  password: CONFIG.PASSWORD,
 });
 
 // We'll use this to store the state of each extension
