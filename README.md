@@ -80,7 +80,7 @@ nimvelo.customers.get(function(err, customer) {
     // Handle errors here
   }
 
-  customer.phonebook.create('1234', function(err, phonebookEntry) {
+  customer.phonebook.get('1234', function(err, phonebookEntry) {
 
     if (err) {
       // Handle errors here
