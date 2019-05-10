@@ -1,72 +1,66 @@
 /* global describe, it, before, beforeEach */
 /* eslint func-names:0 */
 
-'use strict';
+"use strict";
 
-const assert = require('assert');
-const nock = require('nock');
+import assert from "assert";
+import nock from "nock";
 
-const Nimvelo = require('../dist/nimvelo');
-const Call = require('../dist/call');
-const Customer = require('../dist/customer');
-const Recording = require('../dist/recording');
+import Nimvelo from "../dist/nimvelo";
+import Call from "../dist/call";
+import Customer from "../dist/customer";
+import Recording from "../dist/recording";
 
-const VERSION = require('../package.json').version;
+const VERSION = require("../package.json").version;
 
-describe('Nimvelo', function() {
-
-  describe('Constructor', function() {
-
-    describe('new Nimvelo();', function() {
-
+describe("Nimvelo", function() {
+  describe("Constructor", function() {
+    describe("new Nimvelo();", function() {
       const defaults = {
         username: null,
         password: null,
-        customer: 'me',
-        restBase: 'https://pbx.sipcentric.com/api/v1/customers/',
-        streamBase: 'https://pbx.sipcentric.com/api/v1/stream',
+        customer: "me",
+        restBase: "https://pbx.sipcentric.com/api/v1/customers/",
+        streamBase: "https://pbx.sipcentric.com/api/v1/stream",
         json: true,
         requestOptions: {
           headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization': null
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: null
           }
         }
       };
 
-      it('creates new instance', function() {
+      it("creates new instance", function() {
         const client = new Nimvelo();
         assert(client instanceof Nimvelo);
       });
 
-      it('has default options', function() {
+      it("has default options", function() {
         const client = new Nimvelo();
         assert.equal(
           Object.keys(defaults).length,
           Object.keys(client.options).length
         );
-        assert.deepEqual(
-          Object.keys(defaults),
-          Object.keys(client.options)
-        );
+        assert.deepEqual(Object.keys(defaults), Object.keys(client.options));
       });
 
-      it('accepts and overrides options', function() {
+      it("accepts and overrides options", function() {
         const options = {
-          username: 'TEST_USERNAME',
-          password: 'TEST_PASSWORD',
-          newOption: 'TEST_OPTION',
+          username: "TEST_USERNAME",
+          password: "TEST_PASSWORD",
+          newOption: "TEST_OPTION",
           requestOptions: {
             headers: {
-              Authorization: 'Basic TEST_AUTH'
+              Authorization: "Basic TEST_AUTH"
             }
           }
         };
 
         const client = new Nimvelo(options);
 
-        assert(client.options.hasOwnProperty('newOption'));
+        assert(client.options.hasOwnProperty("newOption"));
         assert.equal(client.options.newOption, options.newOption);
 
         assert.equal(client.options.password, options.password);
@@ -77,147 +71,121 @@ describe('Nimvelo', function() {
         );
       });
 
-      it('has pre-configured _request object', function() {
+      it("has pre-configured _request object", function() {
         const client = new Nimvelo({
           requestOptions: {
             headers: {
-              foo: 'bar'
+              foo: "bar"
             }
           }
         });
 
-        assert(client.hasOwnProperty('request'));
+        assert(client.hasOwnProperty("request"));
 
-        nock('http://node.nimvelo').get('/').reply(200);
-        client.request.get('http://node.nimvelo', function (error, response) {
+        nock("http://node.nimvelo")
+          .get("/")
+          .reply(200);
+        client.request.get("http://node.nimvelo", function(error, response) {
           const headers = response.request.headers;
 
-          assert(headers.hasOwnProperty('foo'));
-          assert(headers.foo, 'bar');
+          assert(headers.hasOwnProperty("foo"));
+          assert(headers.foo, "bar");
 
-          assert.equal(headers['User-Agent'], 'node-nimvelo', + VERSION);
+          assert.equal(headers["User-Agent"], "node-nimvelo", +VERSION);
         });
-
       });
-
     });
-
   });
 
-  describe('Prototypes', function() {
-
-    describe('prototype._buildUrl();', function() {
-
+  describe("Prototypes", function() {
+    describe("prototype._buildUrl();", function() {
       let client;
 
       beforeEach(function() {
         client = new Nimvelo();
       });
 
-      it('method exists', function() {
-        assert.equal(typeof client._buildUrl, 'function');
+      it("method exists", function() {
+        assert.equal(typeof client._buildUrl, "function");
       });
 
-      it('builds url', function() {
-
+      it("builds url", function() {
         assert.equal(
-          client._buildUrl('rest', 'customers'),
+          client._buildUrl("rest", "customers"),
           client.options.restBase
         );
 
         assert.equal(
-          client._buildUrl('rest', 'customer'),
+          client._buildUrl("rest", "customer"),
           client.options.restBase
         );
 
         assert.equal(
-          client._buildUrl('rest', 'customer', 5),
-          client.options.restBase + '5/'
+          client._buildUrl("rest", "customer", 5),
+          client.options.restBase + "5/"
         );
 
         assert.equal(
-          client._buildUrl('rest', 'phonebookentry', 5),
-          client.options.restBase + '5/phonebook/'
+          client._buildUrl("rest", "phonebookentry", 5),
+          client.options.restBase + "5/phonebook/"
         );
 
         assert.equal(
-          client._buildUrl('rest', 'phonebookentry', 5, 20),
-          client.options.restBase + '5/phonebook/20/'
+          client._buildUrl("rest", "phonebookentry", 5, 20),
+          client.options.restBase + "5/phonebook/20/"
         );
-
       });
-
     });
 
-    describe('prototype._pathForType();', function() {
-
+    describe("prototype._pathForType();", function() {
       let client;
 
       beforeEach(function() {
         client = new Nimvelo();
       });
 
-      it('method exists', function() {
-        assert.equal(typeof client._pathForType, 'function');
+      it("method exists", function() {
+        assert.equal(typeof client._pathForType, "function");
       });
 
-      it('returns correct path', function() {
+      it("returns correct path", function() {
+        assert.equal(client._pathForType("customers"), "");
 
-        assert.equal(
-          client._pathForType('customers'),
-          ''
-        );
+        assert.equal(client._pathForType("CUSTOMER"), "");
 
-        assert.equal(
-          client._pathForType('CUSTOMER'),
-          ''
-        );
+        assert.equal(client._pathForType("phonebookentry", 5), "5/phonebook");
 
-        assert.equal(
-          client._pathForType('phonebookentry', 5),
-          '5/phonebook'
-        );
-
-        assert.equal(
-          client._pathForType('TEST_TYPE', 5),
-          '5/test_types'
-        );
-
+        assert.equal(client._pathForType("TEST_TYPE", 5), "5/test_types");
       });
-
     });
 
-    describe('prototype._objectFromItem();', function() {
-
+    describe("prototype._objectFromItem();", function() {
       let client;
 
       beforeEach(function() {
         client = new Nimvelo();
       });
 
-      it('method exists', function() {
-        assert.equal(typeof client._objectFromItem, 'function');
+      it("method exists", function() {
+        assert.equal(typeof client._objectFromItem, "function");
       });
 
-      it('returns correct object', function() {
-
+      it("returns correct object", function() {
         const item = {};
 
-        assert.equal(
-          client._objectFromItem(item),
-          item
+        assert.equal(client._objectFromItem(item), item);
+
+        assert(
+          client._objectFromItem({ type: "customer" }) instanceof Customer
         );
 
-        assert(client._objectFromItem({ type: 'customer' }) instanceof Customer);
-
-        assert(client._objectFromItem({ type: 'recording' }) instanceof Recording);
-
+        assert(
+          client._objectFromItem({ type: "recording" }) instanceof Recording
+        );
       });
-
     });
 
-    describe('prototype._buildObjects();', function() {
-
+    describe("prototype._buildObjects();", function() {
       let client;
       let customerItem;
       let callItem;
@@ -226,148 +194,134 @@ describe('Nimvelo', function() {
 
       beforeEach(function() {
         client = new Nimvelo();
-        customerItem = { type: 'customer' };
-        callItem = { type: 'call' };
-        customerItemsArray = [customerItem, customerItem, customerItem, customerItem];
-        mixedItemsArray = [customerItem, callItem, customerItem, callItem, customerItem];
+        customerItem = { type: "customer" };
+        callItem = { type: "call" };
+        customerItemsArray = [
+          customerItem,
+          customerItem,
+          customerItem,
+          customerItem
+        ];
+        mixedItemsArray = [
+          customerItem,
+          callItem,
+          customerItem,
+          callItem,
+          customerItem
+        ];
       });
 
-      it('method exists', function() {
-        assert.equal(typeof client._buildObjects, 'function');
+      it("method exists", function() {
+        assert.equal(typeof client._buildObjects, "function");
       });
 
-      it('returns correct object', function() {
-
+      it("returns correct object", function() {
         assert(!Array.isArray(client._buildObjects(customerItem)));
 
         assert(client._buildObjects(customerItem) instanceof Customer);
 
         assert(client._buildObjects(callItem) instanceof Call);
-
       });
 
-      it('returns correct array', function() {
-
+      it("returns correct array", function() {
         assert(Array.isArray(client._buildObjects(customerItemsArray)));
 
-        assert.equal(
-          client._buildObjects(customerItemsArray).length,
-          4
-        );
+        assert.equal(client._buildObjects(customerItemsArray).length, 4);
 
         assert(client._buildObjects(customerItemsArray)[2] instanceof Customer);
 
-        assert.equal(
-          client._buildObjects(mixedItemsArray).length,
-          5
-        );
+        assert.equal(client._buildObjects(mixedItemsArray).length, 5);
 
         assert(client._buildObjects(mixedItemsArray)[2] instanceof Customer);
 
         assert(client._buildObjects(mixedItemsArray)[3] instanceof Call);
-
       });
-
     });
 
-    describe('prototype._request();', function() {
-
+    describe("prototype._request();", function() {
       let client;
       let type;
 
       beforeEach(function() {
         client = new Nimvelo();
-        type = 'customer';
+        type = "customer";
       });
 
-      it('method exists', function() {
-        assert.equal(typeof client._request, 'function');
+      it("method exists", function() {
+        assert.equal(typeof client._request, "function");
       });
 
-      it('returns a promise by default', function() {
-
-        assert(client._request('get', type) instanceof Promise);
-
+      it("returns a promise by default", function() {
+        assert(client._request("get", type) instanceof Promise);
       });
 
-      it('doesn\'t return a promise if a callback is provided', function() {
-
-        assert.notEqual(client._request('get', type, function() {}) instanceof Promise);
-
+      it("doesn't return a promise if a callback is provided", function() {
+        assert.notEqual(
+          client._request("get", type, function() {}) instanceof Promise
+        );
       });
 
-      it('calls a callback, if provided', function(done) {
+      it("calls a callback, if provided", function(done) {
+        nock("https://pbx.sipcentric.com/api/v1/customers/")
+          .get("/")
+          .reply(200, {
+            type: "customer",
+            company: "TEST_COMPANY"
+          });
 
-        nock('https://pbx.sipcentric.com/api/v1/customers/')
-        .get('/')
-        .reply(200, {
-          type: 'customer',
-          company: 'TEST_COMPANY'
-        });
-
-        client._request('get', type, function(err, data) {
+        client._request("get", type, function(err, data) {
           if (err) {
             done(err);
-          } else if (data.company === 'TEST_COMPANY') {
+          } else if (data.company === "TEST_COMPANY") {
             done();
           } else {
-            done(new Error('Company name doesn\'t match'));
+            done(new Error("Company name doesn't match"));
           }
         });
-
       });
-
     });
 
-    describe('prototype._getResource();', function() {
-
+    describe("prototype._getResource();", function() {
       let client;
       let type;
 
       beforeEach(function() {
         client = new Nimvelo();
-        type = 'customer';
+        type = "customer";
       });
 
-      it('method exists', function() {
-        assert.equal(typeof client._getResource, 'function');
+      it("method exists", function() {
+        assert.equal(typeof client._getResource, "function");
       });
 
-      it('returns a promise by default', function() {
-
+      it("returns a promise by default", function() {
         assert(client._getResource(type) instanceof Promise);
-
       });
 
-      it('doesn\'t return a promise if a callback is provided', function() {
-
-        assert.notEqual(client._getResource(type, function() {}) instanceof Promise);
-
+      it("doesn't return a promise if a callback is provided", function() {
+        assert.notEqual(
+          client._getResource(type, function() {}) instanceof Promise
+        );
       });
 
-      it('calls a callback, if provided', function(done) {
-
-        nock('https://pbx.sipcentric.com/api/v1/customers/')
-        .get('/')
-        .reply(200, {
-          type: 'customer',
-          company: 'TEST_COMPANY'
-        });
+      it("calls a callback, if provided", function(done) {
+        nock("https://pbx.sipcentric.com/api/v1/customers/")
+          .get("/")
+          .reply(200, {
+            type: "customer",
+            company: "TEST_COMPANY"
+          });
 
         client._getResource(type, function(err, data) {
           if (err) {
             done(err);
-          } else if (data.company === 'TEST_COMPANY') {
+          } else if (data.company === "TEST_COMPANY") {
             done();
           } else {
-            done(new Error('Company name doesn\'t match'));
+            done(new Error("Company name doesn't match"));
           }
         });
-
       });
-
     });
-
   });
-
 });

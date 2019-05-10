@@ -4,7 +4,8 @@
   "description": "Official Nimvelo API client library for node.js",
   "main": "lib/index.js",
   "scripts": {
-    "lint": "eslint lib/**; exit 0;",
+    "tsc": "./node_modules/.bin/tsc",
+    "lint": "eslint 'lib/**'; exit 0;",
     "test": "npm run lint"
   },
   "repository": {
@@ -27,17 +28,29 @@
   },
   "homepage": "https://github.com/Nimvelo/node-client",
   "dependencies": {
+    "@types/atmosphere.js": "^2.1.1",
+    "@types/deep-extend": "^0.4.31",
+    "@types/node": "^12.0.0",
+    "@types/xml2json": "^0.10.0",
     "atmosphere.js": "^2.3.8",
     "deep-extend": "^0.6.0",
-    "request": "^2.88.0",
-    "sip.js": "^0.12.0",
+    "sip.js": "^0.13.8",
+    "typescript": "^3.4.5",
     "xml2json": "^0.11.2"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^1.7.0",
+    "@typescript-eslint/parser": "^1.7.0",
     "eslint": "^5.10.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
     "mocha": "^5.2.0",
     "nock": "^10.0.4"
+  },
+  "prettier": {
+    "arrowParens": "always",
+    "jsxSingleQuote": true,
+    "singleQuote": true,
+    "trailingComma": "all"
   }
 }

@@ -2,7 +2,6 @@
 
 Node.js client for the [Nimvelo/Sipcentric API](https://developer.nimvelo.com/)
 
-
 ## Usage
 
 ```
@@ -10,7 +9,7 @@ npm install nimvelo
 ```
 
 ```js
-const Nimvelo = require('nimvelo');
+import Nimvelo from "nimvelo";
 
 // ...
 ```
@@ -26,162 +25,139 @@ There are further examples in the `examples/` directory. To try them, just clone
 #### Get account details
 
 ```js
-const Nimvelo = require('nimvelo');
+import Nimvelo from "nimvelo";
 
-const nimvelo = new Nimvelo({username: 'myusername', password: 'mypassword'});
+const nimvelo = new Nimvelo({ username: "myusername", password: "mypassword" });
 
 nimvelo.customers.get(function(err, customer) {
-
   if (err) {
     // Handle errors here
   }
 
   console.log(customer);
-
 });
 ```
 
 #### Get phone book
 
 ```js
-const Nimvelo = require('nimvelo');
+import Nimvelo from "nimvelo";
 
-const nimvelo = new Nimvelo({username: 'myusername', password: 'mypassword'});
+const nimvelo = new Nimvelo({ username: "myusername", password: "mypassword" });
 
 nimvelo.customers.get(function(err, customer) {
-
   if (err) {
     // Handle errors here
   }
 
   customer.phonebook.get(function(err, phonebook) {
-
     if (err) {
       // Handle errors here
     }
 
     console.log(phonebook);
-
   });
-
 });
 ```
 
 #### Update phone book entry
 
 ```js
-const Nimvelo = require('nimvelo');
+import Nimvelo from "nimvelo";
 
-const nimvelo = new Nimvelo({username: 'myusername', password: 'mypassword'});
+const nimvelo = new Nimvelo({ username: "myusername", password: "mypassword" });
 
 nimvelo.customers.get(function(err, customer) {
-
   if (err) {
     // Handle errors here
   }
 
-  customer.phonebook.get('1234', function(err, phonebookEntry) {
-
+  customer.phonebook.get("1234", function(err, phonebookEntry) {
     if (err) {
       // Handle errors here
     }
 
-    phonebookEntry.name = 'Nimvelo';
+    phonebookEntry.name = "Nimvelo";
 
     phonebookEntry.save(function(err, updatedEntry) {
       console.log(updatedEntry);
     });
-
   });
-
 });
 ```
 
 #### Create phone book entry
 
 ```js
-const Nimvelo = require('nimvelo');
+import Nimvelo from "nimvelo";
 
-const nimvelo = new Nimvelo({username: 'myusername', password: 'mypassword'});
+const nimvelo = new Nimvelo({ username: "myusername", password: "mypassword" });
 
 nimvelo.customers.get(function(err, customer) {
-
   if (err) {
     // Handle errors here
   }
 
   const phonebookentry = {
-    name: 'Nimvelo',
-    phoneNumber: '03301200030',
-    email: 'hello@nimvelo.com'
+    name: "Nimvelo",
+    phoneNumber: "03301200030",
+    email: "hello@nimvelo.com"
   };
 
   customer.phonebook.create(phonebookentry).save(function(err, newEntry) {
     console.log(newEntry);
   });
-
 });
 ```
 
 #### Delete phone book entry
 
 ```js
-const Nimvelo = require('nimvelo');
+import Nimvelo from "nimvelo";
 
-const nimvelo = new Nimvelo({username: 'myusername', password: 'mypassword'});
+const nimvelo = new Nimvelo({ username: "myusername", password: "mypassword" });
 
 nimvelo.customers.get(function(err, customer) {
-
   if (err) {
     // Handle errors here
   }
 
-  customer.phonebook.get('1234', function(err, phonebookEntry) {
-
+  customer.phonebook.get("1234", function(err, phonebookEntry) {
     if (err) {
       // Handle errors here
     }
 
     phonebookEntry.delete(function(err) {
-
       if (err) {
         // Handle errors here
       }
 
       // Record deleted
-
     });
-
   });
-
 });
 ```
-
 
 #### Subscribe to incoming call events
 
 ```js
-const Nimvelo = require('nimvelo');
+import Nimvelo from "nimvelo";
 
-const nimvelo = new Nimvelo({username: 'myusername', password: 'mypassword'});
+const nimvelo = new Nimvelo({ username: "myusername", password: "mypassword" });
 
-nimvelo.stream.subscribe('incomingcall', function(call) {
-
+nimvelo.stream.subscribe("incomingcall", function(call) {
   console.log(call);
-
 });
-
 ```
-
 
 #### Monitor presence of an extension
 
 ```js
-const Nimvelo = require('nimvelo');
+import Nimvelo from "nimvelo";
 
 const nimvelo = new Nimvelo({
-  username: 'myusername',
-  password: 'mypassword',
+  username: "myusername",
+  password: "mypassword"
 });
 
 const myCustomerId = 1; // Change this to your customer ID
@@ -189,23 +165,22 @@ const myCustomerId = 1; // Change this to your customer ID
 // Returns an array of subscriptions
 const subscriptions = await nimvelo.presenceWatcher.subscribe({
   customerId: myCustomerId,
-  targets: ['012345'], // The extensions you'd like to monitor
+  targets: ["012345"], // The extensions you'd like to monitor
   onStateChange: (extension, newState) => {
     console.log(extension); // 012345
     console.log(newState); // AVAILABLE, BUSY, or RINGING
-  },
+  }
 });
 ```
-
 
 #### Monitor presence of all extensions on an account
 
 ```js
-const Nimvelo = require('nimvelo');
+import Nimvelo from "nimvelo";
 
 const nimvelo = new Nimvelo({
-  username: 'myusername',
-  password: 'mypassword',
+  username: "myusername",
+  password: "mypassword"
 });
 
 const subscribeToAll = async () => {
@@ -225,14 +200,13 @@ const subscribeToAll = async () => {
     onStateChange: (extension, newState) => {
       console.log(extension);
       console.log(newState);
-    },
+    }
   });
 };
 
 try {
   subscribeToAll();
 } catch (err) {
-  console.error('Error: ', err);
+  console.error("Error: ", err);
 }
 ```
-

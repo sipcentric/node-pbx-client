@@ -1,7 +1,7 @@
-const colors = require('colors/safe');
+import colors from 'colors/safe';
 
-const Nimvelo = require('../../lib');
-const CONFIG = require('./config');
+import Nimvelo from '../../lib';
+import CONFIG from './config';
 
 const myCustomerId = 5;
 
