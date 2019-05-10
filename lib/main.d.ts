@@ -5,6 +5,7 @@ interface NimveloClient {
   customers: any;
   stream: any;
   presenceWatcher: any;
+  authPromise: Promise<any>;
 
   _saveRepresentation(
     object: RepresentationInterface,
@@ -28,6 +29,8 @@ interface NimveloClient {
 interface ClientOptions {
   username: string;
   password: string;
+  auth: 'basic' | 'token';
+  token?: string;
   customer: string;
   restBase: string;
   streamBase: string;
@@ -90,61 +93,3 @@ interface QueryParams {
 
 type Callback = (result: any, error?: any) => void;
 type PromisedCallback = (callback?: Callback) => Promise<any>;
-
-declare enum CallDirection {
-  IN,
-  OUT,
-}
-
-declare enum CallScope {
-  LOCAL,
-  DOMAIN,
-  EXTERNAL,
-}
-
-declare enum CallOutcome {
-  ANSWERED,
-  NO_ANSWER,
-  BUSY,
-  FAILED,
-}
-
-declare enum CallStatus {
-  INACTIVE,
-  RINGING,
-  ACTIVE,
-  ONHOLD,
-  TERMINATED,
-}
-
-declare enum SmsSendStatus {
-  PENDING,
-  SENT,
-  FAILED,
-}
-
-declare enum SmsDirection {
-  IN,
-  OUT,
-}
-
-interface Links {
-  [id: string]: string;
-}
-
-interface ApiCall extends ApiItem {
-  type: 'call';
-  uri: string;
-  created: string;
-  scope: CallScope;
-  direction: CallDirection;
-  from: string;
-  to: string;
-  callStarted: string;
-  outcome: CallOutcome;
-  duration: number;
-  cost: number;
-  callId: string;
-  linkedId: string;
-  links: Links;
-}

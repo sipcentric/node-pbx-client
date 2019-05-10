@@ -50,6 +50,7 @@ class Nimvelo implements NimveloClient {
   VERSION: string;
   options: ClientOptions;
   authorization: string;
+  authPromise: Promise<any>;
 
   public customers: CustomerList;
   public stream: any;
@@ -58,26 +59,14 @@ class Nimvelo implements NimveloClient {
   constructor(options?: Partial<ClientOptions>) {
     this.VERSION = VERSION;
 
-    if (typeof options !== 'undefined') {
-      if (
-        Object.prototype.hasOwnProperty.call(options, 'username') &&
-        Object.prototype.hasOwnProperty.call(options, 'password')
-      ) {
-        // If we've got the credentials then encode and format them
-        const encodedAuth = Buffer.from(
-          `${options.username}:${options.password}`,
-        ).toString('base64');
-
-        this.authorization = `Basic ${encodedAuth}`;
-      }
-    }
-
+    this.authPromise = Promise.resolve();
     // Merge the default options with the client submitted options
     this.options = extend(
       {
         username: null,
         password: null,
         customer: 'me',
+        auth: 'basic',
         restBase: 'https://pbx.sipcentric.com/api/v1/customers/',
         streamBase: 'https://pbx.sipcentric.com/api/v1/stream',
         json: true,
@@ -94,9 +83,67 @@ class Nimvelo implements NimveloClient {
       options,
     );
 
+    // TODO handle refreshing tokens?
+    if (typeof this.options !== 'undefined') {
+      if (Object.prototype.hasOwnProperty.call(this.options, 'token')) {
+        this.authorization = `Bearer ${this.options.token}`;
+      } else if (
+        Object.prototype.hasOwnProperty.call(this.options, 'username') &&
+        Object.prototype.hasOwnProperty.call(this.options, 'password')
+      ) {
+        if (this.options.auth === 'token') {
+          this.authPromise = this._authenticate(
+            this.options.username,
+            this.options.password,
+            this.options.restBase,
+          ).then((token) => {
+            this.options.token = token;
+            this.authorization = `Bearer ${token}`;
+          });
+        } else {
+          this.authorization = Nimvelo._getAuthHeader(
+            this.options.username,
+            this.options.password,
+          );
+        }
+      }
+    }
+
     this.customers = new CustomerList(this);
     this.stream = new Stream(this);
     this.presenceWatcher = new PresenceWatcher(this);
+  }
+
+  private static _getAuthHeader(username: string, password: string) {
+    // Base64 encode without btoa()
+    const encodedCredentials = new Buffer(`${username}:${password}`).toString(
+      'base64',
+    );
+    return `Basic ${encodedCredentials}`;
+  }
+
+  private _authenticate(username: string, password: string, apiRoot: string) {
+    const authHeader = Nimvelo._getAuthHeader(username, password);
+    const headers = {
+      Authorization: authHeader,
+      'X-WWW-Authenticate': 'false',
+    };
+
+    const method = 'POST';
+
+    return fetch(`${apiRoot}/authenticate/`, {
+      method,
+      headers,
+    }).then(async (res) => {
+      if (res.status !== 200) {
+        // TODO custom error type
+        throw new Error('Authentication failed');
+      }
+      // Authentication succeeded
+      const json = await res.json();
+      const { token } = json;
+      return token as string;
+    });
   }
 
   // eslint-disable-next-line class-methods-use-this
