@@ -102,8 +102,8 @@ class Nimvelo implements NimveloClient {
       }
       // Authentication succeeded
       const json = await res.json();
-      const { token } = json;
-      return token as string;
+      const { accessToken } = json;
+      return accessToken as string;
     });
   }
 
