@@ -88,7 +88,7 @@ class Nimvelo implements NimveloClient {
   private static _authenticate(
     username: string,
     password: string,
-    apiRoot: string,
+    authBase: string,
   ) {
     const authHeader = Nimvelo._getAuthHeader(username, password);
     const headers = {
@@ -98,7 +98,7 @@ class Nimvelo implements NimveloClient {
 
     const method = 'POST';
 
-    return fetch(`${apiRoot}/authenticate/`, {
+    return fetch(authBase, {
       method,
       headers,
     }).then(async (res) => {
@@ -124,9 +124,9 @@ class Nimvelo implements NimveloClient {
   }
 
   public init(options?: Partial<ClientOptions>) {
-    const restBase =
-      (options && options.restBase) ||
-      'https://pbx.sipcentric.com/api/v1/customers/';
+    const authBase =
+      (options && options.authBase) ||
+      'https://pbx.sipcentric.com/api/v1/authenticate/';
     // TODO handle refreshing tokens?
     if (typeof options !== 'undefined') {
       if (Object.prototype.hasOwnProperty.call(options, 'token')) {
@@ -139,7 +139,7 @@ class Nimvelo implements NimveloClient {
           this.authPromise = Nimvelo._authenticate(
             options.username,
             options.password,
-            restBase,
+            authBase,
           ).then((token) => {
             this.options.token = token;
             this.authorization = `Bearer ${token}`;
@@ -160,6 +160,7 @@ class Nimvelo implements NimveloClient {
         customer: 'me',
         auth: 'basic',
         restBase: 'https://pbx.sipcentric.com/api/v1/customers/',
+        authBase: 'https://pbx.sipcentric.com/api/v1/authenticate/',
         streamBase: 'https://pbx.sipcentric.com/api/v1/stream',
         json: true,
         requestOptions: {

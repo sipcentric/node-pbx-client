@@ -84,14 +84,14 @@ class Nimvelo {
         const encodedCredentials = js_base64_1.Base64.encode(`${username}:${password}`);
         return `Basic ${encodedCredentials}`;
     }
-    static _authenticate(username, password, apiRoot) {
+    static _authenticate(username, password, authBase) {
         const authHeader = Nimvelo._getAuthHeader(username, password);
         const headers = {
             Authorization: authHeader,
             'X-WWW-Authenticate': 'false',
         };
         const method = 'POST';
-        return fetch(`${apiRoot}/authenticate/`, {
+        return fetch(authBase, {
             method,
             headers,
         }).then((res) => __awaiter(this, void 0, void 0, function* () {
@@ -110,8 +110,8 @@ class Nimvelo {
         return Object.assign({}, this.options.requestOptions.headers, { Authorization: this.authorization });
     }
     init(options) {
-        const restBase = (options && options.restBase) ||
-            'https://pbx.sipcentric.com/api/v1/customers/';
+        const authBase = (options && options.authBase) ||
+            'https://pbx.sipcentric.com/api/v1/authenticate/';
         // TODO handle refreshing tokens?
         if (typeof options !== 'undefined') {
             if (Object.prototype.hasOwnProperty.call(options, 'token')) {
@@ -120,7 +120,7 @@ class Nimvelo {
             else if (Object.prototype.hasOwnProperty.call(options, 'username') &&
                 Object.prototype.hasOwnProperty.call(options, 'password')) {
                 if (options.auth === 'token') {
-                    this.authPromise = Nimvelo._authenticate(options.username, options.password, restBase).then((token) => {
+                    this.authPromise = Nimvelo._authenticate(options.username, options.password, authBase).then((token) => {
                         this.options.token = token;
                         this.authorization = `Bearer ${token}`;
                     });
@@ -137,6 +137,7 @@ class Nimvelo {
             customer: 'me',
             auth: 'basic',
             restBase: 'https://pbx.sipcentric.com/api/v1/customers/',
+            authBase: 'https://pbx.sipcentric.com/api/v1/authenticate/',
             streamBase: 'https://pbx.sipcentric.com/api/v1/stream',
             json: true,
             requestOptions: {

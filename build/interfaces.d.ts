@@ -19,6 +19,7 @@ export interface ClientOptions {
     token?: string;
     customer: string;
     restBase: string;
+    authBase: string;
     streamBase: string;
     json: boolean;
     requestOptions: {
