@@ -380,7 +380,13 @@ class Nimvelo {
             !(property instanceof representation_1.default) &&
             !(property instanceof representationList_1.default))
             .reduce((a, [key, value]) => (Object.assign({}, a, { [key]: value })), {});
-        return nodeifyv2_1.default(fetch(url, Object.assign({}, this.options.requestOptions, { method, headers: this.getHeaders(), body: JSON.stringify(json) }))
+        const fetchRequestOptions = Object.assign({}, this.options.requestOptions, { method, headers: this.getHeaders() });
+        if (method.toLowerCase() !== 'get' &&
+            method.toLowerCase() !== 'head' &&
+            Object.keys(json).length > 0) {
+            fetchRequestOptions.body = JSON.stringify(json);
+        }
+        return nodeifyv2_1.default(fetch(url, fetchRequestOptions)
             .then((response) => {
             if (!response.ok) {
                 // TODO better errors?

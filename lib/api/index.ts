@@ -436,13 +436,21 @@ class Nimvelo implements NimveloClient {
         {},
       );
 
+    const fetchRequestOptions: RequestInit = {
+      ...this.options.requestOptions,
+      method,
+      headers: this.getHeaders(),
+    };
+    if (
+      method.toLowerCase() !== 'get' &&
+      method.toLowerCase() !== 'head' &&
+      Object.keys(json).length > 0
+    ) {
+      fetchRequestOptions.body = JSON.stringify(json);
+    }
+
     return nodeify(
-      fetch(url, {
-        ...this.options.requestOptions,
-        method,
-        headers: this.getHeaders(),
-        body: JSON.stringify(json),
-      })
+      fetch(url, fetchRequestOptions)
         .then((response) => {
           if (!response.ok) {
             // TODO better errors?
