@@ -1,5 +1,6 @@
 import Representation from './representation';
 import SipregistrationList from './sipregistrationList';
+import { NimveloClient, ApiItem, RepresentationBase } from '../interfaces';
 
 class Sipidentity extends Representation {
   registrations: SipregistrationList;

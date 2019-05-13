@@ -1,4 +1,5 @@
 import Representation from './representation';
+import { RepresentationBase, NimveloClient, ApiItem } from '../interfaces';
 
 class Availablebundle extends Representation {
   constructor(

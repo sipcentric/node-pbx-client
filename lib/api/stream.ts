@@ -1,4 +1,5 @@
 import * as atmosphere from 'atmosphere.js';
+import { NimveloClient, Callback } from '../interfaces';
 
 class Stream {
   protected client: NimveloClient;

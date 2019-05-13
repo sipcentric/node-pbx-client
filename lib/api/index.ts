@@ -43,6 +43,17 @@ import nodeify from '../polyfills/nodeifyv2';
 // Package version
 import * as npmPackage from '../../package.json';
 import { isApiItem } from '../guards';
+import {
+  NimveloClient,
+  ClientOptions,
+  RepresentationTypeParams,
+  ApiItem,
+  RepresentationBase,
+  Callback,
+  QueryParams,
+  FormattedApiList,
+  ApiList,
+} from '../interfaces';
 
 const VERSION: string = (npmPackage as any).version;
 

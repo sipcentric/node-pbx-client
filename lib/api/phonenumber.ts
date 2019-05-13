@@ -1,5 +1,6 @@
 import Representation from './representation';
 import RoutingruleList from './routingruleList';
+import { NimveloClient, ApiItem, RepresentationBase } from '../interfaces';
 
 class Phonenumber extends Representation {
   routingrules: RoutingruleList;

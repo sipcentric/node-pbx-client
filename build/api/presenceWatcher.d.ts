@@ -1,3 +1,4 @@
+import { NimveloClient } from '../interfaces';
 declare class PresenceWatcher {
     protected client: NimveloClient;
     protected dialogStateMap: Map<string, string>;

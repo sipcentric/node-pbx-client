@@ -1,3 +1,4 @@
+import { RepresentationListInterface, RepresentationBase, NimveloClient, QueryParams, Callback } from '../interfaces';
 declare class RepresentationList implements RepresentationListInterface {
     protected client: NimveloClient;
     parent: RepresentationBase;
@@ -8,6 +9,6 @@ declare class RepresentationList implements RepresentationListInterface {
     readonly itemType: string;
     constructor(client: NimveloClient, parent?: RepresentationBase);
     get(id: string, params: QueryParams, callback: Callback): void | Promise<any>;
-    create(properties?: object): RepresentationInterface;
+    create(properties?: object): import("../interfaces").RepresentationInterface;
 }
 export default RepresentationList;

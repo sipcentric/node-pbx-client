@@ -1,3 +1,4 @@
+import { RepresentationInterface, NimveloClient, RepresentationBase, ApiItem, Callback } from '../interfaces';
 declare class Representation implements RepresentationInterface {
     protected client: NimveloClient;
     id?: string;

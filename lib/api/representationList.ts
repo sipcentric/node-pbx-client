@@ -1,4 +1,11 @@
 import Representation from './representation';
+import {
+  RepresentationListInterface,
+  RepresentationBase,
+  NimveloClient,
+  QueryParams,
+  Callback,
+} from '../interfaces';
 
 class RepresentationList implements RepresentationListInterface {
   protected client: NimveloClient;

@@ -2,6 +2,7 @@ import Representation from './representation';
 import QueueentryList from './queueentryList';
 import QueuemembershipList from './queuemembershipList';
 import QueuestatusList from './queuestatusList';
+import { NimveloClient, ApiItem, RepresentationBase } from '../interfaces';
 
 class Queue extends Representation {
   entries: QueueentryList;

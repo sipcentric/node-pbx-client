@@ -1,4 +1,5 @@
 import Representation from './representation';
+import { NimveloClient, ApiItem, RepresentationBase } from '../interfaces';
 
 class Queuestatus extends Representation {
   constructor(

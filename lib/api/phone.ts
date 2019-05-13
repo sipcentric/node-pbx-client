@@ -1,6 +1,7 @@
 import Representation from './representation';
 import ForwardingruleList from './forwardingruleList';
 import SipidentityList from './sipidentityList';
+import { NimveloClient, ApiItem, RepresentationBase } from '../interfaces';
 
 class Phone extends Representation {
   sip: SipidentityList;

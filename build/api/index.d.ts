@@ -1,5 +1,6 @@
 import CustomerList from './customerList';
 import Representation from './representation';
+import { NimveloClient, ClientOptions, RepresentationTypeParams, ApiItem, RepresentationBase, Callback, QueryParams, FormattedApiList, ApiList } from '../interfaces';
 declare class Nimvelo implements NimveloClient {
     VERSION: string;
     options: ClientOptions;

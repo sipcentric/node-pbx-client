@@ -33,6 +33,7 @@ import TimeintervalList from './timeintervalList';
 import Timeinterval from './timeinterval';
 import VirtualList from './virtualList';
 import Virtual from './virtual';
+import { NimveloClient, ApiItem } from '../interfaces';
 declare class Customer extends Representation {
     availablebundles: AvailablebundleList;
     billing: BillingaccountList;

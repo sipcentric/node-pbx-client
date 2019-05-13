@@ -1,3 +1,5 @@
+import { Callback } from '../interfaces';
+
 /*
   Thanks go to Brian Mancini for this polyfill of Q's 'nodeify' method
   http://derpturkey.com/promise-callback-pattern-for-javascript/

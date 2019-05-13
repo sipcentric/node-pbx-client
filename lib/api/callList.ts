@@ -1,5 +1,5 @@
 import RepresentationList from './representationList';
-import Representation from './representation';
+import { RepresentationBase, NimveloClient } from '../interfaces';
 
 class CallList extends RepresentationList {
   constructor(client: NimveloClient, parent: RepresentationBase) {

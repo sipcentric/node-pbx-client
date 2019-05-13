@@ -1,3 +1,4 @@
+import { NimveloClient, Callback } from '../interfaces';
 declare class Stream {
     protected client: NimveloClient;
     stream: any;

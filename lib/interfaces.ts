@@ -1,4 +1,4 @@
-interface NimveloClient {
+export interface NimveloClient {
   VERSION: string;
   options: ClientOptions;
   authorization: string;
@@ -26,7 +26,7 @@ interface NimveloClient {
   ): RepresentationInterface;
 }
 
-interface ClientOptions {
+export interface ClientOptions {
   username: string;
   password: string;
   auth: 'basic' | 'token';
@@ -42,28 +42,28 @@ interface ClientOptions {
   };
 }
 
-interface RepresentationTypeParams {
+export interface RepresentationTypeParams {
   type?: string;
 }
 
-interface RepresentationBase {
+export interface RepresentationBase {
   id?: string;
   type: string;
   parent: RepresentationBase;
   _unavailableMethods: string[];
 }
 
-interface RepresentationInterface extends RepresentationBase {
+export interface RepresentationInterface extends RepresentationBase {
   save(callback: Callback): Promise<any>;
   delete(callback: Callback): Promise<any>;
 }
 
-interface RepresentationListInterface extends RepresentationBase {
+export interface RepresentationListInterface extends RepresentationBase {
   get(id: string, params: QueryParams, callback: Callback): Promise<any> | void;
   create(properties?: object): RepresentationInterface;
 }
 
-interface ApiList<T extends ApiItem> {
+export interface ApiList<T extends ApiItem> {
   items: T[];
   totalItems: number;
   pageSize: number;
@@ -72,7 +72,7 @@ interface ApiList<T extends ApiItem> {
   prevPage?: string;
 }
 
-interface FormattedApiList<T extends ApiItem> {
+export interface FormattedApiList<T extends ApiItem> {
   // items: RepresentationInterface;
   items: T[];
   totalItems: number;
@@ -82,14 +82,14 @@ interface FormattedApiList<T extends ApiItem> {
   prevPage?: PromisedCallback;
 }
 
-interface ApiItem {
+export interface ApiItem {
   type: string;
   // [additionalParams: string]: any;
 }
 
-interface QueryParams {
+export interface QueryParams {
   [param: string]: string;
 }
 
-type Callback = (result: any, error?: any) => void;
-type PromisedCallback = (callback?: Callback) => Promise<any>;
+export type Callback = (result: any, error?: any) => void;
+export type PromisedCallback = (callback?: Callback) => Promise<any>;

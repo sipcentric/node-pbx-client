@@ -1,4 +1,11 @@
 import extend = require('deep-extend');
+import {
+  RepresentationInterface,
+  NimveloClient,
+  RepresentationBase,
+  ApiItem,
+  Callback,
+} from '../interfaces';
 
 class Representation implements RepresentationInterface {
   protected client: NimveloClient;

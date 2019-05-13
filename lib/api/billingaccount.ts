@@ -2,6 +2,7 @@ import Representation from './representation';
 import EstimateList from './estimateList';
 import InvoiceList from './invoiceList';
 import PaymentmethodList from './paymentmethodList';
+import { RepresentationBase, NimveloClient, ApiItem } from '../interfaces';
 
 class Billingaccount extends Representation {
   invoices: InvoiceList;

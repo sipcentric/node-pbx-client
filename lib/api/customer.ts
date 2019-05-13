@@ -35,6 +35,7 @@ import TimeintervalList from './timeintervalList';
 import Timeinterval from './timeinterval';
 import VirtualList from './virtualList';
 import Virtual from './virtual';
+import { NimveloClient, ApiItem } from '../interfaces';
 
 class Customer extends Representation {
   public availablebundles: AvailablebundleList;

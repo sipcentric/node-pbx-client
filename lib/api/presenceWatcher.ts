@@ -1,5 +1,6 @@
 import SIP from 'sip.js';
 import parser from 'xml2json';
+import { NimveloClient } from '../interfaces';
 
 class PresenceWatcher {
   protected client: NimveloClient;
