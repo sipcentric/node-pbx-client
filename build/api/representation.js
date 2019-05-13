@@ -16,8 +16,10 @@ class Representation {
     }
     constructor(client, properties, parent) {
         this.client = client;
-        const { type } = properties, props = __rest(properties, ["type"]);
-        extend(this, props);
+        if (properties) {
+            const { type } = properties, props = __rest(properties, ["type"]);
+            extend(this, props);
+        }
         this.parent = parent;
         this._type = 'none';
     }
