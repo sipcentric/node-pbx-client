@@ -1,6 +1,6 @@
 # Nimvelo Node.js Client
 
-Node.js client for the [Nimvelo/Sipcentric API](https://developer.nimvelo.com/)
+Node.js client for the [Nimvelo/Sipcentric API](https://developer.nimvelo.com/).
 
 
 ## Usage
@@ -19,82 +19,75 @@ const Nimvelo = require('nimvelo');
 
 ### Examples
 
-Many of the following examples use callbacks, however ES6 promises are also supported. To use promises, just don't pass a callback and a promise will be returned instead.
+The techniques shown in these examples work in the same way across the majority of resources. Refer to the API documentation for more information on those specific resources.
+
+The examples below use Promises with async/await, however the library also supports callbacks. To use callbacks, simply pass a callback as the final parameter.
+
+```js
+// Using async/await
+const customers = await nimvelo.customers.get();
+doStuffWith(customers);
+
+// Using callbacks
+nimvelo.customers.get((err, customers) => {
+  doStuffWith(customers);
+});
+```
 
 There are further examples in the `examples/` directory. To try them, just clone the project, run an install in the project root, then again in the directory of the example you want to run. Finally, run `npm start` and the example will run.
 
-#### Get account details
+#### Get all customers a user has access to
 
 ```js
 const Nimvelo = require('nimvelo');
 
-const nimvelo = new Nimvelo({username: 'myusername', password: 'mypassword'});
+(async () => {
+  const nimvelo = new Nimvelo({
+    username: 'myusername',
+    password: 'mypassword'
+  });
 
-nimvelo.customers.get(function(err, customer) {
+  const customers = await nimvelo.customers.get();
+  console.log(customers);
+})();
+```
 
-  if (err) {
-    // Handle errors here
-  }
+#### Get a specific customer
 
+```js
+const Nimvelo = require('nimvelo');
+
+(async () => {
+  const nimvelo = new Nimvelo({
+    username: 'myusername',
+    password: 'mypassword'
+  });
+
+  const customerId = 1234;
+
+  const customer = await nimvelo.customers.get(customerId);
   console.log(customer);
-
-});
+})();
 ```
 
-#### Get phone book
+#### Get a customer's phone book
 
 ```js
 const Nimvelo = require('nimvelo');
 
-const nimvelo = new Nimvelo({username: 'myusername', password: 'mypassword'});
-
-nimvelo.customers.get(function(err, customer) {
-
-  if (err) {
-    // Handle errors here
-  }
-
-  customer.phonebook.get(function(err, phonebook) {
-
-    if (err) {
-      // Handle errors here
-    }
-
-    console.log(phonebook);
-
+(async () => {
+  const nimvelo = new Nimvelo({
+    username: 'myusername',
+    password: 'mypassword'
   });
 
-});
-```
+  const customerId = 1234;
 
-#### Update phone book entry
+  const customer = await nimvelo.customers.get(customerId);
+  const phonebook = await customer.phonebook.get();
 
-```js
-const Nimvelo = require('nimvelo');
-
-const nimvelo = new Nimvelo({username: 'myusername', password: 'mypassword'});
-
-nimvelo.customers.get(function(err, customer) {
-
-  if (err) {
-    // Handle errors here
-  }
-
-  customer.phonebook.get('1234', function(err, phonebookEntry) {
-
-    if (err) {
-      // Handle errors here
-    }
-
-    phonebookEntry.name = 'Nimvelo';
-
-    phonebookEntry.save(function(err, updatedEntry) {
-      console.log(updatedEntry);
-    });
-
-  });
-
-});
+  console.log(phonebook);
+})();
 ```
 
 #### Create phone book entry
@@ -102,59 +95,74 @@ nimvelo.customers.get(function(err, customer) {
 ```js
 const Nimvelo = require('nimvelo');
 
-const nimvelo = new Nimvelo({username: 'myusername', password: 'mypassword'});
+(async () => {
+  const nimvelo = new Nimvelo({
+    username: 'myusername',
+    password: 'mypassword'
+  });
 
-nimvelo.customers.get(function(err, customer) {
+  const customerId = 1234;
 
-  if (err) {
-    // Handle errors here
-  }
-
+  const customer = await nimvelo.customers.get(customerId);
   const phonebookentry = {
     name: 'Nimvelo',
     phoneNumber: '03301200030',
     email: 'hello@nimvelo.com'
   };
 
-  customer.phonebook.create(phonebookentry).save(function(err, newEntry) {
-    console.log(newEntry);
+  const createdEntry = await customer.phonebook
+    .create(phonebookentry)
+    .save();
+
+  console.log(createdEntry);
+})();
+```
+
+#### Update phone book entry
+
+```js
+const Nimvelo = require('nimvelo');
+
+(async () => {
+  const nimvelo = new Nimvelo({
+    username: 'myusername',
+    password: 'mypassword'
   });
 
-});
+  const customerId = 1234;
+  const phonebookentryId = 5678;
+
+  const customer = await nimvelo.customers.get(customerId);
+  const phonebookentry = await customer.phonebook.get(phonebookentryId);
+
+  phonebookentry.name = 'Updated name';
+
+  const savedEntry = await phonebookentry.save();
+
+  console.log(savedEntry);
+})();
 ```
+
 
 #### Delete phone book entry
 
 ```js
 const Nimvelo = require('nimvelo');
 
-const nimvelo = new Nimvelo({username: 'myusername', password: 'mypassword'});
-
-nimvelo.customers.get(function(err, customer) {
-
-  if (err) {
-    // Handle errors here
-  }
-
-  customer.phonebook.get('1234', function(err, phonebookEntry) {
-
-    if (err) {
-      // Handle errors here
-    }
-
-    phonebookEntry.delete(function(err) {
-
-      if (err) {
-        // Handle errors here
-      }
-
-      // Record deleted
-
-    });
-
+(async () => {
+  const nimvelo = new Nimvelo({
+    username: 'myusername',
+    password: 'mypassword'
   });
 
-});
+  const customerId = 1234;
+  const phonebookentryId = 5678;
+
+  const customer = await nimvelo.customers.get(customerId);
+  const phonebookentry = await customer.phonebook.get(phonebookentryId);
+
+  await phonebookentry.delete();
+})();
 ```
 
 
@@ -163,7 +171,10 @@ nimvelo.customers.get(function(err, customer) {
 ```js
 const Nimvelo = require('nimvelo');
 
-const nimvelo = new Nimvelo({username: 'myusername', password: 'mypassword'});
+const nimvelo = new Nimvelo({
+  username: 'myusername',
+  password: 'mypassword'
+});
 
 nimvelo.stream.subscribe('incomingcall', function(call) {
 
