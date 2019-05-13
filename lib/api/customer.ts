@@ -64,7 +64,8 @@ class Customer extends Representation {
   constructor(client: NimveloClient, item: ApiItem) {
     super(client);
 
-    extend(this, item);
+    const { type, ...rest } = item;
+    extend(this, rest);
 
     this._type = 'customer';
 
