@@ -95,12 +95,13 @@ class Nimvelo {
             method,
             headers,
         }).then((res) => __awaiter(this, void 0, void 0, function* () {
-            const json = yield res.json();
             if (res.status !== 200) {
+                const text = yield res.text();
                 // TODO custom error type
-                throw new Error(`Authentication failed with status code ${res.status}: ${json}`);
+                throw new Error(`Authentication failed with status code ${res.status}: ${text}`);
             }
             // Authentication succeeded
+            const json = yield res.json();
             const { accessToken } = json;
             return accessToken;
         }));
