@@ -107,6 +107,13 @@ class Nimvelo implements NimveloClient {
     });
   }
 
+  private getHeaders() {
+    return {
+      ...this.options.requestOptions.headers,
+      Authorization: this.authorization,
+    };
+  }
+
   public init(options?: Partial<ClientOptions>) {
     const restBase =
       options.restBase || 'https://pbx.sipcentric.com/api/v1/customers/';
@@ -422,6 +429,7 @@ class Nimvelo implements NimveloClient {
       fetch(url, {
         ...this.options.requestOptions,
         method,
+        headers: this.getHeaders(),
         body: JSON.stringify(json),
       })
         .then((response) => {

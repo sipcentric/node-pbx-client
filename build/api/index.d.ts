@@ -12,6 +12,8 @@ declare class Nimvelo implements NimveloClient {
     constructor(options?: Partial<ClientOptions>);
     private static _getAuthHeader;
     private _authenticate;
+    private getHeaders;
+    init(options?: Partial<ClientOptions>): Promise<any>;
     _pathForType(type: string, id?: string): string;
     _paramsForType(type: string): RepresentationTypeParams;
     _objectFromItem(item: ApiItem, parent: RepresentationBase): Representation;

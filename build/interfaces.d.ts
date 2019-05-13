@@ -6,6 +6,7 @@ export interface NimveloClient {
     stream: any;
     presenceWatcher: any;
     authPromise: Promise<any>;
+    init(options?: Partial<ClientOptions>): Promise<any>;
     _saveRepresentation(object: RepresentationInterface, callback: Callback): Promise<any>;
     _deleteRepresentation(object: RepresentationInterface, callback: Callback): Promise<any>;
     _getResource(type: string, object: RepresentationBase, ...args: any[]): Promise<any> | void;

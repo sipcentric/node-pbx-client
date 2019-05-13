@@ -73,46 +73,7 @@ class Nimvelo {
     constructor(options) {
         this.VERSION = VERSION;
         this.authPromise = Promise.resolve();
-        // Merge the default options with the client submitted options
-        this.options = extend({
-            username: null,
-            password: null,
-            customer: 'me',
-            auth: 'basic',
-            restBase: 'https://pbx.sipcentric.com/api/v1/customers/',
-            streamBase: 'https://pbx.sipcentric.com/api/v1/stream',
-            json: true,
-            requestOptions: {
-                headers: {
-                    Accept: 'application/json',
-                    Authorization: this.authorization,
-                    'Content-Type': 'application/json',
-                    'User-Agent': `node-nimvelo/${VERSION}`,
-                    'X-Relationship-Key': 'id',
-                },
-            },
-        }, options);
-        // TODO handle refreshing tokens?
-        if (typeof this.options !== 'undefined') {
-            if (Object.prototype.hasOwnProperty.call(this.options, 'token')) {
-                this.authorization = `Bearer ${this.options.token}`;
-            }
-            else if (Object.prototype.hasOwnProperty.call(this.options, 'username') &&
-                Object.prototype.hasOwnProperty.call(this.options, 'password')) {
-                if (this.options.auth === 'token') {
-                    this.authPromise = this._authenticate(this.options.username, this.options.password, this.options.restBase).then((token) => {
-                        this.options.token = token;
-                        this.authorization = `Bearer ${token}`;
-                    });
-                }
-                else {
-                    this.authorization = Nimvelo._getAuthHeader(this.options.username, this.options.password);
-                }
-            }
-        }
-        this.customers = new customerList_1.default(this);
-        // this.stream = new Stream(this);
-        // this.presenceWatcher = new PresenceWatcher(this);
+        this.init(options);
     }
     static _getAuthHeader(username, password) {
         // Base64 encode without btoa()
@@ -139,6 +100,53 @@ class Nimvelo {
             const { token } = json;
             return token;
         }));
+    }
+    getHeaders() {
+        return Object.assign({}, this.options.requestOptions.headers, { Authorization: this.authorization });
+    }
+    init(options) {
+        const restBase = options.restBase || 'https://pbx.sipcentric.com/api/v1/customers/';
+        // TODO handle refreshing tokens?
+        if (typeof options !== 'undefined') {
+            if (Object.prototype.hasOwnProperty.call(options, 'token')) {
+                this.authorization = `Bearer ${this.options.token}`;
+            }
+            else if (Object.prototype.hasOwnProperty.call(options, 'username') &&
+                Object.prototype.hasOwnProperty.call(options, 'password')) {
+                if (options.auth === 'token') {
+                    this.authPromise = this._authenticate(options.username, options.password, restBase).then((token) => {
+                        this.options.token = token;
+                        this.authorization = `Bearer ${token}`;
+                    });
+                }
+                else {
+                    this.authorization = Nimvelo._getAuthHeader(options.username, options.password);
+                }
+            }
+        }
+        // Merge the default options with the client submitted options
+        this.options = extend({
+            username: null,
+            password: null,
+            customer: 'me',
+            auth: 'basic',
+            restBase: 'https://pbx.sipcentric.com/api/v1/customers/',
+            streamBase: 'https://pbx.sipcentric.com/api/v1/stream',
+            json: true,
+            requestOptions: {
+                headers: {
+                    Accept: 'application/json',
+                    Authorization: this.authorization,
+                    'Content-Type': 'application/json',
+                    'User-Agent': `node-nimvelo/${VERSION}`,
+                    'X-Relationship-Key': 'id',
+                },
+            },
+        }, options);
+        this.customers = new customerList_1.default(this);
+        // this.stream = new Stream(this);
+        // this.presenceWatcher = new PresenceWatcher(this);
+        return this.authPromise;
     }
     // eslint-disable-next-line class-methods-use-this
     _pathForType(type, id) {
@@ -365,7 +373,7 @@ class Nimvelo {
             !(property instanceof representation_1.default) &&
             !(property instanceof representationList_1.default))
             .reduce((a, [key, value]) => (Object.assign({}, a, { [key]: value })), {});
-        return nodeifyv2_1.default(fetch(url, Object.assign({}, this.options.requestOptions, { method, body: JSON.stringify(json) }))
+        return nodeifyv2_1.default(fetch(url, Object.assign({}, this.options.requestOptions, { method, headers: this.getHeaders(), body: JSON.stringify(json) }))
             .then((response) => {
             if (!response.ok) {
                 // TODO better errors?
