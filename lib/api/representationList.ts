@@ -27,7 +27,7 @@ class RepresentationList implements RepresentationListInterface {
     this.parent = parent;
   }
 
-  get(id: string, params: QueryParams, callback: Callback) {
+  get(id?: string, params?: QueryParams, callback?: Callback) {
     return this.client._getResource(this.itemType, this, id, params, callback);
   }
 

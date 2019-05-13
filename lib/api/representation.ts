@@ -30,11 +30,11 @@ class Representation implements RepresentationInterface {
     this._type = 'none';
   }
 
-  save(callback: Callback): Promise<any> {
+  save(callback?: Callback): Promise<any> {
     return this.client._saveRepresentation(this, callback);
   }
 
-  delete(callback: Callback): Promise<any> {
+  delete(callback?: Callback): Promise<any> {
     return this.client._deleteRepresentation(this, callback);
   }
 }
