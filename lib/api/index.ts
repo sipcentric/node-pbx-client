@@ -102,14 +102,14 @@ class Nimvelo implements NimveloClient {
       method,
       headers,
     }).then(async (res) => {
+      const json = await res.json();
       if (res.status !== 200) {
         // TODO custom error type
         throw new Error(
-          `Authentication failed with status code ${res.status}: ${res.text}`,
+          `Authentication failed with status code ${res.status}: ${json}`,
         );
       }
       // Authentication succeeded
-      const json = await res.json();
       const { accessToken } = json;
       return accessToken as string;
     });
