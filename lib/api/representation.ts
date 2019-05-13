@@ -25,7 +25,8 @@ class Representation implements RepresentationInterface {
     parent?: RepresentationBase,
   ) {
     this.client = client;
-    extend(this, properties);
+    const { type, ...props } = properties;
+    extend(this, props);
     this.parent = parent;
     this._type = 'none';
   }
