@@ -97,8 +97,8 @@ class Nimvelo {
             }
             // Authentication succeeded
             const json = yield res.json();
-            const { token } = json;
-            return token;
+            const { accessToken } = json;
+            return accessToken;
         }));
     }
     getHeaders() {
