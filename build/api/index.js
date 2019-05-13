@@ -28,6 +28,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const extend = require("deep-extend");
+const js_base64_1 = require("js-base64");
 const availablebundle_1 = __importDefault(require("./availablebundle"));
 const billingaccount_1 = __importDefault(require("./billingaccount"));
 const call_1 = __importDefault(require("./call"));
@@ -77,10 +78,13 @@ class Nimvelo {
     }
     static _getAuthHeader(username, password) {
         // Base64 encode without btoa()
-        const encodedCredentials = new Buffer(`${username}:${password}`).toString('base64');
+        /* const encodedCredentials = new Buffer(`${username}:${password}`).toString(
+          'base64',
+        ); */
+        const encodedCredentials = js_base64_1.Base64.encode(`${username}:${password}`);
         return `Basic ${encodedCredentials}`;
     }
-    _authenticate(username, password, apiRoot) {
+    static _authenticate(username, password, apiRoot) {
         const authHeader = Nimvelo._getAuthHeader(username, password);
         const headers = {
             Authorization: authHeader,
@@ -115,7 +119,7 @@ class Nimvelo {
             else if (Object.prototype.hasOwnProperty.call(options, 'username') &&
                 Object.prototype.hasOwnProperty.call(options, 'password')) {
                 if (options.auth === 'token') {
-                    this.authPromise = this._authenticate(options.username, options.password, restBase).then((token) => {
+                    this.authPromise = Nimvelo._authenticate(options.username, options.password, restBase).then((token) => {
                         this.options.token = token;
                         this.authorization = `Bearer ${token}`;
                     });

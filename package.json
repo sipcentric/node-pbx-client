@@ -30,8 +30,10 @@
   "homepage": "https://github.com/Nimvelo/node-client",
   "dependencies": {
     "@types/deep-extend": "^0.4.31",
+    "@types/js-base64": "^2.3.1",
     "@types/node": "^12.0.0",
     "deep-extend": "^0.6.0",
+    "js-base64": "^2.5.1",
     "typescript": "^3.4.5"
   },
   "devDependencies": {

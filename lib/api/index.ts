@@ -1,4 +1,5 @@
 import extend = require('deep-extend');
+import { Base64 } from 'js-base64';
 
 import Availablebundle from './availablebundle';
 import Billingaccount from './billingaccount';
@@ -77,13 +78,18 @@ class Nimvelo implements NimveloClient {
 
   private static _getAuthHeader(username: string, password: string) {
     // Base64 encode without btoa()
-    const encodedCredentials = new Buffer(`${username}:${password}`).toString(
+    /* const encodedCredentials = new Buffer(`${username}:${password}`).toString(
       'base64',
-    );
+    ); */
+    const encodedCredentials = Base64.encode(`${username}:${password}`);
     return `Basic ${encodedCredentials}`;
   }
 
-  private _authenticate(username: string, password: string, apiRoot: string) {
+  private static _authenticate(
+    username: string,
+    password: string,
+    apiRoot: string,
+  ) {
     const authHeader = Nimvelo._getAuthHeader(username, password);
     const headers = {
       Authorization: authHeader,
@@ -127,7 +133,7 @@ class Nimvelo implements NimveloClient {
         Object.prototype.hasOwnProperty.call(options, 'password')
       ) {
         if (options.auth === 'token') {
-          this.authPromise = this._authenticate(
+          this.authPromise = Nimvelo._authenticate(
             options.username,
             options.password,
             restBase,

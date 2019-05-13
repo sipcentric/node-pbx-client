@@ -11,7 +11,7 @@ declare class Nimvelo implements NimveloClient {
     presenceWatcher: any;
     constructor(options?: Partial<ClientOptions>);
     private static _getAuthHeader;
-    private _authenticate;
+    private static _authenticate;
     private getHeaders;
     init(options?: Partial<ClientOptions>): Promise<any>;
     _pathForType(type: string, id?: string): string;
