@@ -116,7 +116,8 @@ class Nimvelo implements NimveloClient {
 
   public init(options?: Partial<ClientOptions>) {
     const restBase =
-      options.restBase || 'https://pbx.sipcentric.com/api/v1/customers/';
+      (options && options.restBase) ||
+      'https://pbx.sipcentric.com/api/v1/customers/';
     // TODO handle refreshing tokens?
     if (typeof options !== 'undefined') {
       if (Object.prototype.hasOwnProperty.call(options, 'token')) {

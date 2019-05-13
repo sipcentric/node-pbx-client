@@ -105,7 +105,8 @@ class Nimvelo {
         return Object.assign({}, this.options.requestOptions.headers, { Authorization: this.authorization });
     }
     init(options) {
-        const restBase = options.restBase || 'https://pbx.sipcentric.com/api/v1/customers/';
+        const restBase = (options && options.restBase) ||
+            'https://pbx.sipcentric.com/api/v1/customers/';
         // TODO handle refreshing tokens?
         if (typeof options !== 'undefined') {
             if (Object.prototype.hasOwnProperty.call(options, 'token')) {
