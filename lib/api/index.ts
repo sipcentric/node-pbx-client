@@ -71,58 +71,8 @@ class Nimvelo implements NimveloClient {
     this.VERSION = VERSION;
 
     this.authPromise = Promise.resolve();
-    // Merge the default options with the client submitted options
-    this.options = extend(
-      {
-        username: null,
-        password: null,
-        customer: 'me',
-        auth: 'basic',
-        restBase: 'https://pbx.sipcentric.com/api/v1/customers/',
-        streamBase: 'https://pbx.sipcentric.com/api/v1/stream',
-        json: true,
-        requestOptions: {
-          headers: {
-            Accept: 'application/json',
-            Authorization: this.authorization,
-            'Content-Type': 'application/json',
-            'User-Agent': `node-nimvelo/${VERSION}`,
-            'X-Relationship-Key': 'id',
-          },
-        },
-      },
-      options,
-    );
 
-    // TODO handle refreshing tokens?
-    if (typeof this.options !== 'undefined') {
-      if (Object.prototype.hasOwnProperty.call(this.options, 'token')) {
-        this.authorization = `Bearer ${this.options.token}`;
-      } else if (
-        Object.prototype.hasOwnProperty.call(this.options, 'username') &&
-        Object.prototype.hasOwnProperty.call(this.options, 'password')
-      ) {
-        if (this.options.auth === 'token') {
-          this.authPromise = this._authenticate(
-            this.options.username,
-            this.options.password,
-            this.options.restBase,
-          ).then((token) => {
-            this.options.token = token;
-            this.authorization = `Bearer ${token}`;
-          });
-        } else {
-          this.authorization = Nimvelo._getAuthHeader(
-            this.options.username,
-            this.options.password,
-          );
-        }
-      }
-    }
-
-    this.customers = new CustomerList(this);
-    // this.stream = new Stream(this);
-    // this.presenceWatcher = new PresenceWatcher(this);
+    this.init(options);
   }
 
   private static _getAuthHeader(username: string, password: string) {
@@ -155,6 +105,62 @@ class Nimvelo implements NimveloClient {
       const { token } = json;
       return token as string;
     });
+  }
+
+  public init(options?: Partial<ClientOptions>) {
+    const restBase =
+      options.restBase || 'https://pbx.sipcentric.com/api/v1/customers/';
+    // TODO handle refreshing tokens?
+    if (typeof options !== 'undefined') {
+      if (Object.prototype.hasOwnProperty.call(options, 'token')) {
+        this.authorization = `Bearer ${this.options.token}`;
+      } else if (
+        Object.prototype.hasOwnProperty.call(options, 'username') &&
+        Object.prototype.hasOwnProperty.call(options, 'password')
+      ) {
+        if (options.auth === 'token') {
+          this.authPromise = this._authenticate(
+            options.username,
+            options.password,
+            restBase,
+          ).then((token) => {
+            this.options.token = token;
+            this.authorization = `Bearer ${token}`;
+          });
+        } else {
+          this.authorization = Nimvelo._getAuthHeader(
+            options.username,
+            options.password,
+          );
+        }
+      }
+    }
+    // Merge the default options with the client submitted options
+    this.options = extend(
+      {
+        username: null,
+        password: null,
+        customer: 'me',
+        auth: 'basic',
+        restBase: 'https://pbx.sipcentric.com/api/v1/customers/',
+        streamBase: 'https://pbx.sipcentric.com/api/v1/stream',
+        json: true,
+        requestOptions: {
+          headers: {
+            Accept: 'application/json',
+            Authorization: this.authorization,
+            'Content-Type': 'application/json',
+            'User-Agent': `node-nimvelo/${VERSION}`,
+            'X-Relationship-Key': 'id',
+          },
+        },
+      },
+      options,
+    );
+
+    this.customers = new CustomerList(this);
+    // this.stream = new Stream(this);
+    // this.presenceWatcher = new PresenceWatcher(this);
   }
 
   // eslint-disable-next-line class-methods-use-this

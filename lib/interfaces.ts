@@ -7,6 +7,7 @@ export interface NimveloClient {
   presenceWatcher: any;
   authPromise: Promise<any>;
 
+  init(options?: Partial<ClientOptions>): void;
   _saveRepresentation(
     object: RepresentationInterface,
     callback: Callback,
