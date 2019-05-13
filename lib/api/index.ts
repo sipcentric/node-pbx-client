@@ -161,6 +161,8 @@ class Nimvelo implements NimveloClient {
     this.customers = new CustomerList(this);
     // this.stream = new Stream(this);
     // this.presenceWatcher = new PresenceWatcher(this);
+
+    return this.authPromise;
   }
 
   // eslint-disable-next-line class-methods-use-this
