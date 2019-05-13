@@ -19,13 +19,13 @@ import Phone from './phone';
 import Phonebookentry from './phonebookentry';
 import Phonenumber from './phonenumber';
 import Preference from './preference';
-import PresenceWatcher from './presenceWatcher';
+// import PresenceWatcher from './presenceWatcher';
 import Prompt from './prompt';
 import Queue from './queue';
 import Queueentry from './queueentry';
 import Queuemembership from './queuemembership';
 import Queuestatus from './queuestatus';
-import Stream from './stream';
+// import Stream from './stream';
 import Recording from './recording';
 import Routingrule from './routingrule';
 import Sipidentity from './sipidentity';
@@ -121,8 +121,8 @@ class Nimvelo implements NimveloClient {
     }
 
     this.customers = new CustomerList(this);
-    this.stream = new Stream(this);
-    this.presenceWatcher = new PresenceWatcher(this);
+    // this.stream = new Stream(this);
+    // this.presenceWatcher = new PresenceWatcher(this);
   }
 
   private static _getAuthHeader(username: string, password: string) {

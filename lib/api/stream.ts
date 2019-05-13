@@ -1,4 +1,4 @@
-import * as atmosphere from 'atmosphere.js';
+/* import * as atmosphere from 'atmosphere.js';
 import { NimveloClient, Callback } from '../interfaces';
 
 class Stream {
@@ -59,3 +59,4 @@ class Stream {
 }
 
 export default Stream;
+*/

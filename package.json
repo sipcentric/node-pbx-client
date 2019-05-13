@@ -29,15 +29,10 @@
   },
   "homepage": "https://github.com/Nimvelo/node-client",
   "dependencies": {
-    "@types/atmosphere.js": "^2.1.1",
     "@types/deep-extend": "^0.4.31",
     "@types/node": "^12.0.0",
-    "@types/xml2json": "^0.10.0",
-    "atmosphere.js": "^2.3.8",
     "deep-extend": "^0.6.0",
-    "sip.js": "^0.13.8",
-    "typescript": "^3.4.5",
-    "xml2json": "^0.11.2"
+    "typescript": "^3.4.5"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^1.7.0",

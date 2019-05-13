@@ -47,13 +47,13 @@ const phone_1 = __importDefault(require("./phone"));
 const phonebookentry_1 = __importDefault(require("./phonebookentry"));
 const phonenumber_1 = __importDefault(require("./phonenumber"));
 const preference_1 = __importDefault(require("./preference"));
-const presenceWatcher_1 = __importDefault(require("./presenceWatcher"));
+// import PresenceWatcher from './presenceWatcher';
 const prompt_1 = __importDefault(require("./prompt"));
 const queue_1 = __importDefault(require("./queue"));
 const queueentry_1 = __importDefault(require("./queueentry"));
 const queuemembership_1 = __importDefault(require("./queuemembership"));
 const queuestatus_1 = __importDefault(require("./queuestatus"));
-const stream_1 = __importDefault(require("./stream"));
+// import Stream from './stream';
 const recording_1 = __importDefault(require("./recording"));
 const routingrule_1 = __importDefault(require("./routingrule"));
 const sipidentity_1 = __importDefault(require("./sipidentity"));
@@ -111,8 +111,8 @@ class Nimvelo {
             }
         }
         this.customers = new customerList_1.default(this);
-        this.stream = new stream_1.default(this);
-        this.presenceWatcher = new presenceWatcher_1.default(this);
+        // this.stream = new Stream(this);
+        // this.presenceWatcher = new PresenceWatcher(this);
     }
     static _getAuthHeader(username, password) {
         // Base64 encode without btoa()
