@@ -53,8 +53,7 @@ export interface ApiList<T extends ApiItem> {
     nextPage?: string;
     prevPage?: string;
 }
-export interface FormattedApiList<T extends ApiItem> {
-    items: T[];
+export interface FormattedApiList {
     totalItems: number;
     pageSize: number;
     page: number;

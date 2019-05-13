@@ -23,11 +23,11 @@ declare class Nimvelo implements NimveloClient {
     _buildUrlSection(type: string, object: RepresentationBase, url?: string): string;
     _paramsToQueryString(params: QueryParams | string): string;
     _formatGetResponse(response: ApiItem | ApiList<ApiItem>, parent: RepresentationBase): Representation | Representation[] | {
-        meta: FormattedApiList<ApiItem>;
+        meta: FormattedApiList;
         items: Representation | Representation[];
     };
     _getResource(type: string, object: RepresentationBase, ...args: any[]): Promise<Representation | Representation[] | {
-        meta: FormattedApiList<ApiItem>;
+        meta: FormattedApiList;
         items: Representation | Representation[];
     }>;
     _saveRepresentation(object: Representation, callback: Callback): Promise<ApiItem>;

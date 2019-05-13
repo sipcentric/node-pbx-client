@@ -475,8 +475,8 @@ class Nimvelo {
     }
     _formatGetResponse(response, parent) {
         if (!guards_1.isApiItem(response)) {
-            const items = this._buildObjects(response.items, parent);
-            const { nextPage, prevPage } = response, temp = __rest(response, ["nextPage", "prevPage"]);
+            const builtItems = this._buildObjects(response.items, parent);
+            const { nextPage, prevPage, items } = response, temp = __rest(response, ["nextPage", "prevPage", "items"]);
             const meta = temp;
             if (Object.prototype.hasOwnProperty.call(response, 'nextPage')) {
                 const nextPageUrl = response.nextPage;
@@ -490,7 +490,7 @@ class Nimvelo {
                     return this._formatGetResponse(data, parent);
                 }), callback);
             }
-            return { meta, items };
+            return { meta, items: builtItems };
         }
         return this._buildObjects(response, parent);
     }

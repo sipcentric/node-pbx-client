@@ -561,10 +561,10 @@ class Nimvelo implements NimveloClient {
     parent: RepresentationBase,
   ) {
     if (!isApiItem(response)) {
-      const items = this._buildObjects(response.items, parent);
+      const builtItems = this._buildObjects(response.items, parent);
 
-      const { nextPage, prevPage, ...temp } = response;
-      const meta: FormattedApiList<ApiItem> = temp;
+      const { nextPage, prevPage, items, ...temp } = response;
+      const meta: FormattedApiList = temp;
 
       if (Object.prototype.hasOwnProperty.call(response, 'nextPage')) {
         const nextPageUrl = response.nextPage;
@@ -590,7 +590,7 @@ class Nimvelo implements NimveloClient {
           );
       }
 
-      return { meta, items };
+      return { meta, items: builtItems };
     }
 
     return this._buildObjects(response, parent);

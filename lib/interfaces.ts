@@ -74,9 +74,8 @@ export interface ApiList<T extends ApiItem> {
   prevPage?: string;
 }
 
-export interface FormattedApiList<T extends ApiItem> {
+export interface FormattedApiList {
   // items: RepresentationInterface;
-  items: T[];
   totalItems: number;
   pageSize: number;
   page: number;
