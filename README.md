@@ -9,7 +9,7 @@ npm install nimvelo
 ```
 
 ```js
-import Nimvelo from "nimvelo";
+const Nimvelo = require('@nimvelo/phone-api-client');
 
 // ...
 ```
@@ -38,7 +38,7 @@ There are further examples in the `examples/` directory. To try them, just clone
 #### Get all customers a user has access to
 
 ```js
-import Nimvelo from "nimvelo";
+const Nimvelo = require('@nimvelo/phone-api-client');
 
 (async () => {
   const nimvelo = new Nimvelo({
@@ -54,7 +54,7 @@ import Nimvelo from "nimvelo";
 #### Get a specific customer
 
 ```js
-import Nimvelo from "nimvelo";
+const Nimvelo = require('@nimvelo/phone-api-client');
 
 (async () => {
   const nimvelo = new Nimvelo({
@@ -72,7 +72,7 @@ import Nimvelo from "nimvelo";
 #### Get a customer's phone book
 
 ```js
-const Nimvelo = require('nimvelo');
+const Nimvelo = require('@nimvelo/phone-api-client');
 
 (async () => {
   const nimvelo = new Nimvelo({
@@ -92,7 +92,7 @@ const Nimvelo = require('nimvelo');
 #### Create phone book entry
 
 ```js
-import Nimvelo from "nimvelo";
+const Nimvelo = require('@nimvelo/phone-api-client');
 
 (async () => {
   const nimvelo = new Nimvelo({
@@ -120,7 +120,7 @@ import Nimvelo from "nimvelo";
 #### Update phone book entry
 
 ```js
-import Nimvelo from "nimvelo";
+const Nimvelo = require('@nimvelo/phone-api-client');
 
 (async () => {
   const nimvelo = new Nimvelo({
@@ -146,7 +146,7 @@ import Nimvelo from "nimvelo";
 #### Delete phone book entry
 
 ```js
-const Nimvelo = require('nimvelo');
+const Nimvelo = require('@nimvelo/phone-api-client');
 
 (async () => {
   const nimvelo = new Nimvelo({
@@ -167,7 +167,7 @@ const Nimvelo = require('nimvelo');
 #### Subscribe to incoming call events
 
 ```js
-const Nimvelo = require('nimvelo');
+const Nimvelo = require('@nimvelo/phone-api-client');
 
 const nimvelo = new Nimvelo({
   username: 'myusername',
@@ -184,7 +184,7 @@ nimvelo.stream.subscribe("incomingcall", function(call) {
 #### Monitor presence of an extension
 
 ```js
-import Nimvelo from "nimvelo";
+const Nimvelo = require('@nimvelo/phone-api-client');
 
 const nimvelo = new Nimvelo({
   username: "myusername",
@@ -207,7 +207,7 @@ const subscriptions = await nimvelo.presenceWatcher.subscribe({
 #### Monitor presence of all extensions on an account
 
 ```js
-import Nimvelo from "nimvelo";
+const Nimvelo = require('@nimvelo/phone-api-client');
 
 const nimvelo = new Nimvelo({
   username: "myusername",
