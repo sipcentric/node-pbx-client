@@ -1,6 +1,6 @@
 {
   "name": "nimvelo",
-  "version": "1.3.1",
+  "version": "1.4.0",
   "description": "Official Nimvelo API client library for node.js",
   "main": "build/index.js",
   "types": "build/index.d.ts",
