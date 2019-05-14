@@ -53,6 +53,39 @@ const virtual_1 = __importDefault(require("./virtual"));
 class Customer extends representation_1.default {
     constructor(client, item) {
         super(client);
+        this.create = (type, properties) => {
+            // Figure out which class to use for this type
+            switch (type) {
+                case 'call':
+                    return new call_1.default(this.client, properties, this);
+                case 'group':
+                    return new group_1.default(this.client, properties, this);
+                case 'ivr':
+                    return new ivr_1.default(this.client, properties, this);
+                case 'linkeduser':
+                    return new linkeduser_1.default(this.client, properties, this);
+                case 'mailbox':
+                    return new mailbox_1.default(this.client, properties, this);
+                case 'music':
+                    return new music_1.default(this.client, properties, this);
+                case 'phone':
+                    return new phone_1.default(this.client, properties, this);
+                case 'phonebookentry':
+                    return new phonebookentry_1.default(this.client, properties, this);
+                case 'prompt':
+                    return new prompt_1.default(this.client, properties, this);
+                case 'queue':
+                    return new queue_1.default(this.client, properties, this);
+                case 'smsmessage':
+                    return new smsmessage_1.default(this.client, properties, this);
+                case 'timeinterval':
+                    return new timeinterval_1.default(this.client, properties, this);
+                case 'virtual':
+                    return new virtual_1.default(this.client, properties, this);
+                default:
+                    return false;
+            }
+        };
         const { type } = item, rest = __rest(item, ["type"]);
         extend(this, rest);
         this._type = 'customer';
@@ -81,39 +114,6 @@ class Customer extends representation_1.default {
         this.virtuals = new virtualList_1.default(this.client, this);
         this._unavailableMethods = ['delete'];
         this._unavailableMethods.forEach((method) => delete this[method]);
-    }
-    create(type, properties) {
-        // Figure out which class to use for this type
-        switch (type) {
-            case 'call':
-                return new call_1.default(this.client, properties, this);
-            case 'group':
-                return new group_1.default(this.client, properties, this);
-            case 'ivr':
-                return new ivr_1.default(this.client, properties, this);
-            case 'linkeduser':
-                return new linkeduser_1.default(this.client, properties, this);
-            case 'mailbox':
-                return new mailbox_1.default(this.client, properties, this);
-            case 'music':
-                return new music_1.default(this.client, properties, this);
-            case 'phone':
-                return new phone_1.default(this.client, properties, this);
-            case 'phonebookentry':
-                return new phonebookentry_1.default(this.client, properties, this);
-            case 'prompt':
-                return new prompt_1.default(this.client, properties, this);
-            case 'queue':
-                return new queue_1.default(this.client, properties, this);
-            case 'smsmessage':
-                return new smsmessage_1.default(this.client, properties, this);
-            case 'timeinterval':
-                return new timeinterval_1.default(this.client, properties, this);
-            case 'virtual':
-                return new virtual_1.default(this.client, properties, this);
-            default:
-                return false;
-        }
     }
 }
 exports.default = Customer;

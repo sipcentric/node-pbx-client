@@ -11,10 +11,13 @@ var __rest = (this && this.__rest) || function (s, e) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const extend = require("deep-extend");
 class Representation {
-    get type() {
-        return this._type;
-    }
     constructor(client, properties, parent) {
+        this.save = (callback) => {
+            return this.client._saveRepresentation(this, callback);
+        };
+        this.delete = (callback) => {
+            return this.client._deleteRepresentation(this, callback);
+        };
         this.client = client;
         if (properties) {
             const { type } = properties, props = __rest(properties, ["type"]);
@@ -23,11 +26,8 @@ class Representation {
         this.parent = parent;
         this._type = 'none';
     }
-    save(callback) {
-        return this.client._saveRepresentation(this, callback);
-    }
-    delete(callback) {
-        return this.client._deleteRepresentation(this, callback);
+    get type() {
+        return this._type;
     }
 }
 exports.default = Representation;

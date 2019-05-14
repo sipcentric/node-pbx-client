@@ -10,24 +10,24 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 class RepresentationList {
+    constructor(client, parent) {
+        this.get = (id, params, callback) => {
+            return this.client._getResource(this.itemType, this, id, params, callback);
+        };
+        this.create = (properties = {}) => {
+            // Make sure the type is correct, and it has no ID
+            const _a = properties, { id } = _a, rest = __rest(_a, ["id"]);
+            const sanitizedProperties = Object.assign({}, rest, { type: this.itemType });
+            return this.client._objectFromItem(sanitizedProperties, this.parent);
+        };
+        this.client = client;
+        this.parent = parent;
+    }
     get type() {
         return this._type;
     }
     get itemType() {
         return this._itemType;
-    }
-    constructor(client, parent) {
-        this.client = client;
-        this.parent = parent;
-    }
-    get(id, params, callback) {
-        return this.client._getResource(this.itemType, this, id, params, callback);
-    }
-    create(properties = {}) {
-        // Make sure the type is correct, and it has no ID
-        const _a = properties, { id } = _a, rest = __rest(_a, ["id"]);
-        const sanitizedProperties = Object.assign({}, rest, { type: this.itemType });
-        return this.client._objectFromItem(sanitizedProperties, this.parent);
     }
 }
 exports.default = RepresentationList;

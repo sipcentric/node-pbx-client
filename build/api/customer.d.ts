@@ -61,6 +61,6 @@ declare class Customer extends Representation {
     timeintervals: TimeintervalList;
     virtuals: VirtualList;
     constructor(client: NimveloClient, item: ApiItem);
-    create(type: string, properties: ApiItem): false | Call | Group | Ivr | Linkeduser | Mailbox | Music | Phone | Phonebookentry | Prompt | Queue | Smsmessage | Timeinterval | Virtual;
+    create: (type: string, properties: ApiItem) => false | Call | Group | Ivr | Linkeduser | Mailbox | Music | Phone | Phonebookentry | Prompt | Queue | Smsmessage | Timeinterval | Virtual;
 }
 export default Customer;

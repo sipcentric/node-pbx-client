@@ -117,14 +117,12 @@ class Nimvelo implements NimveloClient {
     });
   }
 
-  private getHeaders() {
-    return {
-      ...this.options.requestOptions.headers,
-      Authorization: this.authorization,
-    };
-  }
+  private getHeaders = () => ({
+    ...this.options.requestOptions.headers,
+    Authorization: this.authorization,
+  });
 
-  public init(options?: Partial<ClientOptions>) {
+  public init = (options?: Partial<ClientOptions>) => {
     const authBase =
       (options && options.authBase) ||
       'https://pbx.sipcentric.com/api/v1/authenticate/';
@@ -182,10 +180,10 @@ class Nimvelo implements NimveloClient {
     // this.presenceWatcher = new PresenceWatcher(this);
 
     return this.authPromise;
-  }
+  };
 
   // eslint-disable-next-line class-methods-use-this
-  _pathForType(type: string, id?: string) {
+  _pathForType = (type: string, id?: string) => {
     let path = '';
     const normalizedType = type.toLowerCase();
 
@@ -254,10 +252,10 @@ class Nimvelo implements NimveloClient {
     }
 
     return path;
-  }
+  };
 
   // eslint-disable-next-line class-methods-use-this
-  _paramsForType(type: string) {
+  _paramsForType = (type: string) => {
     const params: RepresentationTypeParams = {};
     const normalizedType = type.toLowerCase();
 
@@ -279,9 +277,9 @@ class Nimvelo implements NimveloClient {
     }
 
     return params;
-  }
+  };
 
-  _objectFromItem(item: ApiItem, parent: RepresentationBase) {
+  _objectFromItem = (item: ApiItem, parent: RepresentationBase) => {
     if (
       typeof item === 'undefined' ||
       !Object.prototype.hasOwnProperty.call(item, 'type')
@@ -397,18 +395,23 @@ class Nimvelo implements NimveloClient {
     }
 
     return object;
-  }
+  };
 
-  _buildObjects(items: ApiItem | ApiItem[], parent: RepresentationBase) {
+  _buildObjects = (items: ApiItem | ApiItem[], parent: RepresentationBase) => {
     // Builds an array of class objects from a given array of items,
     // or returns a single class object if we only give it one object
 
     return Array.isArray(items)
       ? items.map((item) => this._objectFromItem(item, parent))
       : this._objectFromItem(items, parent);
-  }
+  };
 
-  _request(method: string, url: string, params = {}, callback?: Callback) {
+  _request = (
+    method: string,
+    url: string,
+    params = {},
+    callback?: Callback,
+  ) => {
     /* eslint no-param-reassign:0 */
 
     // Normalize method
@@ -487,9 +490,9 @@ class Nimvelo implements NimveloClient {
         }),
       callback,
     );
-  }
+  };
 
-  _buildUrl(type: string, object: RepresentationBase, ...args: any[]) {
+  _buildUrl = (type: string, object: RepresentationBase, ...args: any[]) => {
     let url;
     let id;
     let params: QueryParams = {};
@@ -516,9 +519,9 @@ class Nimvelo implements NimveloClient {
       Object.keys(params).length > 0 ? this._paramsToQueryString(params) : '';
 
     return url;
-  }
+  };
 
-  _buildUrlSection(type: string, object: RepresentationBase, url = '') {
+  _buildUrlSection = (type: string, object: RepresentationBase, url = '') => {
     /* eslint no-param-reassign:0 */
 
     let path;
@@ -536,10 +539,10 @@ class Nimvelo implements NimveloClient {
     }
 
     return url;
-  }
+  };
 
   // eslint-disable-next-line class-methods-use-this
-  _paramsToQueryString(params: QueryParams | string) {
+  _paramsToQueryString = (params: QueryParams | string) => {
     if (typeof params === 'object') {
       const string = Object.keys(params).reduce((prev, key, index) => {
         let startChar = '&';
@@ -558,12 +561,12 @@ class Nimvelo implements NimveloClient {
     }
 
     return '';
-  }
+  };
 
-  _formatGetResponse(
+  _formatGetResponse = (
     response: ApiItem | ApiList<ApiItem>,
     parent: RepresentationBase,
-  ) {
+  ) => {
     if (!isApiItem(response)) {
       const builtItems = this._buildObjects(response.items, parent);
 
@@ -598,9 +601,9 @@ class Nimvelo implements NimveloClient {
     }
 
     return this._buildObjects(response, parent);
-  }
+  };
 
-  _getResource(type: string, object: RepresentationBase, ...args: any[]) {
+  _getResource = (type: string, object: RepresentationBase, ...args: any[]) => {
     let id: string;
     let params: QueryParams;
     let callback: Callback;
@@ -632,9 +635,9 @@ class Nimvelo implements NimveloClient {
       }),
       callback,
     );
-  }
+  };
 
-  _saveRepresentation(object: Representation, callback: Callback) {
+  _saveRepresentation = (object: Representation, callback: Callback) => {
     const url = this._buildUrl(object.type, object, object.id);
     const requestMethod = object.id ? 'put' : 'post';
 
@@ -647,12 +650,12 @@ class Nimvelo implements NimveloClient {
       }),
       callback,
     );
-  }
+  };
 
-  _deleteRepresentation(object: Representation, callback: Callback) {
+  _deleteRepresentation = (object: Representation, callback: Callback) => {
     const url = this._buildUrl(object.type, object, object.id);
     return nodeify(this._request('delete', url, object), callback);
-  }
+  };
 }
 
 export default Nimvelo;

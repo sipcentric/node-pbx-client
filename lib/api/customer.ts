@@ -100,7 +100,7 @@ class Customer extends Representation {
     this._unavailableMethods.forEach((method) => delete (this as any)[method]);
   }
 
-  create(type: string, properties: ApiItem) {
+  create = (type: string, properties: ApiItem) => {
     // Figure out which class to use for this type
 
     switch (type) {
@@ -111,7 +111,7 @@ class Customer extends Representation {
       case 'ivr':
         return new Ivr(this.client, properties, this);
       case 'linkeduser':
-          return new Linkeduser(this.client, properties, this);
+        return new Linkeduser(this.client, properties, this);
       case 'mailbox':
         return new Mailbox(this.client, properties, this);
       case 'music':
@@ -133,7 +133,7 @@ class Customer extends Representation {
       default:
         return false;
     }
-  }
+  };
 }
 
 export default Customer;

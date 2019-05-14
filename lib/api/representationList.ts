@@ -27,11 +27,11 @@ class RepresentationList implements RepresentationListInterface {
     this.parent = parent;
   }
 
-  get(id?: string, params?: QueryParams, callback?: Callback) {
+  get = (id?: string, params?: QueryParams, callback?: Callback) => {
     return this.client._getResource(this.itemType, this, id, params, callback);
-  }
+  };
 
-  create(properties: object = {}) {
+  create = (properties: object = {}) => {
     // Make sure the type is correct, and it has no ID
     const { id, ...rest } = properties as any;
     const sanitizedProperties = {
@@ -40,7 +40,7 @@ class RepresentationList implements RepresentationListInterface {
     };
 
     return this.client._objectFromItem(sanitizedProperties, this.parent);
-  }
+  };
 }
 
 export default RepresentationList;
