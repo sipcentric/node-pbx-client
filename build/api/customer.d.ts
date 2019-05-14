@@ -10,6 +10,8 @@ import GroupList from './groupList';
 import Group from './group';
 import IvrList from './ivrList';
 import Ivr from './ivr';
+import LinkeduserList from './linkeduserList';
+import Linkeduser from './linkeduser';
 import MailboxList from './mailboxList';
 import Mailbox from './mailbox';
 import MusicList from './musicList';
@@ -43,6 +45,7 @@ declare class Customer extends Representation {
     endpoints: EndpointList;
     groups: GroupList;
     ivrs: IvrList;
+    linkedusers: LinkeduserList;
     mailboxes: MailboxList;
     music: MusicList;
     outgoingcallerids: OutgoingcalleridList;
@@ -58,6 +61,6 @@ declare class Customer extends Representation {
     timeintervals: TimeintervalList;
     virtuals: VirtualList;
     constructor(client: NimveloClient, item: ApiItem);
-    create(type: string, properties: ApiItem): false | Call | Group | Ivr | Mailbox | Music | Phone | Phonebookentry | Prompt | Queue | Smsmessage | Timeinterval | Virtual;
+    create(type: string, properties: ApiItem): false | Call | Group | Ivr | Linkeduser | Mailbox | Music | Phone | Phonebookentry | Prompt | Queue | Smsmessage | Timeinterval | Virtual;
 }
 export default Customer;

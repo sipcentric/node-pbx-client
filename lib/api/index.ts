@@ -12,6 +12,7 @@ import Forwardingrule from './forwardingrule';
 import Group from './group';
 import Invoice from './invoice';
 import Ivr from './ivr';
+import Linkeduser from './linkeduser';
 import Mailbox from './mailbox';
 import Music from './music';
 import Outgoingcallerid from './outgoingcallerid';
@@ -328,6 +329,9 @@ class Nimvelo implements NimveloClient {
         break;
       case 'ivr':
         object = new Ivr(this, item, parent);
+        break;
+      case 'linkeduser':
+        object = new Linkeduser(this, item, parent);
         break;
       case 'mailbox':
         object = new Mailbox(this, item, parent);

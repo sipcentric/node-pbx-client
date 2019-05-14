@@ -12,6 +12,8 @@ import GroupList from './groupList';
 import Group from './group';
 import IvrList from './ivrList';
 import Ivr from './ivr';
+import LinkeduserList from './linkeduserList';
+import Linkeduser from './linkeduser';
 import MailboxList from './mailboxList';
 import Mailbox from './mailbox';
 import MusicList from './musicList';
@@ -46,6 +48,7 @@ class Customer extends Representation {
   public endpoints: EndpointList;
   public groups: GroupList;
   public ivrs: IvrList;
+  public linkedusers: LinkeduserList;
   public mailboxes: MailboxList;
   public music: MusicList;
   public outgoingcallerids: OutgoingcalleridList;
@@ -77,6 +80,7 @@ class Customer extends Representation {
     this.endpoints = new EndpointList(this.client, this);
     this.groups = new GroupList(this.client, this);
     this.ivrs = new IvrList(this.client, this);
+    this.linkedusers = new LinkeduserList(this.client, this);
     this.mailboxes = new MailboxList(this.client, this);
     this.music = new MusicList(this.client, this);
     this.outgoingcallerids = new OutgoingcalleridList(this.client, this);
@@ -106,6 +110,8 @@ class Customer extends Representation {
         return new Group(this.client, properties, this);
       case 'ivr':
         return new Ivr(this.client, properties, this);
+      case 'linkeduser':
+          return new Linkeduser(this.client, properties, this);
       case 'mailbox':
         return new Mailbox(this.client, properties, this);
       case 'music':

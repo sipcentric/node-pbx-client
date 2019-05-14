@@ -25,6 +25,8 @@ const groupList_1 = __importDefault(require("./groupList"));
 const group_1 = __importDefault(require("./group"));
 const ivrList_1 = __importDefault(require("./ivrList"));
 const ivr_1 = __importDefault(require("./ivr"));
+const linkeduserList_1 = __importDefault(require("./linkeduserList"));
+const linkeduser_1 = __importDefault(require("./linkeduser"));
 const mailboxList_1 = __importDefault(require("./mailboxList"));
 const mailbox_1 = __importDefault(require("./mailbox"));
 const musicList_1 = __importDefault(require("./musicList"));
@@ -62,6 +64,7 @@ class Customer extends representation_1.default {
         this.endpoints = new endpointList_1.default(this.client, this);
         this.groups = new groupList_1.default(this.client, this);
         this.ivrs = new ivrList_1.default(this.client, this);
+        this.linkedusers = new linkeduserList_1.default(this.client, this);
         this.mailboxes = new mailboxList_1.default(this.client, this);
         this.music = new musicList_1.default(this.client, this);
         this.outgoingcallerids = new outgoingcalleridList_1.default(this.client, this);
@@ -88,6 +91,8 @@ class Customer extends representation_1.default {
                 return new group_1.default(this.client, properties, this);
             case 'ivr':
                 return new ivr_1.default(this.client, properties, this);
+            case 'linkeduser':
+                return new linkeduser_1.default(this.client, properties, this);
             case 'mailbox':
                 return new mailbox_1.default(this.client, properties, this);
             case 'music':
