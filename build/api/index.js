@@ -120,6 +120,9 @@ class Nimvelo {
             // this.presenceWatcher = new PresenceWatcher(this);
             return this.authPromise;
         };
+        this.representationFromJson = (json) => {
+            return this._objectFromItem(json, json.parent);
+        };
         // eslint-disable-next-line class-methods-use-this
         this._pathForType = (type, id) => {
             let path = '';
@@ -414,9 +417,19 @@ class Nimvelo {
             let path;
             const baseUrl = this.options.restBase;
             if (object.parent) {
-                path = this._pathForType(type, object.parent.id);
-                url = (path ? `${path}/` : '') + url;
-                url = this._buildUrlSection(object.parent.type, object.parent, url);
+                if (typeof object.parent === 'string') {
+                    // TODO
+                    path = this._pathForType(type, '');
+                    if (!path.startsWith('/')) {
+                        path = `/${path}`;
+                    }
+                    url = parent + path + url;
+                }
+                else {
+                    path = this._pathForType(type, object.parent.id);
+                    url = (path ? `${path}/` : '') + url;
+                    url = this._buildUrlSection(object.parent.type, object.parent, url);
+                }
             }
             else {
                 path = this._pathForType(type);

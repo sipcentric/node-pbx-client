@@ -5,6 +5,6 @@ import { NimveloClient, ApiItem, RepresentationBase } from '../interfaces';
 declare class Phone extends Representation {
     sip: SipidentityList;
     forwardingrules: ForwardingruleList;
-    constructor(client: NimveloClient, properties: ApiItem, parent: RepresentationBase);
+    constructor(client: NimveloClient, properties: ApiItem, parent: RepresentationBase | string);
 }
 export default Phone;

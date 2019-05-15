@@ -7,6 +7,6 @@ declare class Queue extends Representation {
     entries: QueueentryList;
     memberships: QueuemembershipList;
     status: QueuestatusList;
-    constructor(client: NimveloClient, properties: ApiItem, parent: RepresentationBase);
+    constructor(client: NimveloClient, properties: ApiItem, parent: RepresentationBase | string);
 }
 export default Queue;

@@ -2,11 +2,13 @@ import { RepresentationInterface, NimveloClient, RepresentationBase, ApiItem, Ca
 declare class Representation implements RepresentationInterface {
     protected client: NimveloClient;
     id?: string;
-    parent: RepresentationBase;
+    parent: RepresentationBase | string;
     _unavailableMethods: string[];
     protected _type: string;
+    protected _json: ApiItem;
     readonly type: string;
-    constructor(client: NimveloClient, properties?: ApiItem, parent?: RepresentationBase);
+    readonly json: ApiItem;
+    constructor(client: NimveloClient, properties?: ApiItem, parent?: RepresentationBase | string);
     save: (callback?: Callback) => Promise<any>;
     delete: (callback?: Callback) => Promise<any>;
 }

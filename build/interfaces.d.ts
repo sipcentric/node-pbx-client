@@ -10,7 +10,7 @@ export interface NimveloClient {
     _saveRepresentation(object: RepresentationInterface, callback: Callback): Promise<any>;
     _deleteRepresentation(object: RepresentationInterface, callback: Callback): Promise<any>;
     _getResource(type: string, object: RepresentationBase, ...args: any[]): Promise<any> | void;
-    _objectFromItem(item: ApiItem, parent: RepresentationBase): RepresentationInterface;
+    _objectFromItem(item: ApiItem, parent: RepresentationBase | string): RepresentationInterface;
 }
 export interface ClientOptions {
     username: string;
@@ -34,15 +34,15 @@ export interface RepresentationTypeParams {
 export interface RepresentationBase {
     id?: string;
     type: string;
-    parent: RepresentationBase;
+    parent: RepresentationBase | string;
     _unavailableMethods: string[];
 }
 export interface RepresentationInterface extends RepresentationBase {
-    save(callback: Callback): Promise<any>;
-    delete(callback: Callback): Promise<any>;
+    save(callback?: Callback): Promise<any>;
+    delete(callback?: Callback): Promise<any>;
 }
 export interface RepresentationListInterface extends RepresentationBase {
-    get(id: string, params: QueryParams, callback: Callback): Promise<any> | void;
+    get(id?: string, params?: QueryParams, callback?: Callback): Promise<any> | void;
     create(properties?: object): RepresentationInterface;
 }
 export interface ApiList<T extends ApiItem> {
@@ -62,6 +62,8 @@ export interface FormattedApiList {
 }
 export interface ApiItem {
     type: string;
+    id: string;
+    parent?: string;
 }
 export interface QueryParams {
     [param: string]: string;

@@ -14,15 +14,16 @@ declare class Nimvelo implements NimveloClient {
     private static _authenticate;
     private getHeaders;
     init: (options?: Partial<ClientOptions>) => Promise<any>;
+    representationFromJson: (json: ApiItem) => Representation;
     _pathForType: (type: string, id?: string) => string;
     _paramsForType: (type: string) => RepresentationTypeParams;
-    _objectFromItem: (item: ApiItem, parent: RepresentationBase) => Representation;
-    _buildObjects: (items: ApiItem | ApiItem[], parent: RepresentationBase) => Representation | Representation[];
+    _objectFromItem: (item: ApiItem, parent: string | RepresentationBase) => Representation;
+    _buildObjects: (items: ApiItem | ApiItem[], parent: string | RepresentationBase) => Representation | Representation[];
     _request: (method: string, url: string, params?: {}, callback?: Callback) => Promise<ApiItem>;
     _buildUrl: (type: string, object: RepresentationBase, ...args: any[]) => string;
     _buildUrlSection: (type: string, object: RepresentationBase, url?: string) => string;
     _paramsToQueryString: (params: string | QueryParams) => string;
-    _formatGetResponse: (response: ApiItem | ApiList<ApiItem>, parent: RepresentationBase) => Representation | Representation[] | {
+    _formatGetResponse: (response: ApiItem | ApiList<ApiItem>, parent: string | RepresentationBase) => Representation | Representation[] | {
         meta: FormattedApiList;
         items: Representation | Representation[];
     };

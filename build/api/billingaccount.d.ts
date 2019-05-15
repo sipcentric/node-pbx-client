@@ -7,6 +7,6 @@ declare class Billingaccount extends Representation {
     invoices: InvoiceList;
     estimate: EstimateList;
     paymentmethods: PaymentmethodList;
-    constructor(client: NimveloClient, properties: ApiItem, parent: RepresentationBase);
+    constructor(client: NimveloClient, properties: ApiItem, parent: RepresentationBase | string);
 }
 export default Billingaccount;

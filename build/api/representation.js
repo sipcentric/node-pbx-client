@@ -23,11 +23,17 @@ class Representation {
             const { type } = properties, props = __rest(properties, ["type"]);
             extend(this, props);
         }
-        this.parent = parent;
+        if (parent) {
+            this.parent = parent;
+        }
         this._type = 'none';
+        this._json = properties;
     }
     get type() {
         return this._type;
+    }
+    get json() {
+        return this._json;
     }
 }
 exports.default = Representation;
