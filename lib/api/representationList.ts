@@ -9,7 +9,7 @@ import {
 
 class RepresentationList implements RepresentationListInterface {
   protected client: NimveloClient;
-  public parent: RepresentationBase;
+  public parent: RepresentationBase | string;
   public _unavailableMethods: string[];
 
   protected _type: string;
@@ -22,7 +22,7 @@ class RepresentationList implements RepresentationListInterface {
     return this._itemType;
   }
 
-  constructor(client: NimveloClient, parent?: RepresentationBase) {
+  constructor(client: NimveloClient, parent?: RepresentationBase | string) {
     this.client = client;
     this.parent = parent;
   }

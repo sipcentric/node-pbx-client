@@ -12,7 +12,7 @@ class Billingaccount extends Representation {
   constructor(
     client: NimveloClient,
     properties: ApiItem,
-    parent: RepresentationBase,
+    parent: RepresentationBase | string,
   ) {
     super(client, properties, parent);
 

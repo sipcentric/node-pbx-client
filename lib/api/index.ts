@@ -182,6 +182,10 @@ class Nimvelo implements NimveloClient {
     return this.authPromise;
   };
 
+  public representationFromJson = (json: ApiItem) => {
+    return this._objectFromItem(json, json.parent!);
+  };
+
   // eslint-disable-next-line class-methods-use-this
   _pathForType = (type: string, id?: string) => {
     let path = '';
@@ -279,7 +283,7 @@ class Nimvelo implements NimveloClient {
     return params;
   };
 
-  _objectFromItem = (item: ApiItem, parent: RepresentationBase) => {
+  _objectFromItem = (item: ApiItem, parent: RepresentationBase | string) => {
     if (
       typeof item === 'undefined' ||
       !Object.prototype.hasOwnProperty.call(item, 'type')
@@ -397,7 +401,10 @@ class Nimvelo implements NimveloClient {
     return object;
   };
 
-  _buildObjects = (items: ApiItem | ApiItem[], parent: RepresentationBase) => {
+  _buildObjects = (
+    items: ApiItem | ApiItem[],
+    parent: RepresentationBase | string,
+  ) => {
     // Builds an array of class objects from a given array of items,
     // or returns a single class object if we only give it one object
 
@@ -528,10 +535,19 @@ class Nimvelo implements NimveloClient {
     const baseUrl = this.options.restBase;
 
     if (object.parent) {
-      path = this._pathForType(type, object.parent.id);
+      if (typeof object.parent === 'string') {
+        // TODO
+        path = this._pathForType(type, '');
+        if (!path.startsWith('/')) {
+          path = `/${path}`;
+        }
+        url = parent + path + url;
+      } else {
+        path = this._pathForType(type, object.parent.id);
 
-      url = (path ? `${path}/` : '') + url;
-      url = this._buildUrlSection(object.parent.type, object.parent, url);
+        url = (path ? `${path}/` : '') + url;
+        url = this._buildUrlSection(object.parent.type, object.parent, url);
+      }
     } else {
       path = this._pathForType(type);
 
@@ -565,7 +581,7 @@ class Nimvelo implements NimveloClient {
 
   _formatGetResponse = (
     response: ApiItem | ApiList<ApiItem>,
-    parent: RepresentationBase,
+    parent: RepresentationBase | string,
   ) => {
     if (!isApiItem(response)) {
       const builtItems = this._buildObjects(response.items, parent);

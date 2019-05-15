@@ -1,10 +1,12 @@
-import Representation from "./representation";
-import { NimveloClient, ApiItem, RepresentationBase } from "../interfaces";
+import Representation from './representation';
+import { NimveloClient, ApiItem, RepresentationBase } from '../interfaces';
 
 class Linkeduser extends Representation {
-  constructor(client: NimveloClient,
+  constructor(
+    client: NimveloClient,
     properties: ApiItem,
-    parent: RepresentationBase,) {
+    parent: RepresentationBase | string,
+  ) {
     super(client, properties, parent);
 
     this._type = 'linkeduser';
