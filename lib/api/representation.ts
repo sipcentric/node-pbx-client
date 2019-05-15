@@ -41,6 +41,12 @@ class Representation implements RepresentationInterface {
     this._json = properties;
   }
 
+  extend = (params: ApiItem) => {
+    const { type, ...rest } = params;
+    extend(this, rest);
+    extend(this._json, rest);
+  };
+
   save = (callback?: Callback): Promise<any> => {
     return this.client._saveRepresentation(this, callback);
   };

@@ -12,6 +12,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const extend = require("deep-extend");
 class Representation {
     constructor(client, properties, parent) {
+        this.extend = (params) => {
+            const { type } = params, rest = __rest(params, ["type"]);
+            extend(this, rest);
+            extend(this._json, rest);
+        };
         this.save = (callback) => {
             return this.client._saveRepresentation(this, callback);
         };

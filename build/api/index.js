@@ -506,8 +506,7 @@ class Nimvelo {
             const requestMethod = object.id ? 'put' : 'post';
             return nodeifyv2_1.default(this._request(requestMethod, url, object).then((data) => {
                 // Update our object with the newly returned propreties
-                const { type } = data, rest = __rest(data, ["type"]);
-                extend(object, rest);
+                object.extend(data);
                 return data;
             }), callback);
         };

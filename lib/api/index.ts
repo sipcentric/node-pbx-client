@@ -660,8 +660,7 @@ class Nimvelo implements NimveloClient {
     return nodeify(
       this._request(requestMethod, url, object).then((data) => {
         // Update our object with the newly returned propreties
-        const { type, ...rest } = data;
-        extend(object, rest);
+        object.extend(data);
         return data;
       }),
       callback,

@@ -9,6 +9,7 @@ declare class Representation implements RepresentationInterface {
     readonly type: string;
     readonly json: ApiItem;
     constructor(client: NimveloClient, properties?: ApiItem, parent?: RepresentationBase | string);
+    extend: (params: ApiItem) => void;
     save: (callback?: Callback) => Promise<any>;
     delete: (callback?: Callback) => Promise<any>;
 }
