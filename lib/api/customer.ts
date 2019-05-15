@@ -65,10 +65,7 @@ class Customer extends Representation {
   public virtuals: VirtualList;
 
   constructor(client: NimveloClient, item: ApiItem) {
-    super(client);
-
-    const { type, ...rest } = item;
-    extend(this, rest);
+    super(client, item);
 
     this._type = 'customer';
 
