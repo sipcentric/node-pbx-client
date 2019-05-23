@@ -92,6 +92,8 @@ class Nimvelo {
                     }
                     else {
                         this.authorization = Nimvelo._getAuthHeader(options.username, options.password);
+                        // Check if the username and password are correct
+                        this.authPromise = Nimvelo._authenticate(options.username, options.password, authBase);
                     }
                 }
             }
