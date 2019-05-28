@@ -425,6 +425,9 @@ class Nimvelo {
                     if (!path.startsWith('/')) {
                         path = `/${path}`;
                     }
+                    if (!path.endsWith('/')) {
+                        path = `${path}/`;
+                    }
                     url = object.parent + path + url;
                 }
                 else {
