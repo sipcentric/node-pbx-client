@@ -547,7 +547,7 @@ class Nimvelo implements NimveloClient {
         if (!path.startsWith('/')) {
           path = `/${path}`;
         }
-        url = parent + path + url;
+        url = object.parent + path + url;
       } else {
         path = this._pathForType(type, object.parent.id);
 
