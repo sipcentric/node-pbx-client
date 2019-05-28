@@ -153,7 +153,7 @@ class Nimvelo implements NimveloClient {
             options.username,
             options.password,
             authBase,
-          )
+          );
         }
       }
     }
@@ -546,6 +546,9 @@ class Nimvelo implements NimveloClient {
         path = this._pathForType(type, '');
         if (!path.startsWith('/')) {
           path = `/${path}`;
+        }
+        if (!path.endsWith('/')) {
+          path = `${path}/`;
         }
         url = object.parent + path + url;
       } else {
