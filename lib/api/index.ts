@@ -439,7 +439,7 @@ class Nimvelo implements NimveloClient {
      * Filter out properties which shouldn't be sent back to the server in
      * the json body. This won't affect query params
      */
-    const json = Object.entries(params)
+    const json: any = Object.entries(params)
       .filter(
         ([key, property]) =>
           key.charAt(0) !== '_' &&
@@ -455,6 +455,11 @@ class Nimvelo implements NimveloClient {
         }),
         {},
       );
+
+    // Since I made type private...
+    if (params) {
+      json.type = (params as any).type;
+    }
 
     const fetchRequestOptions: RequestInit = {
       ...this.options.requestOptions,

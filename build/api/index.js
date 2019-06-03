@@ -353,6 +353,10 @@ class Nimvelo {
                 !(property instanceof representation_1.default) &&
                 !(property instanceof representationList_1.default))
                 .reduce((a, [key, value]) => (Object.assign({}, a, { [key]: value })), {});
+            // Since I made type private...
+            if (params) {
+                json.type = params.type;
+            }
             const fetchRequestOptions = Object.assign({}, this.options.requestOptions, { method, headers: this.getHeaders() });
             if (method.toLowerCase() !== 'get' &&
                 method.toLowerCase() !== 'head' &&
