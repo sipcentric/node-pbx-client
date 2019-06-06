@@ -6,7 +6,7 @@ Node.js client for the [Nimvelo/Sipcentric API](https://developer.nimvelo.com/).
 ## Usage
 
 ```
-npm install nimvelo
+npm install @nimvelo/phone-api-client
 ```
 
 ```js
