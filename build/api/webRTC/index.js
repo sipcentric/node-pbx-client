@@ -1,14 +1,10 @@
 "use strict";
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 // @ts-ignore
-const parse = __importStar(require("xml-parser"));
+const xml_parser_1 = __importDefault(require("xml-parser"));
 const npmPackage = require('../../../package.json');
 const VERSION = npmPackage.version;
 const instantiate = (passedConfig, modules) => {
@@ -110,7 +106,7 @@ const instantiate = (passedConfig, modules) => {
                 if (!request.body)
                     return;
                 // Parse the xml request body
-                const parsedBody = parse(request.body);
+                const parsedBody = xml_parser_1.default(request.body);
                 try {
                     // Grab the state and version from the parsed body
                     const state = parsedBody.root.children[0].children[0].content;
