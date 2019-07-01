@@ -35,6 +35,7 @@ import Sipregistration from './sipregistration';
 import Smsmessage from './smsmessage';
 import Timeinterval from './timeinterval';
 import Virtual from './virtual';
+import WebRTC from './webRTC';
 
 import Representation from './representation';
 import RepresentationList from './representationList';
@@ -60,17 +61,32 @@ import {
 const VERSION: string = (npmPackage as any).version;
 
 class Nimvelo implements NimveloClient {
-  VERSION: string;
+  readonly VERSION: string;
+  readonly userAgent: string;
   options: ClientOptions;
   authorization: string;
   authPromise: Promise<any>;
+  rateLimit: {
+    limit: number;
+    remaining: number;
+    reset: number;
+  };
 
   public customers: CustomerList;
   public stream: any;
   public presenceWatcher: any;
 
+  static WebRTC = WebRTC;
+
   constructor(options?: Partial<ClientOptions>) {
     this.VERSION = VERSION;
+    this.rateLimit = {
+      limit: 0,
+      remaining: 0,
+      reset: 0,
+    };
+
+    this.userAgent = `phone-api-client/v${VERSION}`;
 
     this.authPromise = Promise.resolve();
 
@@ -173,7 +189,7 @@ class Nimvelo implements NimveloClient {
             Accept: 'application/json',
             Authorization: this.authorization,
             'Content-Type': 'application/json',
-            'User-Agent': `node-nimvelo/${VERSION}`,
+            'User-Agent': this.userAgent,
             'X-Relationship-Key': 'id',
           },
         },
@@ -190,6 +206,16 @@ class Nimvelo implements NimveloClient {
 
   public representationFromJson = (json: ApiItem) => {
     return this._objectFromItem(json, json.parent!);
+  };
+
+  _updateRateLimits = (response: Response) => {
+    const { headers } = response;
+
+    this.rateLimit = {
+      limit: (headers as any)['x-ratelimit-limit'],
+      remaining: (headers as any)['x-ratelimit-remaining'],
+      reset: (headers as any)['x-ratelimit-reset'],
+    };
   };
 
   // eslint-disable-next-line class-methods-use-this
@@ -243,6 +269,7 @@ class Nimvelo implements NimveloClient {
         path = `${id}/queuestatus`;
         break;
       case 'sipidentity':
+      case 'sipidentitylist':
         path = `${id}/sip`;
         break;
       case 'sipregistration':
@@ -481,9 +508,9 @@ class Nimvelo implements NimveloClient {
             // TODO better errors?
             throw new Error(`Error fetching resource: ${response.status}`);
           }
-          return response.json();
+          return Promise.all([response.json(), response]);
         })
-        .then((data) => {
+        .then(([data, response]) => {
           let parsedData;
 
           if (data && typeof data === 'string') {
@@ -504,7 +531,12 @@ class Nimvelo implements NimveloClient {
             // TODO better errors
             throw new Error(`Api error: ${parsedData.errors}`);
           }
-          return parsedData as ApiItem;
+          this._updateRateLimits(response);
+
+          return { parsedData, response } as {
+            parsedData: ApiItem;
+            response: Response;
+          };
         }),
       callback,
     );
@@ -607,11 +639,14 @@ class Nimvelo implements NimveloClient {
         const nextPageUrl = response.nextPage;
         meta.nextPage = (callback) =>
           nodeify(
-            (this._request('get', nextPageUrl) as Promise<ApiItem>).then(
-              (data) => {
-                return this._formatGetResponse(data, parent);
-              },
-            ),
+            this._request('get', nextPageUrl).then((data) => {
+              const formattedResponse: any = this._formatGetResponse(
+                data.parsedData,
+                parent,
+              );
+              formattedResponse._response = data.response;
+              return formattedResponse;
+            }),
             callback,
           );
       }
@@ -621,7 +656,12 @@ class Nimvelo implements NimveloClient {
         meta.prevPage = (callback) =>
           nodeify(
             this._request('get', prevPageUrl).then((data) => {
-              return this._formatGetResponse(data, parent);
+              const formattedResponse: any = this._formatGetResponse(
+                data.parsedData,
+                parent,
+              );
+              formattedResponse._response = data.response;
+              return formattedResponse;
             }),
             callback,
           );
@@ -658,8 +698,11 @@ class Nimvelo implements NimveloClient {
     const url = this._buildUrl(type, object, id, params);
 
     return nodeify(
-      (this._request('get', url) as Promise<ApiItem>).then((data) => {
-        const formattedResponse = this._formatGetResponse(data, object.parent);
+      this._request('get', url).then((data) => {
+        const formattedResponse = this._formatGetResponse(
+          data.parsedData,
+          object.parent,
+        );
 
         return formattedResponse;
       }),
@@ -674,8 +717,12 @@ class Nimvelo implements NimveloClient {
     return nodeify(
       this._request(requestMethod, url, object).then((data) => {
         // Update our object with the newly returned propreties
-        object.extend(data);
-        return data;
+        object.extend(data.parsedData);
+        const resolveData = {
+          ...data.parsedData,
+          _response: data.response,
+        };
+        return resolveData;
       }),
       callback,
     );
@@ -683,7 +730,16 @@ class Nimvelo implements NimveloClient {
 
   _deleteRepresentation = (object: Representation, callback: Callback) => {
     const url = this._buildUrl(object.type, object, object.id);
-    return nodeify(this._request('delete', url, object), callback);
+    return nodeify(this._request('delete', url, object), callback).then(
+      (data) => {
+        const resolveData = {
+          ...data.parsedData,
+          _response: data.response,
+        };
+
+        return resolveData;
+      },
+    );
   };
 }
 

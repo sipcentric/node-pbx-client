@@ -63,6 +63,7 @@ const sipregistration_1 = __importDefault(require("./sipregistration"));
 const smsmessage_1 = __importDefault(require("./smsmessage"));
 const timeinterval_1 = __importDefault(require("./timeinterval"));
 const virtual_1 = __importDefault(require("./virtual"));
+const webRTC_1 = __importDefault(require("./webRTC"));
 const representation_1 = __importDefault(require("./representation"));
 const representationList_1 = __importDefault(require("./representationList"));
 // Promise + callback polyfill
@@ -112,7 +113,7 @@ class Nimvelo {
                         Accept: 'application/json',
                         Authorization: this.authorization,
                         'Content-Type': 'application/json',
-                        'User-Agent': `node-nimvelo/${VERSION}`,
+                        'User-Agent': this.userAgent,
                         'X-Relationship-Key': 'id',
                     },
                 },
@@ -124,6 +125,14 @@ class Nimvelo {
         };
         this.representationFromJson = (json) => {
             return this._objectFromItem(json, json.parent);
+        };
+        this._updateRateLimits = (response) => {
+            const { headers } = response;
+            this.rateLimit = {
+                limit: headers['x-ratelimit-limit'],
+                remaining: headers['x-ratelimit-remaining'],
+                reset: headers['x-ratelimit-reset'],
+            };
         };
         // eslint-disable-next-line class-methods-use-this
         this._pathForType = (type, id) => {
@@ -175,6 +184,7 @@ class Nimvelo {
                     path = `${id}/queuestatus`;
                     break;
                 case 'sipidentity':
+                case 'sipidentitylist':
                     path = `${id}/sip`;
                     break;
                 case 'sipregistration':
@@ -369,9 +379,9 @@ class Nimvelo {
                     // TODO better errors?
                     throw new Error(`Error fetching resource: ${response.status}`);
                 }
-                return response.json();
+                return Promise.all([response.json(), response]);
             })
-                .then((data) => {
+                .then(([data, response]) => {
                 let parsedData;
                 if (data && typeof data === 'string') {
                     try {
@@ -391,7 +401,8 @@ class Nimvelo {
                     // TODO better errors
                     throw new Error(`Api error: ${parsedData.errors}`);
                 }
-                return parsedData;
+                this._updateRateLimits(response);
+                return { parsedData, response };
             }), callback);
         };
         this._buildUrl = (type, object, ...args) => {
@@ -471,13 +482,17 @@ class Nimvelo {
                 if (Object.prototype.hasOwnProperty.call(response, 'nextPage')) {
                     const nextPageUrl = response.nextPage;
                     meta.nextPage = (callback) => nodeifyv2_1.default(this._request('get', nextPageUrl).then((data) => {
-                        return this._formatGetResponse(data, parent);
+                        const formattedResponse = this._formatGetResponse(data.parsedData, parent);
+                        formattedResponse._response = data.response;
+                        return formattedResponse;
                     }), callback);
                 }
                 if (Object.prototype.hasOwnProperty.call(response, 'prevPage')) {
                     const prevPageUrl = response.prevPage;
                     meta.prevPage = (callback) => nodeifyv2_1.default(this._request('get', prevPageUrl).then((data) => {
-                        return this._formatGetResponse(data, parent);
+                        const formattedResponse = this._formatGetResponse(data.parsedData, parent);
+                        formattedResponse._response = data.response;
+                        return formattedResponse;
                     }), callback);
                 }
                 return { meta, items: builtItems };
@@ -506,7 +521,7 @@ class Nimvelo {
             });
             const url = this._buildUrl(type, object, id, params);
             return nodeifyv2_1.default(this._request('get', url).then((data) => {
-                const formattedResponse = this._formatGetResponse(data, object.parent);
+                const formattedResponse = this._formatGetResponse(data.parsedData, object.parent);
                 return formattedResponse;
             }), callback);
         };
@@ -515,15 +530,25 @@ class Nimvelo {
             const requestMethod = object.id ? 'put' : 'post';
             return nodeifyv2_1.default(this._request(requestMethod, url, object).then((data) => {
                 // Update our object with the newly returned propreties
-                object.extend(data);
-                return data;
+                object.extend(data.parsedData);
+                const resolveData = Object.assign({}, data.parsedData, { _response: data.response });
+                return resolveData;
             }), callback);
         };
         this._deleteRepresentation = (object, callback) => {
             const url = this._buildUrl(object.type, object, object.id);
-            return nodeifyv2_1.default(this._request('delete', url, object), callback);
+            return nodeifyv2_1.default(this._request('delete', url, object), callback).then((data) => {
+                const resolveData = Object.assign({}, data.parsedData, { _response: data.response });
+                return resolveData;
+            });
         };
         this.VERSION = VERSION;
+        this.rateLimit = {
+            limit: 0,
+            remaining: 0,
+            reset: 0,
+        };
+        this.userAgent = `phone-api-client/v${VERSION}`;
         this.authPromise = Promise.resolve();
         this.init(options);
     }
@@ -558,4 +583,5 @@ class Nimvelo {
         }));
     }
 }
+Nimvelo.WebRTC = webRTC_1.default;
 exports.default = Nimvelo;

@@ -5,11 +5,11 @@ Node.js client for the [Nimvelo/Sipcentric API](https://developer.nimvelo.com/).
 ## Usage
 
 ```
-npm install nimvelo
+npm install @nimvelo/phone-api-client
 ```
 
 ```js
-const Nimvelo = require('@nimvelo/phone-api-client');
+const Nimvelo = require("@nimvelo/phone-api-client");
 
 // ...
 ```
@@ -38,12 +38,12 @@ There are further examples in the `examples/` directory. To try them, just clone
 #### Get all customers a user has access to
 
 ```js
-const Nimvelo = require('@nimvelo/phone-api-client');
+const Nimvelo = require("@nimvelo/phone-api-client");
 
 (async () => {
   const nimvelo = new Nimvelo({
-    username: 'myusername',
-    password: 'mypassword'
+    username: "myusername",
+    password: "mypassword"
   });
 
   const customers = await nimvelo.customers.get();
@@ -54,12 +54,12 @@ const Nimvelo = require('@nimvelo/phone-api-client');
 #### Get a specific customer
 
 ```js
-const Nimvelo = require('@nimvelo/phone-api-client');
+const Nimvelo = require("@nimvelo/phone-api-client");
 
 (async () => {
   const nimvelo = new Nimvelo({
-    username: 'myusername',
-    password: 'mypassword'
+    username: "myusername",
+    password: "mypassword"
   });
 
   const customerId = 1234;
@@ -72,12 +72,12 @@ const Nimvelo = require('@nimvelo/phone-api-client');
 #### Get a customer's phone book
 
 ```js
-const Nimvelo = require('@nimvelo/phone-api-client');
+const Nimvelo = require("@nimvelo/phone-api-client");
 
 (async () => {
   const nimvelo = new Nimvelo({
-    username: 'myusername',
-    password: 'mypassword'
+    username: "myusername",
+    password: "mypassword"
   });
 
   const customerId = 1234;
@@ -92,12 +92,12 @@ const Nimvelo = require('@nimvelo/phone-api-client');
 #### Create phone book entry
 
 ```js
-const Nimvelo = require('@nimvelo/phone-api-client');
+const Nimvelo = require("@nimvelo/phone-api-client");
 
 (async () => {
   const nimvelo = new Nimvelo({
-    username: 'myusername',
-    password: 'mypassword'
+    username: "myusername",
+    password: "mypassword"
   });
 
   const customerId = 1234;
@@ -109,9 +109,7 @@ const Nimvelo = require('@nimvelo/phone-api-client');
     email: "hello@nimvelo.com"
   };
 
-  const createdEntry = await customer.phonebook
-    .create(phonebookentry)
-    .save();
+  const createdEntry = await customer.phonebook.create(phonebookentry).save();
 
   console.log(createdEntry);
 })();
@@ -120,12 +118,12 @@ const Nimvelo = require('@nimvelo/phone-api-client');
 #### Update phone book entry
 
 ```js
-const Nimvelo = require('@nimvelo/phone-api-client');
+const Nimvelo = require("@nimvelo/phone-api-client");
 
 (async () => {
   const nimvelo = new Nimvelo({
-    username: 'myusername',
-    password: 'mypassword'
+    username: "myusername",
+    password: "mypassword"
   });
 
   const customerId = 1234;
@@ -134,7 +132,7 @@ const Nimvelo = require('@nimvelo/phone-api-client');
   const customer = await nimvelo.customers.get(customerId);
   const phonebookentry = await customer.phonebook.get(phonebookentryId);
 
-  phonebookentry.name = 'Updated name';
+  phonebookentry.name = "Updated name";
 
   const savedEntry = await phonebookentry.save();
 
@@ -142,16 +140,15 @@ const Nimvelo = require('@nimvelo/phone-api-client');
 })();
 ```
 
-
 #### Delete phone book entry
 
 ```js
-const Nimvelo = require('@nimvelo/phone-api-client');
+const Nimvelo = require("@nimvelo/phone-api-client");
 
 (async () => {
   const nimvelo = new Nimvelo({
-    username: 'myusername',
-    password: 'mypassword'
+    username: "myusername",
+    password: "mypassword"
   });
 
   const customerId = 1234;
@@ -163,6 +160,14 @@ const Nimvelo = require('@nimvelo/phone-api-client');
   await phonebookentry.delete();
 })();
 ```
+
+const customer = await nimvelo.customers.get(customerId);
+const phonebookentry = await customer.phonebook.get(phonebookentryId);
+
+await phonebookentry.delete();
+})();
+
+````
 
 #### Subscribe to incoming call events
 
@@ -179,12 +184,12 @@ const nimvelo = new Nimvelo({ username: "myusername", password: "mypassword" });
 nimvelo.stream.subscribe("incomingcall", function(call) {
   console.log(call);
 });
-```
+````
 
 #### Monitor presence of an extension
 
 ```js
-const Nimvelo = require('@nimvelo/phone-api-client');
+const Nimvelo = require("@nimvelo/phone-api-client");
 
 const nimvelo = new Nimvelo({
   username: "myusername",
@@ -207,7 +212,7 @@ const subscriptions = await nimvelo.presenceWatcher.subscribe({
 #### Monitor presence of all extensions on an account
 
 ```js
-const Nimvelo = require('@nimvelo/phone-api-client');
+const Nimvelo = require("@nimvelo/phone-api-client");
 
 const nimvelo = new Nimvelo({
   username: "myusername",

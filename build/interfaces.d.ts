@@ -70,3 +70,34 @@ export interface QueryParams {
 }
 export declare type Callback = (result: any, error?: any) => void;
 export declare type PromisedCallback = (callback?: Callback) => Promise<any>;
+export interface WebRTCConfig {
+    username: string;
+    password: string;
+    instanceId: string;
+    [k: string]: any;
+}
+export interface CallOptions {
+    mediaConstraints: {
+        audio: boolean;
+        video: boolean;
+    };
+    rtcOfferConstraints: {
+        offerToReceiveVideo: number;
+    };
+    [k: string]: any;
+}
+export interface IWebRTC {
+    dial(target: string, options: CallOptions): any;
+    receiveRequest(request: any): any;
+    emitUserStateChanged(user: string, state: string): any;
+    getSubscription(message: any): any;
+    updateVersion(request: any, version: any): any;
+    updateSubscriptionState(request: any): any;
+    storeSubscription(response: any): any;
+    expireSubscription(response: any): any;
+    clearSubscriptions(): any;
+    subscribeToUser(user: string, replacesSubscription: any): any;
+    resubscribeToUser(subscription: any): any;
+    sendSubscribeRequest(ruri: string, options: any): any;
+    subscribeResponseHandler(response: any): any;
+}
