@@ -1,5 +1,5 @@
 // @ts-ignore
-import * as parse from 'xml-parser';
+import parse from 'xml-parser';
 import { WebRTCConfig, CallOptions, IWebRTC } from '../../interfaces';
 
 const npmPackage = require('../../../package.json');
