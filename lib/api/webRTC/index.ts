@@ -67,7 +67,9 @@ const instantiate = (
       this._receiveRequest = this.receiveRequest;
 
       this.receiveRequest = (request: any) => {
-        // If we've got a NOTIFY
+        // Define a new receiveRequest handler that checks for NOTIFYs
+        // If the request is a NOTIFY it handles it,
+        // otherwise it passes the request off to _receiveRequest
         if (
           request.method === JsSIP.C.NOTIFY &&
           request.headers.Event[0].raw === 'dialog'
