@@ -88,7 +88,6 @@ export interface CallOptions {
 }
 export interface IWebRTC {
     dial(target: string, options: CallOptions): any;
-    receiveRequest(request: any): any;
     emitUserStateChanged(user: string, state: string): any;
     getSubscription(message: any): any;
     updateVersion(request: any, version: any): any;

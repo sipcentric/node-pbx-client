@@ -66,6 +66,68 @@ const instantiate = (
       // Rename receiveRequest to _receiveRequest
       this._receiveRequest = this.receiveRequest;
 
+      this.receiveRequest = (request: any) => {
+        // If we've got a NOTIFY
+        if (
+          request.method === JsSIP.C.NOTIFY &&
+          request.headers.Event[0].raw === 'dialog'
+        ) {
+          // JsSIP transaction check
+          if (Transactions.checkTransaction(this, request)) return;
+
+          // This is horrible but required
+          // eslint-disable-next-line no-new
+          new Transactions.NonInviteServerTransaction(
+            this,
+            this.transport,
+            request,
+          );
+
+          try {
+            const subscriptionStateHeader =
+              request.headers['Subscription-State'][0].raw;
+            if (subscriptionStateHeader) {
+              const subscriptionState = subscriptionStateHeader.split(';')[0];
+
+              this.updateSubscriptionState(request);
+
+              if (subscriptionState === 'terminated') return;
+            }
+          } catch (err) {
+            // console.debug('err: ', err);
+          }
+
+          if (!request.body) return;
+
+          // Parse the xml request body
+          const parsedBody = parse(request.body);
+
+          try {
+            // Grab the state and version from the parsed body
+            const state = parsedBody.root.children[0].children[0].content;
+            const version = parseInt(parsedBody.root.attributes.version, 10);
+
+            // Find the subscription
+            const subscription = this.getSubscription(request);
+
+            if (subscription) {
+              if (version > subscription.version) {
+                this.updateVersion(request, version);
+                this.emitUserStateChanged(subscription.toUser, state);
+              }
+              // Reply OK
+              request.reply(200);
+            }
+          } catch (err) {
+            console.debug('Error parsing xml: ', request);
+          }
+        } else {
+          // Pass the request off to the built-in receiveRequest
+          // eslint-disable-next-line consistent-return
+          return this._receiveRequest(request);
+        }
+      };
+
       this.dialogStateMap = new Map([
         ['terminated', 'AVAILABLE'],
         ['early', 'RINGING'],
@@ -108,68 +170,6 @@ const instantiate = (
       };
 
       return this.call(target, shallowMergedOptions);
-    }
-
-    receiveRequest(request: any) {
-      // If we've got a NOTIFY
-      if (
-        request.method === JsSIP.C.NOTIFY &&
-        request.headers.Event[0].raw === 'dialog'
-      ) {
-        // JsSIP transaction check
-        if (Transactions.checkTransaction(this, request)) return;
-
-        // This is horrible but required
-        // eslint-disable-next-line no-new
-        new Transactions.NonInviteServerTransaction(
-          this,
-          this.transport,
-          request,
-        );
-
-        try {
-          const subscriptionStateHeader =
-            request.headers['Subscription-State'][0].raw;
-          if (subscriptionStateHeader) {
-            const subscriptionState = subscriptionStateHeader.split(';')[0];
-
-            this.updateSubscriptionState(request);
-
-            if (subscriptionState === 'terminated') return;
-          }
-        } catch (err) {
-          // console.debug('err: ', err);
-        }
-
-        if (!request.body) return;
-
-        // Parse the xml request body
-        const parsedBody = parse(request.body);
-
-        try {
-          // Grab the state and version from the parsed body
-          const state = parsedBody.root.children[0].children[0].content;
-          const version = parseInt(parsedBody.root.attributes.version, 10);
-
-          // Find the subscription
-          const subscription = this.getSubscription(request);
-
-          if (subscription) {
-            if (version > subscription.version) {
-              this.updateVersion(request, version);
-              this.emitUserStateChanged(subscription.toUser, state);
-            }
-            // Reply OK
-            request.reply(200);
-          }
-        } catch (err) {
-          console.debug('Error parsing xml: ', request);
-        }
-      } else {
-        // Pass the request off to the built-in receiveRequest
-        // eslint-disable-next-line consistent-return
-        return this._receiveRequest(request);
-      }
     }
 
     emitUserStateChanged(user: string, state: string) {
