@@ -1,12 +1,12 @@
 import colors from 'colors/safe';
 
-import Nimvelo from '../../lib';
-import CONFIG from './config';
+const Sipcentric = require('../../lib');
+const CONFIG = require('./config');
 
 const myCustomerId = 5;
 
 // Enter your API credentials here
-const nimvelo = new Nimvelo({
+const sipcentric = new Sipcentric({
   username: CONFIG.USERNAME,
   password: CONFIG.PASSWORD,
 });
@@ -24,18 +24,18 @@ const colorsMap = new Map([
 ]);
 
 const subscribeToAll = async () => {
-  const customer = await nimvelo.customers.get(myCustomerId);
+  const customer = await sipcentric.customers.get(myCustomerId);
   const phones = await customer.phones.get();
 
   // Build the label for each extension
-  phones.items.forEach(x => {
+  phones.items.forEach((x) => {
     extensionLabelsMap.set(x.id, `${x.shortNumber} - ${x.name}`);
   });
 
   // Get a list of extension IDs to monitor
-  const extensionIds = phones.items.map(x => x.id);
+  const extensionIds = phones.items.map((x) => x.id);
 
-  await nimvelo.presenceWatcher.subscribe({
+  await sipcentric.presenceWatcher.subscribe({
     customerId: myCustomerId,
     targets: extensionIds,
     onStateChange: (extension, newState) => {
@@ -57,7 +57,9 @@ const renderOutput = () => {
 
       if (state === 'RINGING') {
         // Flash between AVAILABLE and BUSY colours
-        colorName = isFlashing ? colorsMap.get('AVAILABLE') : colorsMap.get('BUSY');
+        colorName = isFlashing
+          ? colorsMap.get('AVAILABLE')
+          : colorsMap.get('BUSY');
       } else {
         // Default to grey, if unknown
         colorName = colorsMap.get(state) || 'grey';

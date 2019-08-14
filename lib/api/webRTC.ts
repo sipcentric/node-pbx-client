@@ -24,7 +24,7 @@ const instantiate = (
         domain: 'sip.sipcentric.com',
         register: false,
         registerExpires: 300,
-        userAgent: `phone-api-client/v${VERSION}`,
+        userAgent: `sipcentric-pbx-client/v${VERSION}`,
         wsServer: 'wss://sipws.sipcentric.com',
       };
 
