@@ -1,16 +1,16 @@
-# Nimvelo Node.js Client
+# Sipcentric Node.js Client
 
-Node.js client for the [Nimvelo/Sipcentric API](https://developer.nimvelo.com/).
+Node.js client for the [Sipcentric API](https://developer.sipcentric.com/).
 
 
 ## Usage
 
 ```
-npm install @nimvelo/phone-api-client
+npm install @sipcentric/pbx-client
 ```
 
 ```js
-const Nimvelo = require('@nimvelo/phone-api-client');
+const Sipcentric = require('@sipcentric/pbx-client');
 
 // ...
 ```
@@ -25,11 +25,11 @@ The examples below use Promises with async/await, however the library also suppo
 
 ```js
 // Using async/await
-const customers = await nimvelo.customers.get();
+const customers = await sipcentric.customers.get();
 doStuffWith(customers);
 
 // Using callbacks
-nimvelo.customers.get((err, customers) => {
+sipcentric.customers.get((err, customers) => {
   doStuffWith(customers);
 });
 ```
@@ -39,15 +39,15 @@ There are further examples in the `examples/` directory. To try them, just clone
 #### Get all customers a user has access to
 
 ```js
-const Nimvelo = require('@nimvelo/phone-api-client');
+const Sipcentric = require('@sipcentric/pbx-client');
 
 (async () => {
-  const nimvelo = new Nimvelo({
+  const sipcentric = new Sipcentric({
     username: 'myusername',
     password: 'mypassword'
   });
 
-  const customers = await nimvelo.customers.get();
+  const customers = await sipcentric.customers.get();
   console.log(customers);
 })();
 ```
@@ -55,17 +55,17 @@ const Nimvelo = require('@nimvelo/phone-api-client');
 #### Get a specific customer
 
 ```js
-const Nimvelo = require('@nimvelo/phone-api-client');
+const Sipcentric = require('@sipcentric/pbx-client');
 
 (async () => {
-  const nimvelo = new Nimvelo({
+  const sipcentric = new Sipcentric({
     username: 'myusername',
     password: 'mypassword'
   });
 
   const customerId = 1234;
 
-  const customer = await nimvelo.customers.get(customerId);
+  const customer = await sipcentric.customers.get(customerId);
   console.log(customer);
 })();
 ```
@@ -73,17 +73,17 @@ const Nimvelo = require('@nimvelo/phone-api-client');
 #### Get a customer's phone book
 
 ```js
-const Nimvelo = require('@nimvelo/phone-api-client');
+const Sipcentric = require('@sipcentric/pbx-client');
 
 (async () => {
-  const nimvelo = new Nimvelo({
+  const sipcentric = new Sipcentric({
     username: 'myusername',
     password: 'mypassword'
   });
 
   const customerId = 1234;
 
-  const customer = await nimvelo.customers.get(customerId);
+  const customer = await sipcentric.customers.get(customerId);
   const phonebook = await customer.phonebook.get();
 
   console.log(phonebook);
@@ -93,21 +93,21 @@ const Nimvelo = require('@nimvelo/phone-api-client');
 #### Create phone book entry
 
 ```js
-const Nimvelo = require('@nimvelo/phone-api-client');
+const Sipcentric = require('@sipcentric/pbx-client');
 
 (async () => {
-  const nimvelo = new Nimvelo({
+  const sipcentric = new Sipcentric({
     username: 'myusername',
     password: 'mypassword'
   });
 
   const customerId = 1234;
 
-  const customer = await nimvelo.customers.get(customerId);
+  const customer = await sipcentric.customers.get(customerId);
   const phonebookentry = {
-    name: 'Nimvelo',
+    name: 'Sipcentric',
     phoneNumber: '03301200030',
-    email: 'hello@nimvelo.com'
+    email: 'hello@sipcentric.com'
   };
 
   const createdEntry = await customer.phonebook
@@ -121,10 +121,10 @@ const Nimvelo = require('@nimvelo/phone-api-client');
 #### Update phone book entry
 
 ```js
-const Nimvelo = require('@nimvelo/phone-api-client');
+const Sipcentric = require('@sipcentric/pbx-client');
 
 (async () => {
-  const nimvelo = new Nimvelo({
+  const sipcentric = new Sipcentric({
     username: 'myusername',
     password: 'mypassword'
   });
@@ -132,7 +132,7 @@ const Nimvelo = require('@nimvelo/phone-api-client');
   const customerId = 1234;
   const phonebookentryId = 5678;
 
-  const customer = await nimvelo.customers.get(customerId);
+  const customer = await sipcentric.customers.get(customerId);
   const phonebookentry = await customer.phonebook.get(phonebookentryId);
 
   phonebookentry.name = 'Updated name';
@@ -147,10 +147,10 @@ const Nimvelo = require('@nimvelo/phone-api-client');
 #### Delete phone book entry
 
 ```js
-const Nimvelo = require('@nimvelo/phone-api-client');
+const Sipcentric = require('@sipcentric/pbx-client');
 
 (async () => {
-  const nimvelo = new Nimvelo({
+  const sipcentric = new Sipcentric({
     username: 'myusername',
     password: 'mypassword'
   });
@@ -158,7 +158,7 @@ const Nimvelo = require('@nimvelo/phone-api-client');
   const customerId = 1234;
   const phonebookentryId = 5678;
 
-  const customer = await nimvelo.customers.get(customerId);
+  const customer = await sipcentric.customers.get(customerId);
   const phonebookentry = await customer.phonebook.get(phonebookentryId);
 
   await phonebookentry.delete();
@@ -169,14 +169,14 @@ const Nimvelo = require('@nimvelo/phone-api-client');
 #### Subscribe to incoming call events
 
 ```js
-const Nimvelo = require('@nimvelo/phone-api-client');
+const Sipcentric = require('@sipcentric/pbx-client');
 
-const nimvelo = new Nimvelo({
+const sipcentric = new Sipcentric({
   username: 'myusername',
   password: 'mypassword'
 });
 
-nimvelo.stream.subscribe('incomingcall', function(call) {
+sipcentric.stream.subscribe('incomingcall', function(call) {
 
   console.log(call);
 
@@ -188,9 +188,9 @@ nimvelo.stream.subscribe('incomingcall', function(call) {
 #### Monitor presence of an extension
 
 ```js
-const Nimvelo = require('@nimvelo/phone-api-client');
+const Sipcentric = require('@sipcentric/pbx-client');
 
-const nimvelo = new Nimvelo({
+const sipcentric = new Sipcentric({
   username: 'myusername',
   password: 'mypassword',
 });
@@ -198,7 +198,7 @@ const nimvelo = new Nimvelo({
 const myCustomerId = 1; // Change this to your customer ID
 
 // Returns an array of subscriptions
-const subscriptions = await nimvelo.presenceWatcher.subscribe({
+const subscriptions = await sipcentric.presenceWatcher.subscribe({
   customerId: myCustomerId,
   targets: ['012345'], // The extensions you'd like to monitor
   onStateChange: (extension, newState) => {
@@ -212,9 +212,9 @@ const subscriptions = await nimvelo.presenceWatcher.subscribe({
 #### Monitor presence of all extensions on an account
 
 ```js
-const Nimvelo = require('@nimvelo/phone-api-client');
+const Sipcentric = require('@sipcentric/pbx-client');
 
-const nimvelo = new Nimvelo({
+const sipcentric = new Sipcentric({
   username: 'myusername',
   password: 'mypassword',
 });
@@ -222,7 +222,7 @@ const nimvelo = new Nimvelo({
 const subscribeToAll = async () => {
   const myCustomerId = 1; // Change this to your customer ID
   // Get your customer
-  const customer = await nimvelo.customers.get(myCustomerId);
+  const customer = await sipcentric.customers.get(myCustomerId);
   // Get a list of all regular extensions
   const phones = await customer.phones.get();
 
@@ -230,7 +230,7 @@ const subscribeToAll = async () => {
   const extensionIds = phones.items.map(x => x.id);
 
   // Subscribe to each extension
-  const subscriptions = await nimvelo.presenceWatcher.subscribe({
+  const subscriptions = await sipcentric.presenceWatcher.subscribe({
     customerId: myCustomerId,
     targets: extensionIds,
     onStateChange: (extension, newState) => {

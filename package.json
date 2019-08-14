@@ -1,7 +1,7 @@
 {
-  "name": "@nimvelo/phone-api-client",
+  "name": "@sipcentric/pbx-client",
   "version": "1.6.2",
-  "description": "Official Nimvelo Phone API client",
+  "description": "Official Sipcentric PBX client",
   "main": "lib/index.js",
   "scripts": {
     "lint": "eslint lib/**; exit 0;",
@@ -9,26 +9,29 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Nimvelo/node-client"
+    "url": "https://github.com/sipcentric/node-pbx-client"
   },
   "keywords": [
+    "sipcentric",
     "nimvelo",
     "voip",
     "api",
-    "streaming"
+    "streaming",
+    "webrtc"
   ],
   "author": {
     "name": "Josh Farrant",
-    "email": "josh.farrant@nimvelo.com"
+    "email": "josh.farrant@sipcentric.com"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nimvelo/node-client/issues"
+    "url": "https://github.com/sipcentric/node-pbx-client/issues"
   },
-  "homepage": "https://github.com/Nimvelo/node-client",
+  "homepage": "https://github.com/sipcentric/node-pbx-client",
   "dependencies": {
     "atmosphere.js": "^2.3.8",
     "deep-extend": "^0.6.0",
+    "jssip": "^3.3.6",
     "request": "^2.88.0",
     "xml-parser": "^1.2.1"
   },

@@ -1,12 +1,12 @@
 const colors = require('colors/safe');
 
-const Nimvelo = require('../../lib');
+const Sipcentric = require('../../lib');
 const CONFIG = require('./config');
 
 const myCustomerId = 5;
 
 // Enter your API credentials here
-const nimvelo = new Nimvelo({
+const sipcentric = new Sipcentric({
   username: CONFIG.USERNAME,
   password: CONFIG.PASSWORD,
 });
@@ -24,7 +24,7 @@ const colorsMap = new Map([
 ]);
 
 const subscribeToAll = async () => {
-  const customer = await nimvelo.customers.get(myCustomerId);
+  const customer = await sipcentric.customers.get(myCustomerId);
   const phones = await customer.phones.get();
 
   // Build the label for each extension
@@ -35,7 +35,7 @@ const subscribeToAll = async () => {
   // Get a list of extension IDs to monitor
   const extensionIds = phones.items.map(x => x.id);
 
-  await nimvelo.presenceWatcher.subscribe({
+  await sipcentric.presenceWatcher.subscribe({
     customerId: myCustomerId,
     targets: extensionIds,
     onStateChange: (extension, newState) => {
