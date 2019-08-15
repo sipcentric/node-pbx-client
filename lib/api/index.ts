@@ -219,7 +219,10 @@ class Nimvelo implements NimveloClient {
   };
 
   // eslint-disable-next-line class-methods-use-this
-  async getUA(config: Partial<WebRTCConfig>, modules: { [k: string]: any }) {
+  async getUA(
+    config: Partial<WebRTCConfig & { extensionId: string }>,
+    modules: { [k: string]: any },
+  ) {
     const webRTCConfig = extend(
       {
         username: undefined,
@@ -253,26 +256,36 @@ class Nimvelo implements NimveloClient {
         }
       }
 
-      // Get this user's linkedUser on this customer
-      const linkedUser = await customer.linkedusers.get('me');
+      let { extensionId } = config;
 
-      if (!linkedUser) {
-        throw new Error(
-          `No linkedUser found for this user on this customer (${customer.id})`,
-        );
-      }
+      if (!extensionId) {
+        // Get this user's linkedUser on this customer
+        const linkedUser = await customer.linkedusers.get('me');
 
-      // Get the linkedUser's defaultExtension
-      const { defaultExtension } = linkedUser;
+        if (!linkedUser) {
+          throw new Error(
+            `No linkedUser found for this user on this customer (${customer.id})`,
+          );
+        }
 
-      if (!defaultExtension) {
-        throw new Error(
-          `No default extension set on linkedUser (${linkedUser.id}) on customer (${customer.id})`,
-        );
+        // Get the linkedUser's defaultExtension
+        const { defaultExtension } = linkedUser;
+
+        if (!defaultExtension) {
+          throw new Error(
+            `No default extension set on linkedUser (${linkedUser.id}) on customer (${customer.id})`,
+          );
+        }
+
+        extensionId = defaultExtension;
       }
 
       // Fetch the default extension
-      const extension = await customer.phones.get(defaultExtension);
+      const extension = await customer.phones.get(extensionId);
+
+      if (!extension) {
+        throw new Error(`Extension with id ${extensionId} not found`);
+      }
 
       // Fetch the default extension's sip credentials
       const sipIdentity = await extension.sip.get();
