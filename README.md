@@ -11,21 +11,29 @@ npm install @sipcentric/pbx-client
 ```js
 const Sipcentric = require('@sipcentric/pbx-client');
 
+const sipcentric = new Sipcentric({
+  username: 'myusername',
+  password: 'mypassword',
+});
+
 // ...
 ```
 
-## Getting started
+## Examples
 
-### Examples
-
-The techniques shown in these examples work in the same way across the majority of resources. Refer to the API documentation for more information on those specific resources.
+The techniques shown in these examples work in the same way across the majority of resources. Refer to the [API Documentation](https://developer.sipcentric.com/). for more information on those specific resources.
 
 The examples below use Promises with async/await, however the library also supports callbacks. To use callbacks, simply pass a callback as the final parameter.
 
 ```js
-// Using async/await
+// Using promises with async/await
 const customers = await sipcentric.customers.get();
 doStuffWith(customers);
+
+// Using promises with .then()
+sipcentric.customers.get().then((customers) => {
+  doStuffWith(customers);
+});
 
 // Using callbacks
 sipcentric.customers.get((err, customers) => {
@@ -33,7 +41,9 @@ sipcentric.customers.get((err, customers) => {
 });
 ```
 
-There are further examples in the `examples/` directory. To try them, just clone the project, run an install in the project root, then again in the directory of the example you want to run. Finally, run `npm start` and the example will run.
+There are further examples in the `examples/` directory. To try them, just clone the project, run an install in the project root, then again in the directory of the example you want to run. Finally, run `npm start` in the example directory and the example will run.
+
+### Interacting with the PBX REST API
 
 #### Get all customers a user has access to
 
@@ -169,6 +179,8 @@ await phonebookentry.delete();
 
 ````
 
+### Interacting with the Streaming API
+
 #### Subscribe to incoming call events
 
 ```js
@@ -179,70 +191,59 @@ const sipcentric = new Sipcentric({
   password: 'mypassword'
 });
 
-sipcentric.stream.subscribe('incomingcall', function(call) {
-
-nimvelo.stream.subscribe("incomingcall", function(call) {
+sipcentric.stream.subscribe('incomingcall', (call) => {
   console.log(call);
 });
 ````
+
+### Interacting with the PBX using WebRTC
 
 #### Monitor presence of an extension
 
 ```js
 const Sipcentric = require('@sipcentric/pbx-client');
 
-const sipcentric = new Sipcentric({
-  username: 'myusername',
-  password: 'mypassword',
-});
+(async () => {
+  const sipcentric = new Sipcentric({
+    username: 'myusername',
+    password: 'mypassword',
+  });
 
-const myCustomerId = 1; // Change this to your customer ID
+  const ua = await sipcentric.getUA();
 
-// Returns an array of subscriptions
-const subscriptions = await sipcentric.presenceWatcher.subscribe({
-  customerId: myCustomerId,
-  targets: ['012345'], // The extensions you'd like to monitor
-  onStateChange: (extension, newState) => {
-    console.log(extension); // 012345
+  ua.on('userStateChanged', (extension, newState) => {
+    console.log(extension); // 012345 or 567890
     console.log(newState); // AVAILABLE, BUSY, or RINGING
-  },
-});
+  });
+
+  ua.on('connected', () => {
+    ua.subscribeToUser('012345');
+    ua.subscribeToUser('567890');
+  });
+
+  ua.start();
+})();
 ```
 
-#### Monitor presence of all extensions on an account
+#### Make a call
 
 ```js
 const Sipcentric = require('@sipcentric/pbx-client');
 
-const sipcentric = new Sipcentric({
-  username: 'myusername',
-  password: 'mypassword',
-});
-
-const subscribeToAll = async () => {
-  const myCustomerId = 1; // Change this to your customer ID
-  // Get your customer
-  const customer = await sipcentric.customers.get(myCustomerId);
-  // Get a list of all regular extensions
-  const phones = await customer.phones.get();
-
-  // Get the ids of each extension
-  const extensionIds = phones.items.map((x) => x.id);
-
-  // Subscribe to each extension
-  const subscriptions = await sipcentric.presenceWatcher.subscribe({
-    customerId: myCustomerId,
-    targets: extensionIds,
-    onStateChange: (extension, newState) => {
-      console.log(extension);
-      console.log(newState);
-    },
+(async () => {
+  const sipcentric = new Sipcentric({
+    username: 'myusername',
+    password: 'mypassword',
   });
-};
 
-try {
-  subscribeToAll();
-} catch (err) {
-  console.error('Error: ', err);
-}
+  const ua = await sipcentric.getUA();
+
+  ua.on('connected', () => {
+    // *52 is an echo test, which is useful for testing
+    const numberToCall = '*52';
+    ua.dial(numberToCall);
+  });
+
+  ua.start();
+})();
 ```
