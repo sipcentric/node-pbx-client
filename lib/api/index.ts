@@ -1,4 +1,5 @@
 import extend = require('deep-extend');
+import { v4 as uuidv4 } from 'uuid';
 import { Base64 } from 'js-base64';
 
 import Availablebundle from './availablebundle';
@@ -227,11 +228,34 @@ class Nimvelo implements NimveloClient {
       {
         username: undefined,
         password: undefined,
-        instanceId: undefined, // TODO Generate this, if need be
+        instanceId: undefined,
         register: false,
       },
       config,
     );
+
+    // FIXME only applicable to browser
+    // If we've not been passed an instanceId, check for localStorage
+    if (
+      config.register && // If we want to register
+      !config.instanceId && // and we don't have an instanceId
+      window &&
+      window.localStorage // and localStorage is available
+    ) {
+      const keyName = 'sc-instance-id';
+
+      // Get the stored instanceId
+      let instanceId = window.localStorage.getItem(keyName);
+
+      // If there isn't a stored instanceId, generate one and store it
+      if (!instanceId) {
+        instanceId = uuidv4();
+        window.localStorage.setItem(keyName, instanceId);
+      }
+
+      // Set the instanceId in our webRTCConfig
+      webRTCConfig.instanceId = instanceId;
+    }
 
     // If no username passed, use the user details to fetch them
     if (!webRTCConfig.username) {
