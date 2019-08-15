@@ -35,7 +35,7 @@ import Sipregistration from './sipregistration';
 import Smsmessage from './smsmessage';
 import Timeinterval from './timeinterval';
 import Virtual from './virtual';
-import WebRTC from './webRTC';
+import instantiateWebRTC from './webRTC';
 
 import Representation from './representation';
 import RepresentationList from './representationList';
@@ -56,6 +56,7 @@ import {
   QueryParams,
   FormattedApiList,
   ApiList,
+  WebRTCConfig,
 } from '../interfaces';
 
 const VERSION: string = (npmPackage as any).version;
@@ -75,8 +76,6 @@ class Nimvelo implements NimveloClient {
   public customers: CustomerList;
   public stream: any;
   public presenceWatcher: any;
-
-  static WebRTC = WebRTC;
 
   constructor(options?: Partial<ClientOptions>) {
     this.VERSION = VERSION;
@@ -218,6 +217,73 @@ class Nimvelo implements NimveloClient {
       reset: (headers as any)['x-ratelimit-reset'],
     };
   };
+
+  // eslint-disable-next-line class-methods-use-this
+  async getUA(config: Partial<WebRTCConfig>, modules: { [k: string]: any }) {
+    const webRTCConfig = extend(
+      {
+        username: undefined,
+        password: undefined,
+        instanceId: undefined, // TODO Generate this, if need be
+        register: false,
+      },
+      config,
+    );
+
+    // If no username passed, use the user details to fetch them
+    if (!webRTCConfig.username) {
+      // Get the customers this user has access to
+      const customers = await this.customers.get();
+      if (customers.items.length === 0) {
+        throw new Error('This user does not have access to any customers');
+      }
+
+      // Default to the first customer in the list
+      let customer = customers.items[0];
+
+      // If a customerId is specified, see if that customer exists in the list
+      if (config.customerId) {
+        const chosenCustomer = customers.items.find(
+          (x: any) => x.id === `${config.customerId}`,
+        );
+
+        // If it is in the list, use it
+        if (chosenCustomer) {
+          customer = chosenCustomer;
+        }
+      }
+
+      // Get this user's linkedUser on this customer
+      const linkedUser = await customer.linkedusers.get('me');
+
+      if (!linkedUser) {
+        throw new Error(
+          `No linkedUser found for this user on this customer (${customer.id})`,
+        );
+      }
+
+      // Get the linkedUser's defaultExtension
+      const { defaultExtension } = linkedUser;
+
+      if (!defaultExtension) {
+        throw new Error(
+          `No default extension set on linkedUser (${linkedUser.id}) on customer (${customer.id})`,
+        );
+      }
+
+      // Fetch the default extension
+      const extension = await customer.phones.get(defaultExtension);
+
+      // Fetch the default extension's sip credentials
+      const sipIdentity = await extension.sip.get();
+
+      // Set the sip credentials in our webRTCConfig
+      webRTCConfig.username = sipIdentity.username;
+      webRTCConfig.password = sipIdentity.password;
+    }
+
+    return instantiateWebRTC(webRTCConfig, modules);
+  }
 
   // eslint-disable-next-line class-methods-use-this
   _pathForType = (type: string, id?: string) => {
