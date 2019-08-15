@@ -34,6 +34,7 @@
     "deep-extend": "^0.6.0",
     "jssip": "^3.3.6",
     "request": "^2.88.0",
+    "uuid": "^3.3.2",
     "xml-parser": "^1.2.1"
   },
   "devDependencies": {
