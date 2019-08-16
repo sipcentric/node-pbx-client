@@ -354,19 +354,32 @@ The `getUA()` method accepts a single optional parameter, which is a config obje
 interface Config {
   // Whether the User Agent should register (required for receiving calls)
   register?: boolean; // Default - false
-  // The instanceId (uuid) to send with the registration.
+
+  // The instanceId (uuid) to send with the registration
   instanceId?: string; // Defaults to generated uuid
+
   // The customer to use.
-  customerId?: string; // Defaults to first available customer.
+  customerId?: string; // Defaults to first available customer
+
   // The extension to use.
   extensionId?: string; // Defaults to linkedUser's default extension
+
   // The SIP username of the extension to use
   username?: string; // Defaults to default extension's username
+
   // The SIP password of the extension to use
   password?: string; // Defaults to default extension's password
+
+  // Pass your refs to the <audio> elements to use for local and remote audio
+  audio?: {
+    local?: HTMLAudioElement,
+    remote?: HTMLAudioElement,
+  } // Defaults to undefined
 }
 
-const config: Config = {};
+const config: Config = {
+  // ...
+};
 
 const ua = await sipcentric.getUA(config);
 ```
@@ -467,16 +480,22 @@ const Sipcentric = require('@sipcentric/pbx-client');
 
   // Create an instance of a user agent, passing { register: true }
   const ua = await sipcentric.getUA({
+    // Make sure we register once connected
     register: true,
+    // Bind our local and remote <audio> elements by passing refs
+    audio: {
+      local: localAudioRef,
+      remote: remoteAudioRef,
+    }
   });
 
   ua.on('registered', () => {
     // Do things that rely on a registration here
   });
 
-  ua.on('registrationFailed', (response, cause) => {
+  ua.on('registrationFailed', (data) => {
     // Log out any errors
-    console.log('registration failed', cause);
+    console.log('registration failed', data.cause);
   });
 
   // Start, connect, and register the user agent
@@ -490,7 +509,7 @@ To make a call, you'll need access to browser APIs, so you'll likely need to use
 
 Once you've got the library running in a browser, you'll be able to call the `.dial()` method on the ua.
 
-// TODO Add information on binding audio elements
+You can learn more about handling ongoing calls in [JsSIP's RTCSession documentation](https://jssip.net/documentation/3.3.x/api/session/).
 
 ```js
 const Sipcentric = require('@sipcentric/pbx-client');
@@ -501,14 +520,32 @@ const Sipcentric = require('@sipcentric/pbx-client');
     password: 'mypassword',
   });
 
-  // Create an instance of a user agent
-  const ua = await sipcentric.getUA();
+  // Create an instance of a user agent, passing refs to your <audio> elements
+  const ua = await sipcentric.getUA({
+    audio: {
+      local: localAudioRef,
+      remote: remoteAudioRef,
+    },
+  });
 
   // For the sake of a simple example, we'll dial a number as soon as we connect
   ua.on('connected', () => {
     // *52 is an echo test, which is useful for development
-    ua.dial('*52'); // Change this to the number you'd like to call
-  });
+    const call = ua.dial('*52'); // Change this to the number you'd like to call
+
+    // Do things with the call.session here (.mute(), .hold(), .terminate(), etc)
+
+    // Let's put the call on hold for a few seconds
+    call.session.hold();
+
+    setTimeout(() => {
+      // If it's still on hold
+      if (call.session.isOnHold()) {
+        // Take it off hold
+        call.session.unhold();
+      }
+    }, 3000);
+});
 
   // Start and connect the user agent
   ua.start();
@@ -517,8 +554,48 @@ const Sipcentric = require('@sipcentric/pbx-client');
 
 #### Receive a call
 
-// TODO
+To receive incoming calls, you'll first need to make sure your ua is registered, then you'll need to listen for the `newRTCSession` event, which is emitted for both incoming and outgoing calls. Because it's emitted for all calls, you'll need to check that the `originator` of the call is `'remote'` to ensure that it's an inbound call. Once you're happy, you can call `call.session.answer()` to answer the call.
+
+You can learn more about handling ongoing calls in [JsSIP's RTCSession documentation](https://jssip.net/documentation/3.3.x/api/session/).
 
 ```js
+const Sipcentric = require('@sipcentric/pbx-client');
 
+(async () => {
+  const sipcentric = new Sipcentric({
+    username: 'myusername',
+    password: 'mypassword',
+  });
+
+  // Create an instance of a user agent, passing refs to your <audio> elements
+  const ua = await sipcentric.getUA({
+    // Make sure you're registered if you want to receive incoming calls
+    register: true,
+    audio: {
+      local: localAudioRef,
+      remote: remoteAudioRef,
+    },
+  });
+
+  ua.on('registered', () => {
+    console.log('registered');
+  });
+
+  ua.on('registrationFailed', (data) => {
+    // Log out any errors
+    console.log('registration failed', data.cause);
+  });
+
+  // Fired on a new call, inbound or outbound
+  ua.on('newRTCSession', (call) => {
+    // Make sure it's an inbound call
+    if (call.originator === 'remote') {
+      // Let's answer the call straight away
+      call.session.answer();
+    }
+  });
+
+  // Start and connect the user agent
+  ua.start();
+})();
 ```
