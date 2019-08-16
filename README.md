@@ -30,7 +30,7 @@ A Node.js client for interacting with the Sipcentric PBX.
 
 - Implements all of the Sipcentric REST API endpoints to make interacting with the API simple.
 - Wraps [JsSIP](https://github.com/versatica/JsSIP) to allow you to easily make and receive calls through the Sipcentric PBX using WebRTC and WebSockets.
-- Works in Node.js and in the browser (making/receiving calls only works in the browser).
+- Works in Node.js and in the browser (making/receiving calls _only_ works in the browser).
 
 ## Getting started
 
@@ -51,7 +51,7 @@ const sipcentric = new Sipcentric({
 
 ## Examples
 
-There are examples of how to use this library in the `examples/` directory. To try them, just clone the project, run an install in the project root, then again in the directory of the example you want to run. Finally, run `npm start` in the example directory and the example will run.
+There are examples of how to use this library in the `examples/` directory. To try them, just clone the project, run a `npm install` in the project root, then again in the directory of the example you want to run. Finally, run `npm start` in the example directory and the example will run.
 
 ## Interacting with the REST API
 
@@ -70,7 +70,7 @@ const sipcentric = new Sipcentric({
 
 ### Promises and callbacks
 
-All of the examples in this README will use Promises and async/await, however this library also supports callbacks. To use callbacks, simply pass a callback as the final parameter.
+All of the examples in this README use Promises and async/await, however this library also supports callbacks. To use callbacks, simply pass a callback as the final parameter and a promise won't be returned.
 
 ```js
 // Using promises with async/await
@@ -162,9 +162,7 @@ const Sipcentric = require('@sipcentric/pbx-client');
     password: 'mypassword',
   });
 
-  const customerId = 1234;
-
-  const customer = await sipcentric.customers.get(customerId);
+  const customer = await sipcentric.customers.get('1234');
   const phonebook = await customer.phonebook.get();
 
   console.log(phonebook);
@@ -185,9 +183,7 @@ const Sipcentric = require('@sipcentric/pbx-client');
     password: 'mypassword',
   });
 
-  const customerId = 1234;
-
-  const customer = await sipcentric.customers.get(customerId);
+  const customer = await sipcentric.customers.get('1234');
   const phonebookEntry = await customer.phonebook.get('359');
 
   console.log(phonebookEntry);
@@ -208,9 +204,7 @@ const Sipcentric = require('@sipcentric/pbx-client');
     password: 'mypassword',
   });
 
-  const customerId = 1234;
-
-  const customer = await sipcentric.customers.get(customerId);
+  const customer = await sipcentric.customers.get('1234');
   const phonebookEntry = await customer.phonebookEntry.get('359');
 
   phonebookEntry.name = 'Joseph Bloggs';
@@ -235,9 +229,7 @@ const Sipcentric = require('@sipcentric/pbx-client');
     password: 'mypassword',
   });
 
-  const customerId = 1234;
-
-  const customer = await sipcentric.customers.get(customerId);
+  const customer = await sipcentric.customers.get('1234');
 
   const phonebookEntry = {
     name: 'Sipcentric',
@@ -266,9 +258,7 @@ const Sipcentric = require('@sipcentric/pbx-client');
     password: 'mypassword',
   });
 
-  const customerId = 1234;
-
-  const customer = await sipcentric.customers.get(customerId);
+  const customer = await sipcentric.customers.get('1234');
   const phonebookEntry = await customer.phonebook.get('360');
 
   await phonebookEntry.delete();
@@ -277,7 +267,7 @@ const Sipcentric = require('@sipcentric/pbx-client');
 
 ### Interacting with other resources
 
-The examples above show how to fetch customers and phonebookentrys. **The same methods are available across all resources.**
+The examples above show how to fetch customers and phone book entries. **The same methods are available across all resources.**
 
 - `.get(id?: string)` - List a resource or, if an ID is passed, fetch an individual representation.
 - `.create(obj: {})` - Create a representation from an object. Must then call `.save()` on the returned representation to persist it to the API.
@@ -286,43 +276,45 @@ The examples above show how to fetch customers and phonebookentrys. **The same m
 
 You can find out a bit more about the available resources in the [API Documentation](https://developer.sipcentric.com/). The resources that this client supports are listed below. We endeavour to keep this library up-to-date with the current state of the API, however if there is a resource listed in the API docs that isn't available here, please open an issue and it will be added as a matter of priority.
 
-- sipcentric
-  - .customers
-    - .availablebundles
-    - .billing
-      - .invoices
-      - .estimate
-      - .paymentmethods
-    - .calls
-    - .callbundles
-    - .creditstatus
-    - .endpoints
-    - .groups
-    - .ivrs
-    - .linkedusers
-    - .mailboxes
-    - .music
-    - .outgoingcallerids
-    - .phones
-      - .sip
-        -.registrations
-      - .forwardingrules
-    - .phonebook
-    - .phonenumbers
-      - .routingrules
-    - .prompts
-    - .preferences
-    - .queues
-      - .entries
-      - .memberships
-      - .status
-    - .recordings
-    - .smsmessages
-    - .sounds
-    - .timeintervals
-    - .virtuals
-  - .getUA()
-  - .stream
+```
+sipcentric
+├──.customers
+│   ├──.availablebundles
+│   ├──.billing
+│   │   ├──.invoices
+│   │   ├──.estimate
+│   │   └──.paymentmethods
+│   ├──.calls
+│   ├──.callbundles
+│   ├──.creditstatus
+│   ├──.endpoints
+│   ├──.groups
+│   ├──.ivrs
+│   ├──.linkedusers
+│   ├──.mailboxes
+│   ├──.music
+│   ├──.outgoingcallerids
+│   ├──.phones
+│   │   ├──.forwardingrules
+│   │   └──.sip
+│   │       └──.registrations
+│   ├──.phonebook
+│   ├──.phonenumbers
+│   │   └──.routingrules
+│   ├──.prompts
+│   ├──.preferences
+│   ├──.queues
+│   │   ├──.entries
+│   │   ├──.memberships
+│   │   └──.status
+│   ├──.recordings
+│   ├──.smsmessages
+│   ├──.sounds
+│   ├──.timeintervals
+│   └──.virtuals
+├──.getUA()
+└──.stream
+```
 
 ### Interacting with the Streaming API
 
@@ -356,7 +348,7 @@ interface Config {
   register?: boolean; // Default - false
 
   // The instanceId (uuid) to send with the registration
-  instanceId?: string; // Defaults to generated uuid
+  instanceId?: string; // Defaults to a generated uuid
 
   // The customer to use.
   customerId?: string; // Defaults to first available customer
@@ -370,11 +362,11 @@ interface Config {
   // The SIP password of the extension to use
   password?: string; // Defaults to default extension's password
 
-  // Pass your refs to the <audio> elements to use for local and remote audio
+  // Refs to the <audio> elements to use for local and remote audio
   audio?: {
-    local?: HTMLAudioElement,
-    remote?: HTMLAudioElement,
-  } // Defaults to undefined
+    local?: HTMLAudioElement;
+    remote?: HTMLAudioElement;
+  }; // Defaults to undefined
 }
 
 const config: Config = {
@@ -392,17 +384,17 @@ There are a few minor differences between the Sipcentric UA and the JsSIP UA, wh
 
 **Differences**
 
-- JsSIP's `.call(target, options)` method has been replaced with `.dial(target,options)`. You can pass the same options to `.dial()` as you would `.call()`, but `.dial()` sets a few useful defaults for you.
+- JsSIP's `.call(target, options)` method has been replaced with `.dial(target, options)`. You can pass the same options to `.dial()` as you would `.call()`, but `.dial()` sets a few useful defaults for you.
 - Two new methods have been added.
   - `.subscribeToUser(user)` subscribes to a user's presence and fires a `userStateChanged` event when a user's state changes (see below for more information).
-  - `.clearSubscriptions()` clears all subscriptions
+  - `.clearSubscriptions()` clears all subscriptions.
 - A `userStateChanged` event has been added, which is emitted when a user's presence state changes. Two parameters are also passed when this event is emitted. The first is the user who's state has changed, the second is the new state. See [Monitor the presence of an extension](#monitor-the-presence-of-an-extension) for more information and an example.
 
 #### Create a UA and connect
 
 Creating a UA is simple. By default, the `getUA()` method will do a lot of the heavy lifting for you. It will fetch the first customer you have access to, fetch your linkeduser on that customer, fetch that linkeduser's default extension, then use that extension's SIP credentials to connect. This means that you don't need to pass any parameters to it to get up and running.
 
-If you'd like to connect using a different extension, simply pass an options object to `getUA(options)`, including the `extensionId` and `customerId` properties on that options object. See [Interacting with the PBX using WebRTC](#interacting-with-the-pbx-using-webrtc) for more information on the options parameter.
+If you'd like to connect using a different extension, simply pass an options object to `getUA()` which includes an `extensionId` and a `customerId`. See [Interacting with the PBX using WebRTC](#interacting-with-the-pbx-using-webrtc) for more information on the options parameter.
 
 In this example, we'll let `getUA()` take care of everything for us.
 
@@ -486,7 +478,7 @@ const Sipcentric = require('@sipcentric/pbx-client');
     audio: {
       local: localAudioRef,
       remote: remoteAudioRef,
-    }
+    },
   });
 
   ua.on('registered', () => {
@@ -505,7 +497,7 @@ const Sipcentric = require('@sipcentric/pbx-client');
 
 #### Make a call
 
-To make a call, you'll need access to browser APIs, so you'll likely need to use a bundler (Webpack, rollup, etc) to bundle this library to run in a browser.
+To make a call, you'll need access to browser APIs, so you'll likely need to use a bundler (Webpack, Rollup, etc) to bundle this library to run in a browser.
 
 Once you've got the library running in a browser, you'll be able to call the `.dial()` method on the ua.
 
@@ -528,7 +520,7 @@ const Sipcentric = require('@sipcentric/pbx-client');
     },
   });
 
-  // For the sake of a simple example, we'll dial a number as soon as we connect
+  // For the sake of simplicity, we'll dial a number as soon as we connect
   ua.on('connected', () => {
     // *52 is an echo test, which is useful for development
     const call = ua.dial('*52'); // Change this to the number you'd like to call
@@ -545,7 +537,7 @@ const Sipcentric = require('@sipcentric/pbx-client');
         call.session.unhold();
       }
     }, 3000);
-});
+  });
 
   // Start and connect the user agent
   ua.start();
