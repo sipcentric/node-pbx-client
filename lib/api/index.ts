@@ -224,15 +224,23 @@ class Nimvelo implements NimveloClient {
     config: Partial<WebRTCConfig & { extensionId: string }>,
     modules: { [k: string]: any },
   ) {
-    const webRTCConfig = extend(
-      {
-        username: undefined,
-        password: undefined,
-        instanceId: undefined,
-        register: false,
+    const baseConfig: Partial<WebRTCConfig> = {
+      username: undefined,
+      password: undefined,
+      instanceId: undefined,
+      register: false,
+      customerId: undefined,
+      endpointId: undefined,
+      audio: {
+        localAudio: undefined,
+        remoteAudio: undefined,
       },
-      config,
-    );
+    };
+
+    const webRTCConfig = {
+      ...baseConfig,
+      ...config,
+    };
 
     // FIXME only applicable to browser
     // If we've not been passed an instanceId, check for localStorage
@@ -258,7 +266,7 @@ class Nimvelo implements NimveloClient {
     }
 
     // If no username passed, use the user details to fetch them
-    if (!webRTCConfig.username) {
+    if (!webRTCConfig.username || !webRTCConfig.password) {
       // Get the customers this user has access to
       const customers = await this.customers.get();
       if (customers.items.length === 0) {
@@ -319,7 +327,7 @@ class Nimvelo implements NimveloClient {
       webRTCConfig.password = sipIdentity.password;
     }
 
-    return instantiateWebRTC(webRTCConfig, modules);
+    return instantiateWebRTC(webRTCConfig as WebRTCConfig, modules);
   }
 
   // eslint-disable-next-line class-methods-use-this
