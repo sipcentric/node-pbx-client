@@ -396,7 +396,7 @@ Creating a UA is simple. By default, the `getUA()` method will do a lot of the h
 
 If you'd like to connect using a different extension, simply pass an options object to `getUA()` which includes an `extensionId` and a `customerId`. See [Interacting with the PBX using WebRTC](#interacting-with-the-pbx-using-webrtc) for more information on the options parameter.
 
-In this example, we'll let `getUA()` take care of everything for us.
+In this example, we'll get an instance of a UA for a specific extension.
 
 ```js
 const Sipcentric = require('@sipcentric/pbx-client');
@@ -407,8 +407,10 @@ const Sipcentric = require('@sipcentric/pbx-client');
     password: 'mypassword',
   });
 
-  // Create an instance of a user agent
-  const ua = await sipcentric.getUA();
+  // Create an instance of a user agent, connected to extension 12345
+  const ua = await sipcentric.getUA({
+    extensionId: '12345',
+  });
 
   ua.on('connected', () => {
     // Do things that rely on a connection here
@@ -437,7 +439,9 @@ const Sipcentric = require('@sipcentric/pbx-client');
   });
 
   // Create an instance of a user agent
-  const ua = await sipcentric.getUA();
+  const ua = await sipcentric.getUA({
+    extensionId: '12345',
+  });
 
   // Set up our event listener
   ua.on('userStateChanged', (extension, newState) => {
@@ -472,6 +476,7 @@ const Sipcentric = require('@sipcentric/pbx-client');
 
   // Create an instance of a user agent, passing { register: true }
   const ua = await sipcentric.getUA({
+    extensionId: '12345',
     // Make sure we register once connected
     register: true,
     // Bind our local and remote <audio> elements by passing refs
@@ -514,6 +519,7 @@ const Sipcentric = require('@sipcentric/pbx-client');
 
   // Create an instance of a user agent, passing refs to your <audio> elements
   const ua = await sipcentric.getUA({
+    extensionId: '12345',
     audio: {
       local: localAudioRef,
       remote: remoteAudioRef,
@@ -523,18 +529,18 @@ const Sipcentric = require('@sipcentric/pbx-client');
   // For the sake of simplicity, we'll dial a number as soon as we connect
   ua.on('connected', () => {
     // *52 is an echo test, which is useful for development
-    const call = ua.dial('*52'); // Change this to the number you'd like to call
+    const session = ua.dial('*52'); // Change this to the number you'd like to call
 
-    // Do things with the call.session here (.mute(), .hold(), .terminate(), etc)
+    // Do things with the session here (.mute(), .hold(), .terminate(), etc)
 
     // Let's put the call on hold for a few seconds
-    call.session.hold();
+    session.hold();
 
     setTimeout(() => {
       // If it's still on hold
-      if (call.session.isOnHold()) {
+      if (session.isOnHold()) {
         // Take it off hold
-        call.session.unhold();
+        session.unhold();
       }
     }, 3000);
   });
@@ -561,6 +567,7 @@ const Sipcentric = require('@sipcentric/pbx-client');
 
   // Create an instance of a user agent, passing refs to your <audio> elements
   const ua = await sipcentric.getUA({
+    extensionId: '12345',
     // Make sure you're registered if you want to receive incoming calls
     register: true,
     audio: {
