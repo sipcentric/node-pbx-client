@@ -321,7 +321,7 @@ You can find out a bit more about the available resources in the [API Documentat
     - .sounds
     - .timeintervals
     - .virtuals
-  - .getUa()
+  - .getUA()
   - .stream
 
 ### Interacting with the Streaming API
