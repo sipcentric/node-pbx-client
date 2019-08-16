@@ -11,7 +11,7 @@ A Node.js client for interacting with the Sipcentric PBX.
   - [Promises and callbacks](#promises-and-callbacks)
   - [List customers](#list-customers)
   - [Fetch a specific customer](#fetch-a-specific-customer)
-  - [Fetch a customer's phonebook](#fetch-a-customer's-phonebook)
+  - [List a customer's phone book](#list-a-customers-phone-book)
   - [Fetch a single phone book entry](#fetch-a-single-phone-book-entry)
   - [Update a phone book entry](#update-a-phone-book-entry)
   - [Create a phone book entry](#create-a-phone-book-entry)
@@ -517,7 +517,7 @@ const Sipcentric = require('@sipcentric/pbx-client');
 
 #### Receive a call
 
-a
+// TODO
 
 ```js
 
