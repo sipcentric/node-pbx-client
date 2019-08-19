@@ -8,7 +8,7 @@ Add your Sipcentric username and password to `config.js`, and set your `customer
 
 ```bash
 npm install
-node index.js
+npm start
 ```
 
 You should see a list in your terminal of all extensions on your customer, and their current presence state.
