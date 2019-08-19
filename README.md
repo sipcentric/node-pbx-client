@@ -6,6 +6,7 @@ A Node.js client for interacting with the Sipcentric PBX.
 
 - [Key features](#key-features)
 - [Getting started](#getting-started)
+- [Userful resources](#useful-resources)
 - [Examples](#examples)
 - [Interacting with the REST API](#interacting-with-the-rest-api)
   - [Promises and callbacks](#promises-and-callbacks)
@@ -32,6 +33,11 @@ A Node.js client for interacting with the Sipcentric PBX.
 - Wraps [JsSIP](https://github.com/versatica/JsSIP) to allow you to easily make and receive calls through the Sipcentric PBX using WebRTC and WebSockets.
 - Works in Node.js and in the browser (making/receiving calls _only_ works in the browser).
 
+## Useful resources
+
+- [Sipcentric API Documentation](https://developer.sipcentric.com/)
+- [Example Softphone App](https://github.com/sipcentric/node-pbx-client/tree/master/examples/webrtc-softphone)
+
 ## Getting started
 
 ```
@@ -51,7 +57,12 @@ const sipcentric = new Sipcentric({
 
 ## Examples
 
-There are examples of how to use this library in the `examples/` directory. To try them, just clone the project, run a `npm install` in the project root, then again in the directory of the example you want to run. Finally, run `npm start` in the example directory and the example will run.
+There are some example projects which use this library in the `examples/` directory.
+
+- [Softphone App](https://github.com/sipcentric/node-pbx-client/tree/master/examples/webrtc-softphone) - A simple softphone which allows you to make and receive calls from your browser.
+- [Presence Viewer](https://github.com/sipcentric/node-pbx-client/tree/master/examples/presence) - Displays the current state of all extensions on your customer account in the terminal.
+
+To try these examples, just follow the instructions in their respective READMEs.
 
 ## Interacting with the REST API
 
