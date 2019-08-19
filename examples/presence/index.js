@@ -1,6 +1,6 @@
 const colors = require('colors/safe');
 
-const Sipcentric = require('../../lib');
+const Sipcentric = require('@sipcentric/pbx-client');
 const CONFIG = require('./config');
 
 const myCustomerId = 5;
