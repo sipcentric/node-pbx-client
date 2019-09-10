@@ -37,6 +37,7 @@ export interface ClientOptions {
   authBase: string;
   streamBase: string;
   json: boolean;
+  partnerId?: string;
   requestOptions: {
     headers: {
       [header: string]: string;

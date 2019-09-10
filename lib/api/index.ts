@@ -86,7 +86,7 @@ class Nimvelo implements NimveloClient {
       reset: 0,
     };
 
-    this.userAgent = `phone-api-client/v${VERSION}`;
+    this.userAgent = `sipcentric-pbx-client/v${VERSION}`;
 
     this.authPromise = Promise.resolve();
 
@@ -174,6 +174,20 @@ class Nimvelo implements NimveloClient {
         }
       }
     }
+
+    const headers: { [k: string]: string } = {
+      Accept: 'application/json',
+      Authorization: this.authorization,
+      'Content-Type': 'application/json',
+      'User-Agent': this.userAgent,
+      'X-Relationship-Key': 'id',
+    };
+
+    if (Object.prototype.hasOwnProperty.call(options, 'partnerId')) {
+      headers['X-Partner-Id'] = options.partnerId;
+      delete options.partnerId;
+    }
+
     // Merge the default options with the client submitted options
     this.options = extend(
       {
@@ -186,13 +200,7 @@ class Nimvelo implements NimveloClient {
         streamBase: 'https://pbx.sipcentric.com/api/v1/stream',
         json: true,
         requestOptions: {
-          headers: {
-            Accept: 'application/json',
-            Authorization: this.authorization,
-            'Content-Type': 'application/json',
-            'User-Agent': this.userAgent,
-            'X-Relationship-Key': 'id',
-          },
+          headers,
         },
       },
       options,
@@ -641,6 +649,7 @@ class Nimvelo implements NimveloClient {
           if (parsedData && typeof parsedData.errors !== 'undefined') {
             // If there are some errors returned, reject
             // TODO better errors
+            // -> look at original 56e46f682c24fd21f2ad8a01ef380e31eb5ec007
             throw new Error(`Api error: ${parsedData.errors}`);
           }
           this._updateRateLimits(response);
