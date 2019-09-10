@@ -96,7 +96,11 @@ try {
   const customers = await sipcentric.customers.get();
   doStuffWith(customers);
 } catch (err) {
-  handleErr(err);
+  // Errors may have some of the following properties
+  console.log('message: ', error.message); // Error message
+  console.log('status: ', error.statusCode); // HTTP status code returned from the API
+  console.log('body: ', error.responseBody); // The body of the API response
+  console.log('response: ', error.response); // The full response object
 }
 
 // Using promises with .then()
@@ -105,13 +109,21 @@ sipcentric.customers.get()
     doStuffWith(customers);
   })
   .catch((err) => {
-    handleErr(err);
+    // Errors may have some of the following properties
+    console.log('message: ', error.message); // Error message
+    console.log('status: ', error.statusCode); // HTTP status code returned from the API
+    console.log('body: ', error.responseBody); // The body of the API response
+    console.log('response: ', error.response); // The full response object
   });
 
 // Using callbacks
 sipcentric.customers.get((err, customers) => {
   if (err) {
-    handleErr(err);
+    // Errors may have some of the following properties
+    console.log('message: ', error.message); // Error message
+    console.log('status: ', error.statusCode); // HTTP status code returned from the API
+    console.log('body: ', error.responseBody); // The body of the API response
+    console.log('response: ', error.response); // The full response object
     return;
   }
 
