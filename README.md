@@ -11,6 +11,7 @@ A Node.js client for interacting with the Sipcentric PBX.
 - [Examples](#examples)
 - [Interacting with the REST API](#interacting-with-the-rest-api)
   - [Promises and callbacks](#promises-and-callbacks)
+  - [Create customer](#create-customer)
   - [List customers](#list-customers)
   - [Fetch a specific customer](#fetch-a-specific-customer)
   - [List a customer's phone book](#list-a-customers-phone-book)
@@ -129,6 +130,40 @@ sipcentric.customers.get((err, customers) => {
 
   doStuffWith(customers);
 });
+```
+
+
+### Create customer
+
+To create a Sipcentric customer, simply pass the required data to the `.create()` method on `sipcentric.customers`, then call `.save()`.
+
+```js
+const Sipcentric = require('@sipcentric/pbx-client');
+
+(async () => {
+  const sipcentric = new Sipcentric({
+    username: 'myusername',
+    password: 'mypassword',
+  });
+
+  const customerData = {
+    firstName: 'Fred',
+    lastName: 'Bloggs',
+    company: 'Some Great Company',
+    address1: '123 Some Street',
+    city: 'Birmingham',
+    email: 'support@greatcompany.io',
+    postcode: 'BA0 6ER',
+    telephone: '01234567890',
+  };
+
+  const createdCustomer = await sipcentric.customers
+    .create(customerData)
+    .save();
+
+  console.log(createdCustomer);
+  // { type: 'customer', id: '1234', company: 'Some Great Company', postcode: 'BA0 9ER', ...}
+})();
 ```
 
 
