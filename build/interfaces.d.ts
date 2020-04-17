@@ -95,8 +95,8 @@ export interface IWebRTC {
     storeSubscription(response: any): any;
     expireSubscription(response: any): any;
     clearSubscriptions(): any;
-    subscribeToUser(user: string, replacesSubscription: any): any;
+    subscribeToUser(user: string, replacesSubscription: any, extraHeaders?: string[]): any;
     resubscribeToUser(subscription: any): any;
-    sendSubscribeRequest(ruri: string, options: any): any;
+    sendSubscribeRequest(ruri: string, options: any, extraHeaders?: string[]): any;
     subscribeResponseHandler(response: any): any;
 }

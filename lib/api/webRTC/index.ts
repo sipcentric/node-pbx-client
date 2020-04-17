@@ -278,7 +278,11 @@ const instantiate = (
       this.subscriptions.clear();
     }
 
-    subscribeToUser(user: string, replacesSubscription: any) {
+    subscribeToUser(
+      user: string,
+      replacesSubscription: any,
+      extraHeaders?: string[],
+    ) {
       let uri = `sip:${user}@${this.domain}`;
       uri = JsSIP.URI.parse(uri);
 
@@ -295,7 +299,7 @@ const instantiate = (
         cseq: 1,
       };
 
-      this.sendSubscribeRequest(uri, options);
+      this.sendSubscribeRequest(uri, options, extraHeaders);
     }
 
     resubscribeToUser(subscription: any) {
@@ -311,11 +315,12 @@ const instantiate = (
       this.sendSubscribeRequest(subscription.contact, options);
     }
 
-    sendSubscribeRequest(ruri: string, options: any) {
+    sendSubscribeRequest(ruri: string, options: any, headers?: string[]) {
       const extraHeaders = [
         `Contact: ${this.contact.toString()}; expires=${this.subscribeExpires}`,
         `Expires: ${this.subscribeExpires}`,
         'Event: dialog',
+        ...(headers || []),
       ];
 
       const request = new SIPMessage.OutgoingRequest(
@@ -373,9 +378,7 @@ const instantiate = (
         // Verify it seems a valid challenge.
         if (!challenge) {
           console.error(
-            `${
-              response.statusCode
-            } with wrong or missing challenge, cannot authenticate`,
+            `${response.statusCode} with wrong or missing challenge, cannot authenticate`,
           );
           return;
         }

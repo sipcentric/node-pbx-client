@@ -19,7 +19,7 @@ const instantiate = (passedConfig, modules) => {
                 userAgent: `phone-api-client/v${VERSION}`,
                 wsServer: 'wss://sipws.sipcentric.com',
             };
-            const config = Object.assign({}, baseConfig, options, { uri: '' });
+            const config = Object.assign(Object.assign(Object.assign({}, baseConfig), options), { uri: '' });
             // Check for required options
             const requiredOptions = ['username', 'password'];
             requiredOptions.forEach((optionName) => {
@@ -129,7 +129,7 @@ const instantiate = (passedConfig, modules) => {
                     offerToReceiveVideo: 0,
                 },
             };
-            const shallowMergedOptions = Object.assign({}, baseOptions, options);
+            const shallowMergedOptions = Object.assign(Object.assign({}, baseOptions), options);
             return this.call(target, shallowMergedOptions);
         }
         emitUserStateChanged(user, state) {
@@ -144,7 +144,7 @@ const instantiate = (passedConfig, modules) => {
         updateVersion(request, version) {
             const subscription = this.getSubscription(request);
             if (subscription) {
-                this.subscriptions.set(request.call_id, Object.assign({}, subscription, { version }));
+                this.subscriptions.set(request.call_id, Object.assign(Object.assign({}, subscription), { version }));
             }
         }
         updateSubscriptionState(request) {
@@ -160,7 +160,7 @@ const instantiate = (passedConfig, modules) => {
             const subscription = this.getSubscription(request);
             if (subscription) {
                 clearTimeout(subscription.expireTimeout);
-                this.subscriptions.set(request.call_id, Object.assign({}, subscription, { subscriptionState: state, expires: secToExpire === undefined
+                this.subscriptions.set(request.call_id, Object.assign(Object.assign({}, subscription), { subscriptionState: state, expires: secToExpire === undefined
                         ? subscription.expires
                         : Date.now() + msToExpire, expireTimeout: setTimeout(() => {
                         this.expireSubscription(request);
@@ -198,7 +198,7 @@ const instantiate = (passedConfig, modules) => {
             const callId = response.call_id;
             const subscription = this.getSubscription(response);
             if (subscription) {
-                this.subscriptions.set(callId, Object.assign({}, subscription, { subscriptionState: 'expired' }));
+                this.subscriptions.set(callId, Object.assign(Object.assign({}, subscription), { subscriptionState: 'expired' }));
             }
         }
         clearSubscriptions() {
@@ -208,7 +208,7 @@ const instantiate = (passedConfig, modules) => {
             });
             this.subscriptions.clear();
         }
-        subscribeToUser(user, replacesSubscription) {
+        subscribeToUser(user, replacesSubscription, extraHeaders) {
             let uri = `sip:${user}@${this.domain}`;
             uri = JsSIP.URI.parse(uri);
             const callId = replacesSubscription
@@ -221,7 +221,7 @@ const instantiate = (passedConfig, modules) => {
                 from_tag: fromTag,
                 cseq: 1,
             };
-            this.sendSubscribeRequest(uri, options);
+            this.sendSubscribeRequest(uri, options, extraHeaders);
         }
         resubscribeToUser(subscription) {
             const uri = `sip:${subscription.toUser}@${subscription.toDomain}`;
@@ -234,11 +234,12 @@ const instantiate = (passedConfig, modules) => {
             };
             this.sendSubscribeRequest(subscription.contact, options);
         }
-        sendSubscribeRequest(ruri, options) {
+        sendSubscribeRequest(ruri, options, headers) {
             const extraHeaders = [
                 `Contact: ${this.contact.toString()}; expires=${this.subscribeExpires}`,
                 `Expires: ${this.subscribeExpires}`,
                 'Event: dialog',
+                ...(headers || []),
             ];
             const request = new SIPMessage.OutgoingRequest(JsSIP.C.SUBSCRIBE, ruri, this, options, extraHeaders);
             const eventHandlers = {
