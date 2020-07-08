@@ -57,7 +57,7 @@ const instantiate = (
         instance_id: config.instanceId,
       });
 
-      this.domain = config.domain;
+      this.pbxDomain = config.domain;
 
       this.subscriptions = new Map();
       this.subscribeExpires = 600;
@@ -285,7 +285,7 @@ const instantiate = (
       replacesSubscription: any,
       extraHeaders?: string[],
     ) {
-      let uri = `sip:${user}@${this.domain}`;
+      let uri = `sip:${user}@${this.pbxDomain}`;
       uri = JsSIP.URI.parse(uri);
 
       const callId = replacesSubscription
@@ -305,7 +305,8 @@ const instantiate = (
     }
 
     resubscribeToUser(subscription: any) {
-      const uri = `sip:${subscription.toUser}@${subscription.toDomain}`;
+      let uri = `sip:${subscription.toUser}@${subscription.toDomain}`;
+      uri = JsSIP.URI.parse(uri);
 
       const options = {
         to_uri: uri,
