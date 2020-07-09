@@ -2,10 +2,11 @@
 
 A basic example of how to use presence.
 
-## Usage
+## Setup config file
+Add your Sipcentric username, password, and customerId to a new file named `config.js`.  See config.example.js
+for reference.
 
-Add your Sipcentric username and password to `config.js`, and set your `customerId` in `index.js`.
-
+## Install dependencies and run the script
 ```bash
 npm install
 npm start
