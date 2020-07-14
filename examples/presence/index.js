@@ -3,7 +3,7 @@ const colors = require('colors/safe');
 const Sipcentric = require('@sipcentric/pbx-client');
 const CONFIG = require('./config');
 
-const myCustomerId = 5;
+const myCustomerId = CONFIG.CUSTOMER_ID;
 
 // Enter your API credentials here
 const sipcentric = new Sipcentric({
@@ -27,22 +27,27 @@ const subscribeToAll = async () => {
   const customer = await sipcentric.customers.get(myCustomerId);
   const phones = await customer.phones.get();
 
-  // Build the label for each extension
-  phones.items.forEach(x => {
-    extensionLabelsMap.set(x.id, `${x.shortNumber} - ${x.name}`);
-  });
+  await Promise.all(phones.items.map(async (phone) => {
+    const [ua, sip] = await Promise.all([
+      sipcentric.getUA({extensionId: phone.id}),
+      phone.sip.get()
+    ])
 
-  // Get a list of extension IDs to monitor
-  const extensionIds = phones.items.map(x => x.id);
+    extensionLabelsMap.set(sip.username, `${phone.shortNumber} - ${phone.name}`);
 
-  await sipcentric.presenceWatcher.subscribe({
-    customerId: myCustomerId,
-    targets: extensionIds,
-    onStateChange: (extension, newState) => {
-      // Update the extension's state
-      stateMap.set(extension, newState);
-    },
-  });
+    // Set up event listener for userStateChanged event
+    ua.on('userStateChanged', (extension, newState) => {
+      stateMap.set(extension, newState)
+    })
+
+    // Subscribe to user once ua has connected
+    ua.on('connected', () => {
+      ua.subscribeToUser(sip.username)
+    })
+
+    // Start user agent connection
+    ua.start()
+  }))
 };
 
 // We'll use this to flash the bullet for ringing extensions
@@ -71,7 +76,7 @@ const renderOutput = () => {
     })
     .join('\n');
 
-  console.log('\033[2J'); // Clear the console
+  console.clear(); // Clear the console
   console.log(logLines); // Log everything out
 };
 
