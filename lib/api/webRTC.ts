@@ -313,7 +313,7 @@ const instantiate = (
         call_id: subscription.callId,
         cseq: subscription.cseq + 1,
         from_tag: subscription.fromTag,
-        // to_tag: subscription.toTag,
+        to_tag: subscription.toTag,
       };
       this.sendSubscribeRequest(uri, options);
     }
