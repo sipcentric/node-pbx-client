@@ -4,7 +4,7 @@ A basic example of a softphone, built using the Sipcentric PBX Client (`@sipcent
 
 ## Usage
 
-First, you'll need to edit `src/components/App/component.jsx` and enter your Sipcentric username and password where prompted in `componentDidMount()`.
+First, you'll need to edit `src/index.js` and enter your Sipcentric username and password where prompted in `componentDidMount()`.
 
 Next, install and start the app.
 
