@@ -39,7 +39,7 @@ A Node.js client for interacting with the Sipcentric PBX.
 
 ## Useful resources
 
-- [Sipcentric API Documentation](https://developer.sipcentric.com/)
+- [API Documentation](https://developer.simwood.com/direct)
 - [Example Softphone App](https://github.com/sipcentric/node-pbx-client/tree/master/examples/webrtc-softphone)
 
 
@@ -349,7 +349,7 @@ The examples above show how to fetch customers and phone book entries. **The sam
 - `.save()` - Persist a representation to the API.
 - `.delete()` - Delete a representation from the API.
 
-You can find out a bit more about the available resources in the [API Documentation](https://developer.sipcentric.com/). The resources that this client supports are listed below. We endeavour to keep this library up-to-date with the current state of the API, however if there is a resource listed in the API docs that isn't available here, please open an issue and it will be added as a matter of priority.
+You can find out a bit more about the available resources in the [API Documentation](https://developer.simwood.com/direct). The resources that this client supports are listed below. We endeavour to keep this library up-to-date with the current state of the API, however if there is a resource listed in the API docs that isn't available here, please open an issue and it will be added as a matter of priority.
 
 ```
 sipcentric
@@ -395,7 +395,7 @@ sipcentric
 
 The streaming API uses long-polling HTTP requests to keep a connection open for events to be pushed down.
 
-There are a variety of events which are exposed through the stream. For more information on those events see the [API Documentation](https://developer.sipcentric.com/).
+There are a variety of events which are exposed through the stream. For more information on those events see the [API Documentation](https://developer.simwood.com/direct).
 
 
 #### Subscribe to stream events
