@@ -89,6 +89,7 @@ class Nimvelo {
                         this.authPromise = Nimvelo._authenticate(options.username, options.password, authBase).then((token) => {
                             this.options.token = token;
                             this.authorization = `Bearer ${token}`;
+                            return token;
                         });
                     }
                     else {
