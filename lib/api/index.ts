@@ -158,6 +158,7 @@ class Nimvelo implements NimveloClient {
           ).then((token) => {
             this.options.token = token;
             this.authorization = `Bearer ${token}`;
+            return token;
           });
         } else {
           this.authorization = Nimvelo._getAuthHeader(
