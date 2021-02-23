@@ -37,19 +37,21 @@
     "@types/node": "^12.0.0",
     "deep-extend": "^0.6.0",
     "js-base64": "^2.5.1",
-    "typescript": "^3.4.5",
+    "typescript": "^4.2.2",
     "uuid": "^3.3.2",
     "xml-parser": "^1.2.1"
   },
   "devDependencies": {
     "@types/uuid": "^8.3.0",
-    "@typescript-eslint/eslint-plugin": "^1.7.0",
-    "@typescript-eslint/parser": "^1.7.0",
-    "eslint": "^5.10.0",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.14.0",
+    "@typescript-eslint/eslint-plugin": "^4.15.2",
+    "@typescript-eslint/parser": "^4.15.2",
+    "eslint": "^7.20.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-import": "^2.22.1",
     "mocha": "^5.2.0",
-    "nock": "^10.0.4"
+    "nock": "^10.0.4",
+    "prettier": "^2.2.1"
   },
   "prettier": {
     "arrowParens": "always",

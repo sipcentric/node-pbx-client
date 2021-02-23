@@ -48,7 +48,7 @@ import nodeify from '../polyfills/nodeifyv2';
 import * as npmPackage from '../../package.json';
 import { isApiItem } from '../guards';
 import {
-  NimveloClient,
+  SipcentricClient,
   ClientOptions,
   RepresentationTypeParams,
   ApiItem,
@@ -62,7 +62,7 @@ import {
 
 const VERSION: string = (npmPackage as any).version;
 
-class Nimvelo implements NimveloClient {
+class Sipcentric implements SipcentricClient {
   readonly VERSION: string;
   readonly userAgent: string;
   options: ClientOptions;
@@ -107,7 +107,7 @@ class Nimvelo implements NimveloClient {
     password: string,
     authBase: string,
   ) {
-    const authHeader = Nimvelo._getAuthHeader(username, password);
+    const authHeader = Sipcentric._getAuthHeader(username, password);
     const headers = {
       Authorization: authHeader,
       'X-WWW-Authenticate': 'false',
@@ -151,7 +151,7 @@ class Nimvelo implements NimveloClient {
         Object.prototype.hasOwnProperty.call(options, 'password')
       ) {
         if (options.auth === 'token') {
-          this.authPromise = Nimvelo._authenticate(
+          this.authPromise = Sipcentric._authenticate(
             options.username,
             options.password,
             authBase,
@@ -161,12 +161,12 @@ class Nimvelo implements NimveloClient {
             return token;
           });
         } else {
-          this.authorization = Nimvelo._getAuthHeader(
+          this.authorization = Sipcentric._getAuthHeader(
             options.username,
             options.password,
           );
           // Check if the username and password are correct
-          this.authPromise = Nimvelo._authenticate(
+          this.authPromise = Sipcentric._authenticate(
             options.username,
             options.password,
             authBase,
@@ -864,4 +864,4 @@ class Nimvelo implements NimveloClient {
   };
 }
 
-export default Nimvelo;
+export default Sipcentric;
