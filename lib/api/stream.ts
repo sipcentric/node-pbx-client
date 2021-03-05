@@ -1,11 +1,11 @@
 /* import * as atmosphere from 'atmosphere.js';
-import { NimveloClient, Callback } from '../interfaces';
+import { SipcentricClient, Callback } from '../interfaces';
 
 class Stream {
-  protected client: NimveloClient;
+  protected client: SipcentricClient;
   public stream: any;
 
-  constructor(client: NimveloClient) {
+  constructor(client: SipcentricClient) {
     this.client = client;
 
     this.stream = {

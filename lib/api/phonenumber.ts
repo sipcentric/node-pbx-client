@@ -1,21 +1,24 @@
 import Representation from './representation';
-import RoutingruleList from './routingruleList';
-import { NimveloClient, ApiItem, RepresentationBase } from '../interfaces';
+import { SipcentricClient, ApiItem, RepresentationBase } from '../interfaces';
+import { APIPhoneNumber, APIRoutingRule } from '../interfaces/api';
+import RepresentationList from './representationList';
 
-class Phonenumber extends Representation {
-  routingrules: RoutingruleList;
+class PhoneNumberRepresentation extends Representation<APIPhoneNumber> {
+  routingrules: RepresentationList<APIRoutingRule>;
 
   constructor(
-    client: NimveloClient,
-    properties: ApiItem,
+    client: SipcentricClient,
+    properties: APIPhoneNumber,
     parent: RepresentationBase | string,
   ) {
-    super(client, properties, parent);
+    super(client, 'did', properties, parent);
 
-    this._type = 'phonenumber';
-
-    this.routingrules = new RoutingruleList(this.client, this);
+    this.routingrules = new RepresentationList<APIRoutingRule>(
+      this.client,
+      'routingrule',
+      this,
+    );
   }
 }
 
-export default Phonenumber;
+export default PhoneNumberRepresentation;

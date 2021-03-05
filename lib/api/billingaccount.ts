@@ -1,27 +1,43 @@
 import Representation from './representation';
-import EstimateList from './estimateList';
-import InvoiceList from './invoiceList';
-import PaymentmethodList from './paymentmethodList';
-import { RepresentationBase, NimveloClient, ApiItem } from '../interfaces';
+import { RepresentationBase, SipcentricClient } from '../interfaces';
+import {
+  APIBilling,
+  APIBillingEstimate,
+  APIBillingInvoice,
+  APIBillingPaymentMethod,
+} from '../interfaces/billing';
+import RepresentationList from './representationList';
 
-class Billingaccount extends Representation {
-  invoices: InvoiceList;
-  estimate: EstimateList;
-  paymentmethods: PaymentmethodList;
+class BillingRepresentation extends Representation<APIBilling> {
+  invoices: RepresentationList<APIBillingInvoice>;
+  estimate: RepresentationList<APIBillingEstimate>;
+  // TODO this list type used to be 'paymentmethod'
+  paymentmethods: RepresentationList<APIBillingPaymentMethod>;
 
   constructor(
-    client: NimveloClient,
-    properties: ApiItem,
+    client: SipcentricClient,
+    properties: APIBilling,
     parent: RepresentationBase | string,
   ) {
-    super(client, properties, parent);
+    super(client, 'billingaccount', properties, parent);
 
-    this._type = 'billingaccount';
-
-    this.invoices = new InvoiceList(this.client, this);
-    this.estimate = new EstimateList(this.client, this);
-    this.paymentmethods = new PaymentmethodList(this.client, this);
+    this.invoices = new RepresentationList<APIBillingInvoice>(
+      this.client,
+      'invoice',
+      this,
+    );
+    this.estimate = new RepresentationList<APIBillingEstimate>(
+      this.client,
+      'estimate',
+      this,
+    );
+    // TODO
+    this.paymentmethods = new RepresentationList<APIBillingPaymentMethod>(
+      this.client,
+      '',
+      this,
+    );
   }
 }
 
-export default Billingaccount;
+export default BillingRepresentation;

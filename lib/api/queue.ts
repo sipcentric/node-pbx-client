@@ -1,27 +1,41 @@
 import Representation from './representation';
-import QueueentryList from './queueentryList';
-import QueuemembershipList from './queuemembershipList';
-import QueuestatusList from './queuestatusList';
-import { NimveloClient, ApiItem, RepresentationBase } from '../interfaces';
+import { SipcentricClient, ApiItem, RepresentationBase } from '../interfaces';
+import { APICallQueue } from '../interfaces/endpoints';
+import {
+  APIQueueEntry,
+  APIQueueMembership,
+  APIQueueStatus,
+} from '../interfaces/api';
+import RepresentationList from './representationList';
 
-class Queue extends Representation {
-  entries: QueueentryList;
-  memberships: QueuemembershipList;
-  status: QueuestatusList;
+class QueueRepresentation extends Representation<APICallQueue> {
+  entries: RepresentationList<APIQueueEntry>;
+  memberships: RepresentationList<APIQueueMembership>;
+  status: RepresentationList<APIQueueStatus>;
 
   constructor(
-    client: NimveloClient,
-    properties: ApiItem,
+    client: SipcentricClient,
+    properties: APICallQueue,
     parent: RepresentationBase | string,
   ) {
-    super(client, properties, parent);
+    super(client, 'queue', properties, parent);
 
-    this._type = 'queue';
-
-    this.entries = new QueueentryList(this.client, this);
-    this.memberships = new QueuemembershipList(this.client, this);
-    this.status = new QueuestatusList(this.client, this);
+    this.entries = new RepresentationList<APIQueueEntry>(
+      this.client,
+      'queueentry',
+      this,
+    );
+    this.memberships = new RepresentationList<APIQueueMembership>(
+      this.client,
+      'queuemembership',
+      this,
+    );
+    this.status = new RepresentationList<APIQueueStatus>(
+      this.client,
+      'queuestatus',
+      this,
+    );
   }
 }
 
-export default Queue;
+export default QueueRepresentation;

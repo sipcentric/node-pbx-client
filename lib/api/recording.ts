@@ -1,19 +1,18 @@
 import Representation from './representation';
-import { NimveloClient, ApiItem, RepresentationBase } from '../interfaces';
+import { SipcentricClient, ApiItem, RepresentationBase } from '../interfaces';
+import { APICallRecording } from '../interfaces/api';
 
-class Recording extends Representation {
+class CallRecordingRepresentation extends Representation<APICallRecording> {
   constructor(
-    client: NimveloClient,
-    properties: ApiItem,
+    client: SipcentricClient,
+    properties: APICallRecording,
     parent: RepresentationBase | string,
   ) {
-    super(client, properties, parent);
-
-    this._type = 'recording';
+    super(client, 'recording', properties, parent);
 
     this._unavailableMethods = ['save'];
     this._unavailableMethods.forEach((method) => delete (this as any)[method]);
   }
 }
 
-export default Recording;
+export default CallRecordingRepresentation;

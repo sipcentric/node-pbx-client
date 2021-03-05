@@ -1,24 +1,28 @@
 import Representation from './representation';
-import ForwardingruleList from './forwardingruleList';
 import SipidentityList from './sipidentityList';
-import { NimveloClient, ApiItem, RepresentationBase } from '../interfaces';
+import { SipcentricClient, RepresentationBase } from '../interfaces';
+import { APIForwardingRule } from '../interfaces/api';
+import RepresentationList from './representationList';
+import { APIPhoneExtension } from '../interfaces/endpoints';
 
-class Phone extends Representation {
+class PhoneRepresentation extends Representation<APIPhoneExtension> {
   sip: SipidentityList;
-  forwardingrules: ForwardingruleList;
+  forwardingrules: RepresentationList<APIForwardingRule>;
 
   constructor(
-    client: NimveloClient,
-    properties: ApiItem,
+    client: SipcentricClient,
+    properties: APIPhoneExtension,
     parent: RepresentationBase | string,
   ) {
-    super(client, properties, parent);
-
-    this._type = 'phone';
+    super(client, 'phone', properties, parent);
 
     this.sip = new SipidentityList(this.client, this);
-    this.forwardingrules = new ForwardingruleList(this.client, this);
+    this.forwardingrules = new RepresentationList<APIForwardingRule>(
+      this.client,
+      'forwardingrule',
+      this,
+    );
   }
 }
 
-export default Phone;
+export default PhoneRepresentation;

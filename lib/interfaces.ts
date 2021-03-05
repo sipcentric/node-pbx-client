@@ -1,4 +1,4 @@
-export interface NimveloClient {
+export interface SipcentricClient {
   VERSION: string;
   options: ClientOptions;
   authorization: string;
@@ -8,23 +8,29 @@ export interface NimveloClient {
   authPromise: Promise<any>;
 
   init(options?: Partial<ClientOptions>): Promise<any>;
-  _saveRepresentation(
-    object: RepresentationInterface,
+
+  _saveRepresentation<Item extends ApiItem>(
+    object: RepresentationInterface<Item>,
     callback: Callback,
-  ): Promise<any>;
-  _deleteRepresentation(
-    object: RepresentationInterface,
+  ): Promise<Item & { _response: Response }>;
+
+  _deleteRepresentation<Item extends ApiItem>(
+    object: RepresentationInterface<Item>,
     callback: Callback,
-  ): Promise<any>;
-  _getResource(
-    type: string,
+  ): Promise<Item>;
+
+  _getResource<Item extends ApiItem>(
+    type: Item['type'],
     object: RepresentationBase,
     ...args: any[]
-  ): Promise<any> | void;
-  _objectFromItem(
-    item: ApiItem,
+  ): Promise<
+    RepresentationInterface<Item> | RepresentationListInterface<Item>
+  > | void;
+
+  _objectFromItem<Item extends ApiItem | ApiItemWithoutId>(
+    item: Item,
     parent: RepresentationBase | string,
-  ): RepresentationInterface;
+  ): RepresentationInterface<Item>;
 }
 
 export interface ClientOptions {
@@ -46,28 +52,32 @@ export interface ClientOptions {
 }
 
 export interface RepresentationTypeParams {
-  type?: string;
+  type?: ApiItemType;
 }
 
 export interface RepresentationBase {
   id?: string;
   type: string;
   parent: RepresentationBase | string;
+  client: SipcentricClient;
   _unavailableMethods: string[];
 }
 
-export interface RepresentationInterface extends RepresentationBase {
-  save(callback?: Callback): Promise<any>;
-  delete(callback?: Callback): Promise<any>;
+export interface RepresentationInterface<Item> extends RepresentationBase {
+  save(callback?: Callback): Promise<Item>;
+  delete(callback?: Callback): Promise<Item>;
 }
 
-export interface RepresentationListInterface extends RepresentationBase {
+export interface RepresentationListInterface<Item> extends RepresentationBase {
+  itemType: string;
   get(
     id?: string,
     params?: QueryParams,
     callback?: Callback,
-  ): Promise<any> | void;
-  create(properties?: object): RepresentationInterface;
+  ): Promise<
+    RepresentationInterface<Item> | RepresentationListInterface<Item>
+  > | void;
+  create(properties?: object): RepresentationInterface<Item>;
 }
 
 export interface ApiList<T extends ApiItem> {
@@ -88,11 +98,57 @@ export interface FormattedApiList {
   prevPage?: PromisedCallback;
 }
 
-export interface ApiItem {
-  type: string;
+export type ApiItemType =
+  | 'availablebundle'
+  | 'billingaccount'
+  | 'creditstatus'
+  | 'customers'
+  | 'customer'
+  | 'did'
+  | 'estimate'
+  | 'phone'
+  | 'virtual'
+  | 'group'
+  | 'queue'
+  | 'ivr'
+  | 'mailbox'
+  | 'invoice'
+  | 'outgoingcallerid'
+  | 'phonebookentry'
+  | 'queueentry'
+  | 'queuemembership'
+  | 'queuestatus'
+  | 'recording'
+  | 'sipidentity'
+  | 'sipidentitylist'
+  | 'sipregistration'
+  | 'smsmessage'
+  | 'sound'
+  | 'prompt'
+  | 'music'
+  // //
+  | 'forwardingrule'
+  | 'routingrule'
+  | 'call'
+  // FIXME 'customerbundle' type?
+  | 'customerbundle'
+  | 'linkeduser'
+  | 'customerpreferences'
+  | 'timeinterval'
+  | 'invite'
+  | 'bargegroup'
+  | 'worldpay'
+  | 'stripe'
+  | 'trunk';
+
+export interface ApiItemWithoutId {
+  type: ApiItemType;
+  uri: string;
+  created: Date;
+  parent?: string; // uri of parent item
+}
+export interface ApiItem extends ApiItemWithoutId {
   id: string;
-  parent?: string;
-  // [additionalParams: string]: any;
 }
 
 export interface QueryParams {

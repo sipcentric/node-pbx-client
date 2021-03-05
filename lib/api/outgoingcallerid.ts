@@ -1,15 +1,14 @@
 import Representation from './representation';
-import { NimveloClient, ApiItem, RepresentationBase } from '../interfaces';
+import { SipcentricClient, ApiItem, RepresentationBase } from '../interfaces';
+import { APIOutgoingCLI } from '../interfaces/api';
 
-class Outgoingcallerid extends Representation {
+class OutgoingCallerIdRepresentation extends Representation<APIOutgoingCLI> {
   constructor(
-    client: NimveloClient,
-    properties: ApiItem,
+    client: SipcentricClient,
+    properties: APIOutgoingCLI,
     parent: RepresentationBase | string,
   ) {
-    super(client, properties, parent);
-
-    this._type = 'outgoingcallerid';
+    super(client, 'outgoingcallerid', properties, parent);
 
     this._unavailableMethods = ['save', 'delete'];
     this._unavailableMethods.forEach((method) => {
@@ -18,4 +17,4 @@ class Outgoingcallerid extends Representation {
   }
 }
 
-export default Outgoingcallerid;
+export default OutgoingCallerIdRepresentation;

@@ -1,16 +1,18 @@
 import RepresentationList from './representationList';
 import Representation from './representation';
-import { NimveloClient, RepresentationBase } from '../interfaces';
+import { SipcentricClient, RepresentationBase } from '../interfaces';
+import { APIPhoneNumber } from '../interfaces/api';
 
-class PhonenumberList extends RepresentationList {
-  constructor(client: NimveloClient, parent: RepresentationBase) {
-    super(client, parent);
-    this._type = 'phonenumberList';
-    this._itemType = 'phonenumber';
+class PhoneNumberList extends RepresentationList<APIPhoneNumber> {
+  constructor(client: SipcentricClient, parent: RepresentationBase) {
+    super(client, 'did', parent);
+    // TODO remove
+    // this._type = 'phonenumberList';
+    // this._itemType = 'phonenumber';
 
     this._unavailableMethods = ['create'];
     this._unavailableMethods.forEach((method) => delete (this as any)[method]);
   }
 }
 
-export default PhonenumberList;
+export default PhoneNumberList;

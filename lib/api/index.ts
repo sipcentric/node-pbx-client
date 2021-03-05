@@ -1,44 +1,18 @@
 import extend = require('deep-extend');
 import { v4 as uuidv4 } from 'uuid';
-import { Base64 } from 'js-base64';
-
-import Availablebundle from './availablebundle';
-import Billingaccount from './billingaccount';
-import Call from './call';
-import Callbundle from './callbundle';
-import Creditstatus from './creditstatus';
-import Customer from './customer';
-import CustomerList from './customerList';
-import Forwardingrule from './forwardingrule';
-import Group from './group';
-import Invoice from './invoice';
-import Ivr from './ivr';
-import Linkeduser from './linkeduser';
-import Mailbox from './mailbox';
-import Music from './music';
-import Outgoingcallerid from './outgoingcallerid';
-import Paymentmethod from './paymentmethod';
-import Phone from './phone';
-import Phonebookentry from './phonebookentry';
-import Phonenumber from './phonenumber';
-import Preference from './preference';
+import BillingAccountRepresentation from './billingaccount';
+import CustomerRepresentation from './customer';
+import OutgoingCallerIdRepresentation from './outgoingcallerid';
+import PhoneRepresentation from './phone';
 // import PresenceWatcher from './presenceWatcher';
-import Prompt from './prompt';
-import Queue from './queue';
-import Queueentry from './queueentry';
-import Queuemembership from './queuemembership';
-import Queuestatus from './queuestatus';
+import QueueRepresentation from './queue';
 // import Stream from './stream';
-import Recording from './recording';
-import Routingrule from './routingrule';
-import Sipidentity from './sipidentity';
-import Sipregistration from './sipregistration';
-import Smsmessage from './smsmessage';
-import Timeinterval from './timeinterval';
-import Virtual from './virtual';
+import RecordingRepresentation from './recording';
+import SipIdentityRepresentation from './sipidentity';
+import SmsMessageRepresentation from './smsmessage';
 import instantiateWebRTC from './webRTC';
 
-import Representation from './representation';
+import Representation, { RepresentationType } from './representation';
 import RepresentationList from './representationList';
 
 // Promise + callback polyfill
@@ -58,7 +32,15 @@ import {
   FormattedApiList,
   ApiList,
   WebRTCConfig,
+  ApiItemType,
+  ApiItemWithoutId,
 } from '../interfaces';
+import {
+  getBasicAuthHeader,
+  scAuthenticate,
+  urlPathForItemType,
+} from '../utils/utils';
+import { APICustomer } from '../interfaces/api';
 
 const VERSION: string = (npmPackage as any).version;
 
@@ -74,7 +56,7 @@ class Sipcentric implements SipcentricClient {
     reset: number;
   };
 
-  public customers: CustomerList;
+  public customers: RepresentationList<APICustomer>;
   public stream: any;
   public presenceWatcher: any;
 
@@ -91,46 +73,6 @@ class Sipcentric implements SipcentricClient {
     this.authPromise = Promise.resolve();
 
     this.init(options);
-  }
-
-  private static _getAuthHeader(username: string, password: string) {
-    // Base64 encode without btoa()
-    /* const encodedCredentials = new Buffer(`${username}:${password}`).toString(
-      'base64',
-    ); */
-    const encodedCredentials = Base64.encode(`${username}:${password}`);
-    return `Basic ${encodedCredentials}`;
-  }
-
-  private static _authenticate(
-    username: string,
-    password: string,
-    authBase: string,
-  ) {
-    const authHeader = Sipcentric._getAuthHeader(username, password);
-    const headers = {
-      Authorization: authHeader,
-      'X-WWW-Authenticate': 'false',
-    };
-
-    const method = 'POST';
-
-    return fetch(authBase, {
-      method,
-      headers,
-    }).then(async (res) => {
-      if (res.status !== 200) {
-        const text = await res.text();
-        // TODO custom error type
-        throw new Error(
-          `Authentication failed with status code ${res.status}: ${text}`,
-        );
-      }
-      // Authentication succeeded
-      const json = await res.json();
-      const { accessToken } = json;
-      return accessToken as string;
-    });
   }
 
   private getHeaders = () => ({
@@ -151,7 +93,7 @@ class Sipcentric implements SipcentricClient {
         Object.prototype.hasOwnProperty.call(options, 'password')
       ) {
         if (options.auth === 'token') {
-          this.authPromise = Sipcentric._authenticate(
+          this.authPromise = scAuthenticate(
             options.username,
             options.password,
             authBase,
@@ -161,12 +103,12 @@ class Sipcentric implements SipcentricClient {
             return token;
           });
         } else {
-          this.authorization = Sipcentric._getAuthHeader(
+          this.authorization = getBasicAuthHeader(
             options.username,
             options.password,
           );
           // Check if the username and password are correct
-          this.authPromise = Sipcentric._authenticate(
+          this.authPromise = scAuthenticate(
             options.username,
             options.password,
             authBase,
@@ -206,14 +148,16 @@ class Sipcentric implements SipcentricClient {
       options,
     );
 
-    this.customers = new CustomerList(this);
+    this.customers = new RepresentationList<APICustomer>(this, 'customer');
     // this.stream = new Stream(this);
     // this.presenceWatcher = new PresenceWatcher(this);
 
     return this.authPromise;
   };
 
-  public representationFromJson = (json: ApiItem) => {
+  public representationFromJson = <T extends ApiItem>(
+    json: T,
+  ): RepresentationType<T> => {
     return this._objectFromItem(json, json.parent!);
   };
 
@@ -221,9 +165,9 @@ class Sipcentric implements SipcentricClient {
     const { headers } = response;
 
     this.rateLimit = {
-      limit: (headers as any)['x-ratelimit-limit'],
-      remaining: (headers as any)['x-ratelimit-remaining'],
-      reset: (headers as any)['x-ratelimit-reset'],
+      limit: Number(headers.get('x-ratelimit-limit')),
+      remaining: Number(headers.get('x-ratelimit-remaining')),
+      reset: Number(headers.get('x-ratelimit-reset')),
     };
   };
 
@@ -339,79 +283,6 @@ class Sipcentric implements SipcentricClient {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  _pathForType = (type: string, id?: string) => {
-    let path = '';
-    const normalizedType = type.toLowerCase();
-
-    switch (normalizedType) {
-      case 'availablebundle':
-        path = `${id}/callbundles/available`;
-        break;
-      case 'billingaccount':
-        path = `${id}/billing`;
-        break;
-      case 'creditstatus':
-        path = `${id}/creditstatus`;
-        break;
-      case 'customers':
-        // Use the default base REST URL
-        break;
-      case 'customer':
-        path = id || '';
-        break;
-      case 'estimate':
-        path = 'estimate';
-        break;
-      case 'phone':
-      case 'virtual':
-      case 'group':
-      case 'queue':
-      case 'ivr':
-      case 'mailbox':
-        path = `${id}/endpoints`;
-        break;
-      case 'invoice':
-        path = 'invoices';
-        break;
-      case 'phonebookentry':
-        path = `${id}/phonebook`;
-        break;
-      case 'paymentmethod':
-        path = 'paymentmethods';
-        break;
-      case 'queueentry':
-        path = `${id}/queueentries`;
-        break;
-      case 'queuemembership':
-        path = `${id}/queuememberships`;
-        break;
-      case 'queuestatus':
-        path = `${id}/queuestatus`;
-        break;
-      case 'sipidentity':
-      case 'sipidentitylist':
-        path = `${id}/sip`;
-        break;
-      case 'sipregistration':
-        path = 'registrations';
-        break;
-      case 'smsmessage':
-        path = `${id}/sms`;
-        break;
-      case 'sound':
-      case 'prompt':
-      case 'music':
-        path = `${id}/sounds`;
-        break;
-      default:
-        path = `${id}/${normalizedType}s`;
-        break;
-    }
-
-    return path;
-  };
-
-  // eslint-disable-next-line class-methods-use-this
   _paramsForType = (type: string) => {
     const params: RepresentationTypeParams = {};
     const normalizedType = type.toLowerCase();
@@ -436,126 +307,85 @@ class Sipcentric implements SipcentricClient {
     return params;
   };
 
-  _objectFromItem = (item: ApiItem, parent: RepresentationBase | string) => {
-    if (
-      typeof item === 'undefined' ||
-      !Object.prototype.hasOwnProperty.call(item, 'type')
-    ) {
-      // FIXME is it okay?
-      return null;
-      // return item;
-    }
-
-    let object: Representation;
-
+  _objectFromItem = <T extends ApiItem | ApiItemWithoutId>(
+    item: T,
+    parent: RepresentationBase | string,
+  ): RepresentationType<T> => {
     // Figure out which class to use for this type
 
     switch (item.type) {
-      /* eslint no-use-before-define: 0 */
-      case 'availablebundle':
-        object = new Availablebundle(this, item, parent);
-        break;
+      // /* eslint no-use-before-define: 0 */
+      // case 'availablebundle':
+      //   return new Availablebundle(this, item, parent);
       case 'billingaccount':
-        object = new Billingaccount(this, item, parent);
-        break;
-      case 'call':
-        object = new Call(this, item, parent);
-        break;
-      case 'callbundle':
-        object = new Callbundle(this, item, parent);
-        break;
-      case 'creditstatus':
-        object = new Creditstatus(this, item, parent);
-        break;
+        return new BillingAccountRepresentation(this, item, parent) as any;
+      // case 'call':
+      //   return new Call(this, item, parent);
+      // case 'callbundle':
+      //   return new Callbundle(this, item, parent);
+      // case 'creditstatus':
+      //   return new Creditstatus(this, item, parent);
       case 'customer':
-        object = new Customer(this, item);
-        break;
-      case 'did':
-        object = new Phonenumber(this, item, parent);
-        break;
-      case 'forwardingrule':
-        object = new Forwardingrule(this, item, parent);
-        break;
-      case 'group':
-        object = new Group(this, item, parent);
-        break;
-      case 'invoice':
-        object = new Invoice(this, item, parent);
-        break;
-      case 'ivr':
-        object = new Ivr(this, item, parent);
-        break;
-      case 'linkeduser':
-        object = new Linkeduser(this, item, parent);
-        break;
-      case 'mailbox':
-        object = new Mailbox(this, item, parent);
-        break;
-      case 'music':
-        object = new Music(this, item, parent);
-        break;
+        return new CustomerRepresentation(this, item) as any;
+      // case 'did':
+      //   return new Phonenumber(this, item, parent);
+      // case 'forwardingrule':
+      //   return new Forwardingrule(this, item, parent);
+      // case 'group':
+      //   return new Group(this, item, parent);
+      // case 'invoice':
+      //   return new Invoice(this, item, parent);
+      // case 'ivr':
+      //   return new Ivr(this, item, parent);
+      // case 'linkeduser':
+      //   return new Linkeduser(this, item, parent);
+      // case 'mailbox':
+      //   return new Mailbox(this, item, parent);
+      // case 'music':
+      //   return new Music(this, item, parent);
       case 'outgoingcallerid':
-        object = new Outgoingcallerid(this, item, parent);
-        break;
-      case 'paymentmethod':
-      case 'worldpay':
-        object = new Paymentmethod(this, item, parent);
-        break;
+        return new OutgoingCallerIdRepresentation(this, item, parent) as any;
+      // FIXME
+      // case 'paymentmethod':
+      // case 'worldpay':
+      //   return new Paymentmethod(this, item, parent);
       case 'phone':
-        object = new Phone(this, item, parent);
-        break;
-      case 'phonebookentry':
-        object = new Phonebookentry(this, item, parent);
-        break;
-      case 'prompt':
-        object = new Prompt(this, item, parent);
-        break;
-      case 'preference':
-        object = new Preference(this, item, parent);
-        break;
+        return new PhoneRepresentation(this, item, parent) as any;
+      // case 'phonebookentry':
+      //   return new Phonebookentry(this, item, parent);
+      // case 'prompt':
+      //   return new Prompt(this, item, parent);
+      // case 'preference':
+      //   return new Preference(this, item, parent);
       case 'queue':
-        object = new Queue(this, item, parent);
-        break;
-      case 'queueentry':
-        object = new Queueentry(this, item, parent);
-        break;
-      case 'queuemembership':
-        object = new Queuemembership(this, item, parent);
-        break;
-      case 'queuestatus':
-        object = new Queuestatus(this, item, parent);
-        break;
+        return new QueueRepresentation(this, item, parent) as any;
+      // case 'queueentry':
+      //   return new Queueentry(this, item, parent);
+      // case 'queuemembership':
+      //   return new Queuemembership(this, item, parent);
+      // case 'queuestatus':
+      //   return new Queuestatus(this, item, parent);
       case 'recording':
-        object = new Recording(this, item, parent);
-        break;
-      case 'routingrule':
-        object = new Routingrule(this, item, parent);
-        break;
+        return new RecordingRepresentation(this, item, parent) as any;
+      // case 'routingrule':
+      //   return new Routingrule(this, item, parent);
       case 'smsmessage':
-        object = new Smsmessage(this, item, parent);
-        break;
+        return new SmsMessageRepresentation(this, item, parent) as any;
       case 'sipidentity':
-        object = new Sipidentity(this, item, parent);
-        break;
-      case 'sipregistration':
-        object = new Sipregistration(this, item, parent);
-        break;
-      case 'timeinterval':
-        object = new Timeinterval(this, item, parent);
-        break;
-      case 'virtual':
-        object = new Virtual(this, item, parent);
-        break;
+        return new SipIdentityRepresentation(this, item, parent) as any;
+      // case 'sipregistration':
+      //   return new Sipregistration(this, item, parent);
+      // case 'timeinterval':
+      //   return new Timeinterval(this, item, parent);
+      // case 'virtual':
+      //   return new Virtual(this, item, parent);
       default:
-        object = new Representation(this, item, parent);
-        break;
+        return new Representation<T>(this, item.type, item, parent) as any;
     }
-
-    return object;
   };
 
-  _buildObjects = (
-    items: ApiItem | ApiItem[],
+  _buildObjects = <Item extends ApiItem>(
+    items: Item | Item[],
     parent: RepresentationBase | string,
   ) => {
     // Builds an array of class objects from a given array of items,
@@ -663,7 +493,11 @@ class Sipcentric implements SipcentricClient {
     );
   };
 
-  _buildUrl = (type: string, object: RepresentationBase, ...args: any[]) => {
+  _buildUrl = (
+    type: ApiItemType,
+    object: RepresentationBase,
+    ...args: any[]
+  ) => {
     let url;
     let id;
     let params: QueryParams = {};
@@ -692,7 +526,11 @@ class Sipcentric implements SipcentricClient {
     return url;
   };
 
-  _buildUrlSection = (type: string, object: RepresentationBase, url = '') => {
+  _buildUrlSection = (
+    type: ApiItemType,
+    object: RepresentationBase,
+    url = '',
+  ) => {
     /* eslint no-param-reassign:0 */
 
     let path;
@@ -701,7 +539,7 @@ class Sipcentric implements SipcentricClient {
     if (object.parent) {
       if (typeof object.parent === 'string') {
         // TODO
-        path = this._pathForType(type, '');
+        path = urlPathForItemType(type, '');
         if (!path.startsWith('/')) {
           path = `/${path}`;
         }
@@ -710,13 +548,13 @@ class Sipcentric implements SipcentricClient {
         }
         url = object.parent + path + url;
       } else {
-        path = this._pathForType(type, object.parent.id);
+        path = urlPathForItemType(type, object.parent.id);
 
         url = (path ? `${path}/` : '') + url;
         url = this._buildUrlSection(object.parent.type, object.parent, url);
       }
     } else {
-      path = this._pathForType(type);
+      path = urlPathForItemType(type);
 
       url = baseUrl + (path ? `${path}/` : '') + (url || '');
     }
@@ -746,8 +584,8 @@ class Sipcentric implements SipcentricClient {
     return '';
   };
 
-  _formatGetResponse = (
-    response: ApiItem | ApiList<ApiItem>,
+  _formatGetResponse = <Item extends ApiItem>(
+    response: Item | ApiList<Item>,
     parent: RepresentationBase | string,
   ) => {
     if (!isApiItem(response)) {
@@ -794,7 +632,11 @@ class Sipcentric implements SipcentricClient {
     return this._buildObjects(response, parent);
   };
 
-  _getResource = (type: string, object: RepresentationBase, ...args: any[]) => {
+  _getResource = <Item extends ApiItem>(
+    type: Item['type'],
+    object: RepresentationBase,
+    ...args: any[]
+  ): Promise<Representation<Item> | RepresentationList<Item>> => {
     let id: string;
     let params: QueryParams;
     let callback: Callback;
@@ -831,16 +673,19 @@ class Sipcentric implements SipcentricClient {
     );
   };
 
-  _saveRepresentation = (object: Representation, callback: Callback) => {
+  _saveRepresentation = <Item extends ApiItem>(
+    object: Representation<Item>,
+    callback: Callback,
+  ) => {
     const url = this._buildUrl(object.type, object, object.id);
     const requestMethod = object.id ? 'put' : 'post';
 
     return nodeify(
       this._request(requestMethod, url, object).then((data) => {
         // Update our object with the newly returned propreties
-        object.extend(data.parsedData);
+        object.extend(data.parsedData as Item);
         const resolveData = {
-          ...data.parsedData,
+          ...(data.parsedData as Item),
           _response: data.response,
         };
         return resolveData;
@@ -849,12 +694,15 @@ class Sipcentric implements SipcentricClient {
     );
   };
 
-  _deleteRepresentation = (object: Representation, callback: Callback) => {
+  _deleteRepresentation = <Item extends ApiItem>(
+    object: Representation<Item>,
+    callback: Callback,
+  ) => {
     const url = this._buildUrl(object.type, object, object.id);
     return nodeify(this._request('delete', url, object), callback).then(
       (data) => {
         const resolveData = {
-          ...data.parsedData,
+          ...(data.parsedData as Item),
           _response: data.response,
         };
 

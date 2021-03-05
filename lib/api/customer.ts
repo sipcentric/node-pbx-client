@@ -1,103 +1,172 @@
 import extend = require('deep-extend');
 
 import Representation from './representation';
-import AvailablebundleList from './availablebundleList';
-import BillingaccountList from './billingaccountList';
-import CallList from './callList';
-import Call from './call';
-import CallbundleList from './callbundleList';
-import CreditstatusList from './creditstatusList';
-import EndpointList from './endpointList';
-import GroupList from './groupList';
-import Group from './group';
-import IvrList from './ivrList';
-import Ivr from './ivr';
-import LinkeduserList from './linkeduserList';
-import Linkeduser from './linkeduser';
-import MailboxList from './mailboxList';
-import Mailbox from './mailbox';
-import MusicList from './musicList';
-import Music from './music';
-import OutgoingcalleridList from './outgoingcalleridList';
-import PhoneList from './phoneList';
 import Phone from './phone';
-import PhonebookentryList from './phonebookentryList';
-import Phonebookentry from './phonebookentry';
-import PhonenumberList from './phonenumberList';
-import PromptList from './promptList';
-import Prompt from './prompt';
-import PreferenceList from './preferenceList';
-import QueueList from './queueList';
+import PhoneNumberList from './phonenumberList';
 import Queue from './queue';
-import RecordingList from './recordingList';
-import SmsmessageList from './smsmessageList';
 import Smsmessage from './smsmessage';
-import SoundList from './soundList';
-import TimeintervalList from './timeintervalList';
-import Timeinterval from './timeinterval';
-import VirtualList from './virtualList';
-import Virtual from './virtual';
-import { NimveloClient, ApiItem } from '../interfaces';
+import { SipcentricClient, ApiItem, ApiItemType } from '../interfaces';
+import {
+  APIAvailableBundle,
+  APICall,
+  APICallBundle,
+  APICallRecording,
+  APICustomer,
+  APILinkedUser,
+  APIOutgoingCLI,
+  APIPhonebook,
+  APIPreferences,
+  APIRoutingRule,
+  APISMSMessage,
+  APISoundMusic,
+  APISoundPrompt,
+  APITimeInterval,
+} from '../interfaces/api';
+import RepresentationList from './representationList';
+import { APIBilling, APICreditStatus } from '../interfaces/billing';
+import {
+  APICallQueue,
+  APIIVR,
+  APIPhoneExtension,
+  APIRingGroup,
+  APISharedMailbox,
+  APIVirtual,
+} from '../interfaces/endpoints';
 
-class Customer extends Representation {
-  public availablebundles: AvailablebundleList;
-  public billing: BillingaccountList;
-  public calls: CallList;
-  public callbundles: CallbundleList;
-  public creditstatus: CreditstatusList;
-  public endpoints: EndpointList;
-  public groups: GroupList;
-  public ivrs: IvrList;
-  public linkedusers: LinkeduserList;
-  public mailboxes: MailboxList;
-  public music: MusicList;
-  public outgoingcallerids: OutgoingcalleridList;
-  public phones: PhoneList;
-  public phonebook: PhonebookentryList;
-  public phonenumbers: PhonenumberList;
-  public prompts: PromptList;
-  public preferences: PreferenceList;
-  public queues: QueueList;
-  public recordings: RecordingList;
-  public smsmessages: SmsmessageList;
-  public sounds: SoundList;
-  public timeintervals: TimeintervalList;
-  public virtuals: VirtualList;
+class CustomerRepresentation extends Representation<APICustomer> {
+  public availablebundles: RepresentationList<APIAvailableBundle>;
+  public billing: RepresentationList<APIBilling>;
+  public calls: RepresentationList<APICall>;
+  // FIXME 'customerbundle' type?
+  public callbundles: RepresentationList<APICallBundle>;
+  public creditstatus: RepresentationList<APICreditStatus>;
+  // public endpoints: RepresentationList<APIEndpoint>;
+  public groups: RepresentationList<APIRingGroup>;
+  public ivrs: RepresentationList<APIIVR>;
+  public linkedusers: RepresentationList<APILinkedUser>;
+  public mailboxes: RepresentationList<APISharedMailbox>;
+  public music: RepresentationList<APISoundMusic>;
+  public outgoingcallerids: RepresentationList<APIOutgoingCLI>;
+  public phones: RepresentationList<APIPhoneExtension>;
+  public phonebook: RepresentationList<APIPhonebook>;
+  public phonenumbers: PhoneNumberList;
+  public prompts: RepresentationList<APISoundPrompt>;
+  public preferences: RepresentationList<APIPreferences>;
+  public queues: RepresentationList<APICallQueue>;
+  public recordings: RepresentationList<APICallRecording>;
+  public smsmessages: RepresentationList<APISMSMessage>;
+  // public sounds: RepresentationList<APIRoutingRule>;
+  public timeintervals: RepresentationList<APITimeInterval>;
+  public virtuals: RepresentationList<APIVirtual>;
 
-  constructor(client: NimveloClient, item: ApiItem) {
-    super(client, item);
+  constructor(client: SipcentricClient, item: APICustomer) {
+    super(client, 'customer', item);
 
-    this._type = 'customer';
-
-    this.availablebundles = new AvailablebundleList(this.client, this);
-    this.billing = new BillingaccountList(this.client, this);
-    this.calls = new CallList(this.client, this);
-    this.callbundles = new CallbundleList(this.client, this);
-    this.creditstatus = new CreditstatusList(this.client, this);
-    this.endpoints = new EndpointList(this.client, this);
-    this.groups = new GroupList(this.client, this);
-    this.ivrs = new IvrList(this.client, this);
-    this.linkedusers = new LinkeduserList(this.client, this);
-    this.mailboxes = new MailboxList(this.client, this);
-    this.music = new MusicList(this.client, this);
-    this.outgoingcallerids = new OutgoingcalleridList(this.client, this);
-    this.phones = new PhoneList(this.client, this);
-    this.phonebook = new PhonebookentryList(this.client, this);
-    this.phonenumbers = new PhonenumberList(this.client, this);
-    this.prompts = new PromptList(this.client, this);
-    this.preferences = new PreferenceList(this.client, this);
-    this.queues = new QueueList(this.client, this);
-    this.recordings = new RecordingList(this.client, this);
-    this.smsmessages = new SmsmessageList(this.client, this);
-    this.sounds = new SoundList(this.client, this);
-    this.timeintervals = new TimeintervalList(this.client, this);
-    this.virtuals = new VirtualList(this.client, this);
+    this.availablebundles = new RepresentationList<APIAvailableBundle>(
+      this.client,
+      'availablebundle',
+      this,
+    );
+    this.billing = new RepresentationList<APIBilling>(
+      this.client,
+      'billingaccount',
+      this,
+    );
+    this.calls = new RepresentationList<APICall>(this.client, 'call', this);
+    this.callbundles = new RepresentationList<APICallBundle>(
+      this.client,
+      'customerbundle',
+      this,
+    );
+    this.creditstatus = new RepresentationList<APICreditStatus>(
+      this.client,
+      'creditstatus',
+      this,
+    );
+    // this.endpoints = new EndpointList(this.client, this);
+    this.groups = new RepresentationList<APIRingGroup>(
+      this.client,
+      'group',
+      this,
+    );
+    this.ivrs = new RepresentationList<APIIVR>(this.client, 'ivr', this);
+    this.linkedusers = new RepresentationList<APILinkedUser>(
+      this.client,
+      'linkeduser',
+      this,
+    );
+    this.mailboxes = new RepresentationList<APISharedMailbox>(
+      this.client,
+      'mailbox',
+      this,
+    );
+    this.music = new RepresentationList<APISoundMusic>(
+      this.client,
+      'music',
+      this,
+    );
+    this.outgoingcallerids = new RepresentationList<APIOutgoingCLI>(
+      this.client,
+      'outgoingcallerid',
+      this,
+    );
+    this.phones = new RepresentationList<APIPhoneExtension>(
+      this.client,
+      'phone',
+      this,
+    );
+    this.phonebook = new RepresentationList<APIPhonebook>(
+      this.client,
+      'phonebookentry',
+      this,
+    );
+    this.phonenumbers = new PhoneNumberList(this.client, this);
+    this.prompts = new RepresentationList<APISoundPrompt>(
+      this.client,
+      'prompt',
+      this,
+    );
+    this.preferences = new RepresentationList<APIPreferences>(
+      this.client,
+      'customerpreferences',
+      this,
+    );
+    this.queues = new RepresentationList<APICallQueue>(
+      this.client,
+      'queue',
+      this,
+    );
+    this.recordings = new RepresentationList<APICallRecording>(
+      this.client,
+      'recording',
+      this,
+    );
+    this.smsmessages = new RepresentationList<APISMSMessage>(
+      this.client,
+      'smsmessage',
+      this,
+    );
+    // this.sounds = new SoundList(this.client, this);
+    this.timeintervals = new RepresentationList<APITimeInterval>(
+      this.client,
+      'timeinterval',
+      this,
+    );
+    this.virtuals = new RepresentationList<APIVirtual>(
+      this.client,
+      'virtual',
+      this,
+    );
 
     this._unavailableMethods = ['delete'];
     this._unavailableMethods.forEach((method) => delete (this as any)[method]);
   }
 
-  create = (type: string, properties: ApiItem) => {
+  // FIXME limit to types creatable in customer
+  create = <Item extends { type: ApiItemType }>(
+    type: Item['type'],
+    properties: Item,
+  ) => {
     // Figure out which class to use for this type
 
     switch (type) {
@@ -133,4 +202,4 @@ class Customer extends Representation {
   };
 }
 
-export default Customer;
+export default CustomerRepresentation;

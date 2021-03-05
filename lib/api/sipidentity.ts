@@ -1,21 +1,24 @@
 import Representation from './representation';
-import SipregistrationList from './sipregistrationList';
-import { NimveloClient, ApiItem, RepresentationBase } from '../interfaces';
+import { SipcentricClient, RepresentationBase } from '../interfaces';
+import { APISipIdentity, APISipRegistration } from '../interfaces/api';
+import RepresentationList from './representationList';
 
-class Sipidentity extends Representation {
-  registrations: SipregistrationList;
+class SipIdentityRepresentation extends Representation<APISipIdentity> {
+  registrations: RepresentationList<APISipRegistration>;
 
   constructor(
-    client: NimveloClient,
-    properties: ApiItem,
+    client: SipcentricClient,
+    properties: APISipIdentity,
     parent: RepresentationBase | string,
   ) {
-    super(client, properties, parent);
+    super(client, 'sipidentity', properties, parent);
 
-    this._type = 'sipidentity';
-
-    this.registrations = new SipregistrationList(this.client, this);
+    this.registrations = new RepresentationList<APISipRegistration>(
+      this.client,
+      'sipregistration',
+      this,
+    );
   }
 }
 
-export default Sipidentity;
+export default SipIdentityRepresentation;

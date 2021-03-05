@@ -1,13 +1,14 @@
 import Representation from './representation';
-import { NimveloClient, ApiItem, RepresentationBase } from '../interfaces';
+import { SipcentricClient, ApiItem, RepresentationBase } from '../interfaces';
+import { APISMSMessage } from '../interfaces/api';
 
-class Smsmessage extends Representation {
+class SmsMessageRepresentation extends Representation<APISMSMessage> {
   constructor(
-    client: NimveloClient,
-    properties: ApiItem,
+    client: SipcentricClient,
+    properties: APISMSMessage,
     parent: RepresentationBase | string,
   ) {
-    super(client, properties, parent);
+    super(client, 'smsmessage', properties, parent);
 
     this._type = 'smsmessage';
 
@@ -16,4 +17,4 @@ class Smsmessage extends Representation {
   }
 }
 
-export default Smsmessage;
+export default SmsMessageRepresentation;
