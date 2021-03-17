@@ -1,26 +1,33 @@
+import Sipcentric from '.';
 import {
-  RepresentationListInterface,
   RepresentationBase,
-  SipcentricClient,
   QueryParams,
   Callback,
   ApiItemType,
-  RepresentationInterface,
   ApiItem,
+  FormattedApiList,
 } from '../interfaces';
+import { RepresentationType } from './representation';
 
-class RepresentationList<Item extends ApiItem>
-  implements RepresentationListInterface<Item> {
-  protected _client: SipcentricClient;
+type GetResponse<Item extends ApiItem> = {
+  (id: string, params?: QueryParams, callback?: Callback):
+    | (RepresentationType<Item> & Item)
+    | void;
+  (): FormattedApiList<Item> | void;
+  (
+    id: undefined,
+    params?: QueryParams,
+    callback?: Callback,
+  ): FormattedApiList<Item> | void;
+};
+
+class RepresentationList<Item extends ApiItem> {
+  protected client: Sipcentric;
   public parent: RepresentationBase | string;
   public _unavailableMethods: string[];
 
   protected _type: string;
   protected _itemType: ApiItemType;
-
-  public get client(): SipcentricClient {
-    return this._client;
-  }
 
   public get type() {
     return this._type;
@@ -30,42 +37,41 @@ class RepresentationList<Item extends ApiItem>
   }
 
   constructor(
-    client: SipcentricClient,
+    client: Sipcentric,
     itemType: Item['type'],
     parent?: RepresentationBase | string,
   ) {
-    this._client = client;
+    this.client = client;
     this.parent = parent;
     this._itemType = itemType;
     this._type = `${itemType}List`;
   }
 
-  // FIXME conditional type return, also elsewhere where such union is used
-  get = (
+  get: GetResponse<Item> = (
     id?: string,
     params?: QueryParams,
     callback?: Callback,
-  ): Promise<
-    RepresentationInterface<Item> | RepresentationListInterface<Item>
-  > | void => {
-    return this._client._getResource<Item>(
+  ) => {
+    return this.client._getResource<Item>(
       this.itemType,
       this,
       id,
       params,
       callback,
-    );
+      // TODO better way?
+    ) as any;
   };
 
-  create = (properties: Item) => {
+  create = (properties: Omit<Item, 'id'>) => {
     // Make sure the type is correct, and it has no ID
+    // @ts-ignore
     const { id, ...rest } = properties;
     const sanitizedProperties = {
       ...rest,
       type: this.itemType,
     };
 
-    return this._client._objectFromItem(sanitizedProperties, this.parent);
+    return this.client._objectFromItem(sanitizedProperties, this.parent);
   };
 }
 

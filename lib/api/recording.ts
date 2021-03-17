@@ -1,10 +1,11 @@
 import Representation from './representation';
-import { SipcentricClient, ApiItem, RepresentationBase } from '../interfaces';
+import { RepresentationBase } from '../interfaces';
 import { APICallRecording } from '../interfaces/api';
+import Sipcentric from '.';
 
 class CallRecordingRepresentation extends Representation<APICallRecording> {
   constructor(
-    client: SipcentricClient,
+    client: Sipcentric,
     properties: APICallRecording,
     parent: RepresentationBase | string,
   ) {

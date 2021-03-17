@@ -1,16 +1,17 @@
 import Representation from './representation';
 import SipidentityList from './sipidentityList';
-import { SipcentricClient, RepresentationBase } from '../interfaces';
+import { RepresentationBase } from '../interfaces';
 import { APIForwardingRule } from '../interfaces/api';
 import RepresentationList from './representationList';
 import { APIPhoneExtension } from '../interfaces/endpoints';
+import Sipcentric from '.';
 
 class PhoneRepresentation extends Representation<APIPhoneExtension> {
   sip: SipidentityList;
   forwardingrules: RepresentationList<APIForwardingRule>;
 
   constructor(
-    client: SipcentricClient,
+    client: Sipcentric,
     properties: APIPhoneExtension,
     parent: RepresentationBase | string,
   ) {

@@ -1,11 +1,9 @@
-import extend = require('deep-extend');
-
-import Representation from './representation';
+import Representation, { RepresentationType } from './representation';
 import Phone from './phone';
 import PhoneNumberList from './phonenumberList';
 import Queue from './queue';
 import Smsmessage from './smsmessage';
-import { SipcentricClient, ApiItem, ApiItemType } from '../interfaces';
+import { ApiItem, ApiItemType } from '../interfaces';
 import {
   APIAvailableBundle,
   APICall,
@@ -16,7 +14,6 @@ import {
   APIOutgoingCLI,
   APIPhonebook,
   APIPreferences,
-  APIRoutingRule,
   APISMSMessage,
   APISoundMusic,
   APISoundPrompt,
@@ -32,6 +29,32 @@ import {
   APISharedMailbox,
   APIVirtual,
 } from '../interfaces/endpoints';
+import Sipcentric from '.';
+
+type CreatableTypes = Extract<
+  ApiItemType,
+  | 'availablebundle'
+  | 'billingaccount'
+  | 'call'
+  | 'customerbundle'
+  | 'creditstatus'
+  | 'group'
+  | 'ivr'
+  | 'linkeduser'
+  | 'mailbox'
+  | 'music'
+  | 'outgoingcallerid'
+  | 'phone'
+  | 'phonebookentry'
+  | 'did'
+  | 'prompt'
+  | 'customerpreferences'
+  | 'queue'
+  | 'recording'
+  | 'smsmessage'
+  | 'timeinterval'
+  | 'virtual'
+>;
 
 class CustomerRepresentation extends Representation<APICustomer> {
   public availablebundles: RepresentationList<APIAvailableBundle>;
@@ -59,7 +82,7 @@ class CustomerRepresentation extends Representation<APICustomer> {
   public timeintervals: RepresentationList<APITimeInterval>;
   public virtuals: RepresentationList<APIVirtual>;
 
-  constructor(client: SipcentricClient, item: APICustomer) {
+  constructor(client: Sipcentric, item: APICustomer) {
     super(client, 'customer', item);
 
     this.availablebundles = new RepresentationList<APIAvailableBundle>(
@@ -162,42 +185,24 @@ class CustomerRepresentation extends Representation<APICustomer> {
     this._unavailableMethods.forEach((method) => delete (this as any)[method]);
   }
 
-  // FIXME limit to types creatable in customer
-  create = <Item extends { type: ApiItemType }>(
-    type: Item['type'],
+  create = <Item extends ApiItem>(
+    type: Item['type'] & CreatableTypes,
     properties: Item,
-  ) => {
-    // Figure out which class to use for this type
-
+  ): RepresentationType<Item> => {
     switch (type) {
-      case 'call':
-        return new Call(this.client, properties, this);
-      case 'group':
-        return new Group(this.client, properties, this);
-      case 'ivr':
-        return new Ivr(this.client, properties, this);
-      case 'linkeduser':
-        return new Linkeduser(this.client, properties, this);
-      case 'mailbox':
-        return new Mailbox(this.client, properties, this);
-      case 'music':
-        return new Music(this.client, properties, this);
       case 'phone':
-        return new Phone(this.client, properties, this);
-      case 'phonebookentry':
-        return new Phonebookentry(this.client, properties, this);
-      case 'prompt':
-        return new Prompt(this.client, properties, this);
+        return new Phone(this.client, properties as any, this) as any;
       case 'queue':
-        return new Queue(this.client, properties, this);
+        return new Queue(this.client, properties as any, this) as any;
       case 'smsmessage':
-        return new Smsmessage(this.client, properties, this);
-      case 'timeinterval':
-        return new Timeinterval(this.client, properties, this);
-      case 'virtual':
-        return new Virtual(this.client, properties, this);
+        return new Smsmessage(this.client, properties as any, this) as any;
       default:
-        return false;
+        return new Representation<Item>(
+          this.client,
+          type,
+          properties,
+          this,
+        ) as any;
     }
   };
 }

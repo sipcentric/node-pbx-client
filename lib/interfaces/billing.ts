@@ -2,11 +2,9 @@ import { ApiItem } from '../interfaces';
 
 type PaymentProviders = 'worldpay' | 'stripe';
 
-export interface APIBilling {
+export interface APIBilling extends ApiItem {
   type: 'billingaccount';
-  uri: string;
-  id: string;
-  parent: string;
+  // TODO this is not in API?
   providersEnabled: PaymentProviders[];
   paymentsEnabled: boolean;
   testAccount: boolean;
@@ -107,12 +105,11 @@ export interface APISetupIntent {
   publishableKey: string;
 }
 
-export interface APICreditStatus {
+// TODO this has no id
+export interface APICreditStatus extends ApiItem {
   type: 'creditstatus';
-  uri: string;
   accountType: 'PREPAID' | 'POSTPAID';
   balance: number;
-  parent: string;
 }
 
 export interface APICallCharging {
@@ -135,4 +132,10 @@ export interface APIChargingPlan {
   roundSeconds: number;
   type: 'chargingplan';
   uri: string;
+}
+
+export interface APICallCredit extends ApiItem {
+  type: 'callcredit';
+  amount: number;
+  charge: number;
 }

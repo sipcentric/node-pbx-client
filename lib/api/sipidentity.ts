@@ -1,13 +1,14 @@
 import Representation from './representation';
-import { SipcentricClient, RepresentationBase } from '../interfaces';
+import { RepresentationBase } from '../interfaces';
 import { APISipIdentity, APISipRegistration } from '../interfaces/api';
 import RepresentationList from './representationList';
+import Sipcentric from '.';
 
 class SipIdentityRepresentation extends Representation<APISipIdentity> {
   registrations: RepresentationList<APISipRegistration>;
 
   constructor(
-    client: SipcentricClient,
+    client: Sipcentric,
     properties: APISipIdentity,
     parent: RepresentationBase | string,
   ) {

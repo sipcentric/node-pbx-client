@@ -1,10 +1,11 @@
 import Representation from './representation';
-import { SipcentricClient, ApiItem, RepresentationBase } from '../interfaces';
+import { RepresentationBase } from '../interfaces';
 import { APISMSMessage } from '../interfaces/api';
+import Sipcentric from '.';
 
 class SmsMessageRepresentation extends Representation<APISMSMessage> {
   constructor(
-    client: SipcentricClient,
+    client: Sipcentric,
     properties: APISMSMessage,
     parent: RepresentationBase | string,
   ) {

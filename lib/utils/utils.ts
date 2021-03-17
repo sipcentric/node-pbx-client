@@ -1,7 +1,7 @@
-import { ApiItemType } from '../interfaces';
-
 export const getBasicAuthHeader = (username: string, password: string) => {
-  const encodedCredentials = Base64.encode(`${username}:${password}`);
+  const encodedCredentials = Buffer.from(`${username}:${password}`).toString(
+    'base64',
+  );
   return `Basic ${encodedCredentials}`;
 };
 
@@ -35,7 +35,7 @@ export const scAuthenticate = (
   });
 };
 
-export const urlPathForItemType = (type: ApiItemType, id?: string) => {
+export const urlPathForItemType = (type: string, id?: string) => {
   let path = '';
   const normalizedType = type.toLowerCase();
 

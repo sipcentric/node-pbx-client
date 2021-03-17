@@ -1,10 +1,10 @@
 import RepresentationList from './representationList';
-import Representation from './representation';
-import { SipcentricClient, RepresentationBase } from '../interfaces';
+import { RepresentationBase } from '../interfaces';
 import { APIPhoneNumber } from '../interfaces/api';
+import Sipcentric from '.';
 
 class PhoneNumberList extends RepresentationList<APIPhoneNumber> {
-  constructor(client: SipcentricClient, parent: RepresentationBase) {
+  constructor(client: Sipcentric, parent: RepresentationBase) {
     super(client, 'did', parent);
     // TODO remove
     // this._type = 'phonenumberList';

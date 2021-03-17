@@ -1,5 +1,5 @@
 import Representation from './representation';
-import { RepresentationBase, SipcentricClient } from '../interfaces';
+import { RepresentationBase } from '../interfaces';
 import {
   APIBilling,
   APIBillingEstimate,
@@ -7,6 +7,7 @@ import {
   APIBillingPaymentMethod,
 } from '../interfaces/billing';
 import RepresentationList from './representationList';
+import Sipcentric from '.';
 
 class BillingRepresentation extends Representation<APIBilling> {
   invoices: RepresentationList<APIBillingInvoice>;
@@ -15,7 +16,7 @@ class BillingRepresentation extends Representation<APIBilling> {
   paymentmethods: RepresentationList<APIBillingPaymentMethod>;
 
   constructor(
-    client: SipcentricClient,
+    client: Sipcentric,
     properties: APIBilling,
     parent: RepresentationBase | string,
   ) {
@@ -34,7 +35,7 @@ class BillingRepresentation extends Representation<APIBilling> {
     // TODO
     this.paymentmethods = new RepresentationList<APIBillingPaymentMethod>(
       this.client,
-      '',
+      'worldpay',
       this,
     );
   }

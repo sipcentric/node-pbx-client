@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "build",
+    "outDir": "./build",
     "target": "es6",
     "lib": ["es2017", "es7", "es6", "dom"],
     "module": "commonjs",
@@ -11,7 +11,6 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "moduleResolution": "node",
-    "noEmit": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
@@ -21,7 +20,7 @@
     "strict": true,
     "strictNullChecks": false,
     "sourceMap": true,
-    "suppressImplicitAnyIndexErrors": true,
+    "suppressImplicitAnyIndexErrors": true
   },
   "include": ["lib/**/*.ts"],
   "exclude": ["node_modules"]

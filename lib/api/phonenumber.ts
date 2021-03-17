@@ -1,13 +1,14 @@
 import Representation from './representation';
-import { SipcentricClient, ApiItem, RepresentationBase } from '../interfaces';
+import { RepresentationBase } from '../interfaces';
 import { APIPhoneNumber, APIRoutingRule } from '../interfaces/api';
 import RepresentationList from './representationList';
+import Sipcentric from '.';
 
 class PhoneNumberRepresentation extends Representation<APIPhoneNumber> {
   routingrules: RepresentationList<APIRoutingRule>;
 
   constructor(
-    client: SipcentricClient,
+    client: Sipcentric,
     properties: APIPhoneNumber,
     parent: RepresentationBase | string,
   ) {

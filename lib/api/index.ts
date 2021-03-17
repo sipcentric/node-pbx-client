@@ -22,18 +22,17 @@ import nodeify from '../polyfills/nodeifyv2';
 import * as npmPackage from '../../package.json';
 import { isApiItem } from '../guards';
 import {
-  SipcentricClient,
   ClientOptions,
   RepresentationTypeParams,
   ApiItem,
   RepresentationBase,
   Callback,
   QueryParams,
-  FormattedApiList,
+  FormattedApiListMetadata,
   ApiList,
   WebRTCConfig,
   ApiItemType,
-  ApiItemWithoutId,
+  FormattedApiList,
 } from '../interfaces';
 import {
   getBasicAuthHeader,
@@ -44,7 +43,18 @@ import { APICustomer } from '../interfaces/api';
 
 const VERSION: string = (npmPackage as any).version;
 
-class Sipcentric implements SipcentricClient {
+// type FormatGetResponse<Item extends ApiItem> = {
+//   (
+//     response: Item,
+//     parent: RepresentationBase | string,
+//   ): RepresentationType<Item>;
+
+//   (
+//     response: ApiList<Item>,
+//     parent: RepresentationBase | string,
+//   ): FormattedApiList<Item>;
+// };
+class Sipcentric {
   readonly VERSION: string;
   readonly userAgent: string;
   options: ClientOptions;
@@ -71,6 +81,8 @@ class Sipcentric implements SipcentricClient {
     this.userAgent = `sipcentric-pbx-client/v${VERSION}`;
 
     this.authPromise = Promise.resolve();
+
+    // this._formatGetResponse = this._formatGetResponse.bind(this);
 
     this.init(options);
   }
@@ -221,7 +233,7 @@ class Sipcentric implements SipcentricClient {
     if (!webRTCConfig.username || !webRTCConfig.password) {
       // Get the customers this user has access to
       const customers = await this.customers.get();
-      if (customers.items.length === 0) {
+      if (!customers || customers.items.length === 0) {
         throw new Error('This user does not have access to any customers');
       }
 
@@ -274,16 +286,18 @@ class Sipcentric implements SipcentricClient {
       // Fetch the default extension's sip credentials
       const sipIdentity = await extension.sip.get();
 
-      // Set the sip credentials in our webRTCConfig
-      webRTCConfig.username = sipIdentity.username;
-      webRTCConfig.password = sipIdentity.password;
+      if (sipIdentity) {
+        // Set the sip credentials in our webRTCConfig
+        webRTCConfig.username = sipIdentity.username;
+        webRTCConfig.password = sipIdentity.password;
+      }
     }
 
     return instantiateWebRTC(webRTCConfig as WebRTCConfig, modules);
   }
 
   // eslint-disable-next-line class-methods-use-this
-  _paramsForType = (type: string) => {
+  _paramsForType = (type: ApiItemType) => {
     const params: RepresentationTypeParams = {};
     const normalizedType = type.toLowerCase();
 
@@ -307,10 +321,10 @@ class Sipcentric implements SipcentricClient {
     return params;
   };
 
-  _objectFromItem = <T extends ApiItem | ApiItemWithoutId>(
-    item: T,
+  _objectFromItem = <T extends ApiItem>(
+    item: T | Omit<T, 'id'>,
     parent: RepresentationBase | string,
-  ): RepresentationType<T> => {
+  ): RepresentationType<T> & T => {
     // Figure out which class to use for this type
 
     switch (item.type) {
@@ -318,7 +332,11 @@ class Sipcentric implements SipcentricClient {
       // case 'availablebundle':
       //   return new Availablebundle(this, item, parent);
       case 'billingaccount':
-        return new BillingAccountRepresentation(this, item, parent) as any;
+        return new BillingAccountRepresentation(
+          this,
+          item as any,
+          parent,
+        ) as any;
       // case 'call':
       //   return new Call(this, item, parent);
       // case 'callbundle':
@@ -326,7 +344,7 @@ class Sipcentric implements SipcentricClient {
       // case 'creditstatus':
       //   return new Creditstatus(this, item, parent);
       case 'customer':
-        return new CustomerRepresentation(this, item) as any;
+        return new CustomerRepresentation(this, item as any) as any;
       // case 'did':
       //   return new Phonenumber(this, item, parent);
       // case 'forwardingrule':
@@ -344,13 +362,17 @@ class Sipcentric implements SipcentricClient {
       // case 'music':
       //   return new Music(this, item, parent);
       case 'outgoingcallerid':
-        return new OutgoingCallerIdRepresentation(this, item, parent) as any;
+        return new OutgoingCallerIdRepresentation(
+          this,
+          item as any,
+          parent,
+        ) as any;
       // FIXME
       // case 'paymentmethod':
       // case 'worldpay':
       //   return new Paymentmethod(this, item, parent);
       case 'phone':
-        return new PhoneRepresentation(this, item, parent) as any;
+        return new PhoneRepresentation(this, item as any, parent) as any;
       // case 'phonebookentry':
       //   return new Phonebookentry(this, item, parent);
       // case 'prompt':
@@ -358,7 +380,7 @@ class Sipcentric implements SipcentricClient {
       // case 'preference':
       //   return new Preference(this, item, parent);
       case 'queue':
-        return new QueueRepresentation(this, item, parent) as any;
+        return new QueueRepresentation(this, item as any, parent) as any;
       // case 'queueentry':
       //   return new Queueentry(this, item, parent);
       // case 'queuemembership':
@@ -366,13 +388,13 @@ class Sipcentric implements SipcentricClient {
       // case 'queuestatus':
       //   return new Queuestatus(this, item, parent);
       case 'recording':
-        return new RecordingRepresentation(this, item, parent) as any;
+        return new RecordingRepresentation(this, item as any, parent) as any;
       // case 'routingrule':
       //   return new Routingrule(this, item, parent);
       case 'smsmessage':
-        return new SmsMessageRepresentation(this, item, parent) as any;
+        return new SmsMessageRepresentation(this, item as any, parent) as any;
       case 'sipidentity':
-        return new SipIdentityRepresentation(this, item, parent) as any;
+        return new SipIdentityRepresentation(this, item as any, parent) as any;
       // case 'sipregistration':
       //   return new Sipregistration(this, item, parent);
       // case 'timeinterval':
@@ -380,23 +402,16 @@ class Sipcentric implements SipcentricClient {
       // case 'virtual':
       //   return new Virtual(this, item, parent);
       default:
-        return new Representation<T>(this, item.type, item, parent) as any;
+        return new Representation<T>(
+          this,
+          item.type,
+          item as any,
+          parent,
+        ) as any;
     }
   };
 
-  _buildObjects = <Item extends ApiItem>(
-    items: Item | Item[],
-    parent: RepresentationBase | string,
-  ) => {
-    // Builds an array of class objects from a given array of items,
-    // or returns a single class object if we only give it one object
-
-    return Array.isArray(items)
-      ? items.map((item) => this._objectFromItem(item, parent))
-      : this._objectFromItem(items, parent);
-  };
-
-  _request = (
+  _request = <Item extends ApiItem>(
     method: string,
     url: string,
     params = {},
@@ -485,7 +500,7 @@ class Sipcentric implements SipcentricClient {
           this._updateRateLimits(response);
 
           return { parsedData, response } as {
-            parsedData: ApiItem;
+            parsedData: Item | ApiList<Item>;
             response: Response;
           };
         }),
@@ -526,11 +541,7 @@ class Sipcentric implements SipcentricClient {
     return url;
   };
 
-  _buildUrlSection = (
-    type: ApiItemType,
-    object: RepresentationBase,
-    url = '',
-  ) => {
+  _buildUrlSection = (type: string, object: RepresentationBase, url = '') => {
     /* eslint no-param-reassign:0 */
 
     let path;
@@ -584,15 +595,25 @@ class Sipcentric implements SipcentricClient {
     return '';
   };
 
+  // _formatGetResponse<Item extends ApiItem>(
+  //   response: Item,
+  //   parent: RepresentationBase | string,
+  // ): RepresentationType<Item>;
+  // _formatGetResponse<Item extends ApiItem>(
+  //   response: ApiList<Item>,
+  //   parent: RepresentationBase | string,
+  // ): FormattedApiList<Item>;
   _formatGetResponse = <Item extends ApiItem>(
     response: Item | ApiList<Item>,
     parent: RepresentationBase | string,
   ) => {
     if (!isApiItem(response)) {
-      const builtItems = this._buildObjects(response.items, parent);
+      const builtItems = response.items
+        ? response.items.map((item) => this._objectFromItem<Item>(item, parent))
+        : [];
 
       const { nextPage, prevPage, items, ...temp } = response;
-      const meta: FormattedApiList = temp;
+      const meta: FormattedApiListMetadata = temp;
 
       if (Object.prototype.hasOwnProperty.call(response, 'nextPage')) {
         const nextPageUrl = response.nextPage;
@@ -600,7 +621,7 @@ class Sipcentric implements SipcentricClient {
           nodeify(
             this._request('get', nextPageUrl).then((data) => {
               const formattedResponse: any = this._formatGetResponse(
-                data.parsedData,
+                data.parsedData as ApiList<Item>,
                 parent,
               );
               formattedResponse._response = data.response;
@@ -616,7 +637,7 @@ class Sipcentric implements SipcentricClient {
           nodeify(
             this._request('get', prevPageUrl).then((data) => {
               const formattedResponse: any = this._formatGetResponse(
-                data.parsedData,
+                data.parsedData as ApiList<Item>,
                 parent,
               );
               formattedResponse._response = data.response;
@@ -628,15 +649,14 @@ class Sipcentric implements SipcentricClient {
 
       return { meta, items: builtItems };
     }
-
-    return this._buildObjects(response, parent);
+    return this._objectFromItem<Item>(response, parent);
   };
 
   _getResource = <Item extends ApiItem>(
     type: Item['type'],
     object: RepresentationBase,
     ...args: any[]
-  ): Promise<Representation<Item> | RepresentationList<Item>> => {
+  ): Promise<(RepresentationType<Item> & Item) | FormattedApiList<Item>> => {
     let id: string;
     let params: QueryParams;
     let callback: Callback;
@@ -661,7 +681,7 @@ class Sipcentric implements SipcentricClient {
     const url = this._buildUrl(type, object, id, params);
 
     return nodeify(
-      this._request('get', url).then((data) => {
+      this._request<Item>('get', url).then((data) => {
         const formattedResponse = this._formatGetResponse(
           data.parsedData,
           object.parent,

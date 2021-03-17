@@ -1,5 +1,6 @@
+export {};
 /* import * as atmosphere from 'atmosphere.js';
-import { SipcentricClient, Callback } from '../interfaces';
+import { Callback } from '../interfaces';
 
 class Stream {
   protected client: SipcentricClient;

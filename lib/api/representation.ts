@@ -1,11 +1,10 @@
 import extend = require('deep-extend');
+import Sipcentric from '.';
 import {
-  RepresentationInterface,
-  SipcentricClient,
   RepresentationBase,
-  ApiItem,
   Callback,
   ApiItemType,
+  ApiItem,
 } from '../interfaces';
 import {
   APICallRecording,
@@ -28,19 +27,14 @@ import SipIdentityRepresentation from './sipidentity';
 import SmsMessageRepresentation from './smsmessage';
 
 // TODO typing
-class Representation<Item extends { type: ApiItemType }>
-  implements RepresentationInterface<Item> {
-  protected _client: SipcentricClient;
+class Representation<Item extends ApiItem> {
+  protected client: Sipcentric;
   public id?: string;
   public parent: RepresentationBase | string;
   public _unavailableMethods: string[];
 
   protected _type: ApiItemType;
   protected _json: Item;
-
-  public get client(): SipcentricClient {
-    return this._client;
-  }
 
   public get type(): ApiItemType {
     return this._type;
@@ -51,12 +45,12 @@ class Representation<Item extends { type: ApiItemType }>
   }
 
   constructor(
-    client: SipcentricClient,
+    client: Sipcentric,
     type: Item['type'],
     properties?: Item,
     parent?: RepresentationBase | string,
   ) {
-    this._client = client;
+    this.client = client;
     this._type = type;
     if (properties) {
       const { type, ...props } = properties;
@@ -74,20 +68,18 @@ class Representation<Item extends { type: ApiItemType }>
     extend(this._json, rest);
   };
 
-  save = (callback?: Callback): Promise<any> => {
-    return this._client._saveRepresentation(this, callback);
+  save = (callback?: Callback) => {
+    return this.client._saveRepresentation(this, callback);
   };
 
-  delete = (callback?: Callback): Promise<any> => {
-    return this._client._deleteRepresentation(this, callback);
+  delete = (callback?: Callback) => {
+    return this.client._deleteRepresentation(this, callback);
   };
 }
 
 export default Representation;
 
-export type RepresentationType<
-  T extends { type: ApiItemType }
-> = T extends APIBilling
+export type RepresentationType<T extends ApiItem> = T extends APIBilling
   ? BillingRepresentation
   : T extends APICustomer
   ? CustomerRepresentation

@@ -1,11 +1,19 @@
 import RepresentationList from './representationList';
-import { SipcentricClient, RepresentationBase } from '../interfaces';
+import { Callback, QueryParams, RepresentationBase } from '../interfaces';
 import { APISipIdentity, APISipRegistration } from '../interfaces/api';
+import Sipcentric from '.';
+import { RepresentationType } from './representation';
+
+type GetResponse = (
+  id?: string,
+  params?: QueryParams,
+  callback?: Callback,
+) => (RepresentationType<APISipIdentity> & APISipIdentity) | void;
 
 class SipidentityList extends RepresentationList<APISipIdentity> {
   public registrations: RepresentationList<APISipRegistration>;
 
-  constructor(client: SipcentricClient, parent: RepresentationBase) {
+  constructor(client: Sipcentric, parent: RepresentationBase) {
     super(client, 'sipidentity', parent);
 
     // A shortcut to get registrations without getting sipidentity first
@@ -15,6 +23,10 @@ class SipidentityList extends RepresentationList<APISipIdentity> {
       this,
     );
   }
+
+  // FIXME
+  // @ts-ignore
+  get: GetResponse;
 }
 
 export default SipidentityList;

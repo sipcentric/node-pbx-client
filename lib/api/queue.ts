@@ -1,5 +1,5 @@
 import Representation from './representation';
-import { SipcentricClient, ApiItem, RepresentationBase } from '../interfaces';
+import { RepresentationBase } from '../interfaces';
 import { APICallQueue } from '../interfaces/endpoints';
 import {
   APIQueueEntry,
@@ -7,6 +7,7 @@ import {
   APIQueueStatus,
 } from '../interfaces/api';
 import RepresentationList from './representationList';
+import Sipcentric from '.';
 
 class QueueRepresentation extends Representation<APICallQueue> {
   entries: RepresentationList<APIQueueEntry>;
@@ -14,7 +15,7 @@ class QueueRepresentation extends Representation<APICallQueue> {
   status: RepresentationList<APIQueueStatus>;
 
   constructor(
-    client: SipcentricClient,
+    client: Sipcentric,
     properties: APICallQueue,
     parent: RepresentationBase | string,
   ) {

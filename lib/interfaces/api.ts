@@ -68,12 +68,9 @@ export interface APIPermissions {
   uri: string;
 }
 
-export interface APIPreferences {
-  id: string;
+export interface APIPreferences extends ApiItem {
   recordingExpireDays: number;
-  parent: string;
   type: 'customerpreferences';
-  uri: string;
 }
 
 export interface APIPricing {
@@ -112,13 +109,10 @@ export interface APISMSSummary {
 }
 
 export interface APIBargeGroup extends ApiItem {
-  uri: string;
-  created: Date;
   managers: string[];
   members: string[];
   name: string;
   type: 'bargegroup';
-  readOnly: boolean;
 }
 
 export interface APICallBundle extends ApiItem {

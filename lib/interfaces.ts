@@ -1,37 +1,4 @@
-export interface SipcentricClient {
-  VERSION: string;
-  options: ClientOptions;
-  authorization: string;
-  customers: any;
-  stream: any;
-  presenceWatcher: any;
-  authPromise: Promise<any>;
-
-  init(options?: Partial<ClientOptions>): Promise<any>;
-
-  _saveRepresentation<Item extends ApiItem>(
-    object: RepresentationInterface<Item>,
-    callback: Callback,
-  ): Promise<Item & { _response: Response }>;
-
-  _deleteRepresentation<Item extends ApiItem>(
-    object: RepresentationInterface<Item>,
-    callback: Callback,
-  ): Promise<Item>;
-
-  _getResource<Item extends ApiItem>(
-    type: Item['type'],
-    object: RepresentationBase,
-    ...args: any[]
-  ): Promise<
-    RepresentationInterface<Item> | RepresentationListInterface<Item>
-  > | void;
-
-  _objectFromItem<Item extends ApiItem | ApiItemWithoutId>(
-    item: Item,
-    parent: RepresentationBase | string,
-  ): RepresentationInterface<Item>;
-}
+import { RepresentationType } from './api/representation';
 
 export interface ClientOptions {
   username: string;
@@ -59,29 +26,28 @@ export interface RepresentationBase {
   id?: string;
   type: string;
   parent: RepresentationBase | string;
-  client: SipcentricClient;
   _unavailableMethods: string[];
 }
 
-export interface RepresentationInterface<Item> extends RepresentationBase {
-  save(callback?: Callback): Promise<Item>;
-  delete(callback?: Callback): Promise<Item>;
-}
+// export interface RepresentationInterface<Item> extends RepresentationBase {
+//   save(callback?: Callback): Promise<Item>;
+//   delete(callback?: Callback): Promise<Item>;
+// }
 
-export interface RepresentationListInterface<Item> extends RepresentationBase {
-  itemType: string;
-  get(
-    id?: string,
-    params?: QueryParams,
-    callback?: Callback,
-  ): Promise<
-    RepresentationInterface<Item> | RepresentationListInterface<Item>
-  > | void;
-  create(properties?: object): RepresentationInterface<Item>;
-}
+// export interface RepresentationListInterface<Item> extends RepresentationBase {
+//   itemType: string;
+//   get(
+//     id?: string,
+//     params?: QueryParams,
+//     callback?: Callback,
+//   ): Promise<
+//     RepresentationInterface<Item> | RepresentationListInterface<Item>
+//   > | void;
+//   create(properties?: object): RepresentationInterface<Item>;
+// }
 
 export interface ApiList<T extends ApiItem> {
-  items: T[];
+  items?: T[];
   totalItems: number;
   pageSize: number;
   page: number;
@@ -89,13 +55,18 @@ export interface ApiList<T extends ApiItem> {
   prevPage?: string;
 }
 
-export interface FormattedApiList {
+export interface FormattedApiListMetadata {
   // items: RepresentationInterface;
   totalItems: number;
   pageSize: number;
   page: number;
   nextPage?: PromisedCallback;
   prevPage?: PromisedCallback;
+}
+
+export interface FormattedApiList<Item extends ApiItem> {
+  meta: FormattedApiListMetadata;
+  items: (RepresentationType<Item> & Item)[];
 }
 
 export type ApiItemType =
@@ -139,12 +110,13 @@ export type ApiItemType =
   | 'bargegroup'
   | 'worldpay'
   | 'stripe'
-  | 'trunk';
+  | 'trunk'
+  | 'callcredit';
 
 export interface ApiItemWithoutId {
   type: ApiItemType;
   uri: string;
-  created: Date;
+  created?: Date;
   parent?: string; // uri of parent item
 }
 export interface ApiItem extends ApiItemWithoutId {
