@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "outDir": "./build",
     "target": "es6",
     "lib": ["es2017", "es7", "es6", "dom"],
     "module": "commonjs",
@@ -22,6 +21,5 @@
     "sourceMap": true,
     "suppressImplicitAnyIndexErrors": true
   },
-  "include": ["lib/**/*.ts"],
   "exclude": ["node_modules"]
 }

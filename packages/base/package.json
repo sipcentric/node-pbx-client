@@ -1,10 +1,11 @@
 {
-  "name": "pbx-clients",
+  "name": "@sipcentric/base-pbx-client",
   "version": "2.2.1",
   "description": "Official Sipcentric PBX client",
-  "main": "build/index.js",
-  "types": "build/index.d.ts",
+  "main": "build/lib/index.js",
+  "types": "build/lib/index.d.ts",
   "scripts": {
+    "build": "rm -rf build/ && tsc -d",
     "lint": "eslint 'lib/**'; exit 0;",
     "test": "npm run lint",
     "postversion": "git push && git push --tags"
@@ -30,23 +31,15 @@
     "url": "https://github.com/sipcentric/node-pbx-client/issues"
   },
   "homepage": "https://github.com/sipcentric/node-pbx-client",
-  "devDependencies": {
-    "@types/node": "^12.0.0",
-    "@typescript-eslint/eslint-plugin": "^4.15.2",
-    "@typescript-eslint/parser": "^4.15.2",
-    "eslint": "^7.20.0",
-    "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-config-prettier": "^8.1.0",
-    "eslint-plugin-import": "^2.22.1",
-    "mocha": "^5.2.0",
-    "nock": "^10.0.4",
-    "prettier": "^2.2.1",
-    "typescript": "^4.2.2"
+  "dependencies": {
+    "@types/deep-extend": "^0.4.31",
+    "@types/js-base64": "^2.3.1",
+    "deep-extend": "^0.6.0",
+    "js-base64": "^2.5.1",
+    "uuid": "^3.3.2",
+    "xml-parser": "^1.2.1"
   },
-  "prettier": {
-    "arrowParens": "always",
-    "jsxSingleQuote": true,
-    "singleQuote": true,
-    "trailingComma": "all"
+  "devDependencies": {
+    "@types/uuid": "^8.3.0"
   }
 }
